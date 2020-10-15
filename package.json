@@ -1,6 +1,6 @@
 {
   "name": "ops.riv-alumni.com",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "dependencies": {
     "firebase": "^7.23.0",
