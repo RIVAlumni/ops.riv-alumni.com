@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
-import { rootStore, FirebaseService } from './services';
+
+import { Router } from './components';
+import { rootStore } from './services';
 
 import * as serviceWorker from './serviceWorker';
-
-FirebaseService.getInstance().sayHello();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={rootStore}>
-      <h1>Hello World</h1>
+      <Router />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

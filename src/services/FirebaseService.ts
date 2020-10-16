@@ -21,6 +21,27 @@ class FirebaseService {
     return firestore;
   }
 
+  public async signOut(): Promise<void> {
+    try {
+      await auth().signOut();
+    } catch (e) {
+      const { message }: auth.AuthError = e;
+      console.error(message);
+    }
+  }
+
+  public async signInWithGoogle(): Promise<void> {
+    const provider = new auth.GoogleAuthProvider();
+
+    try {
+      await auth().setPersistence(auth.Auth.Persistence.LOCAL);
+      await auth().signInWithPopup(provider);
+    } catch (e) {
+      const { message }: auth.AuthError = e;
+      console.error(message);
+    }
+  }
+
   public getUserDoc<T>(uid: string): Observable<T> {
     return docData<T>(this.getUsersCol().doc(uid)).pipe(
       count('Firestore Reads')

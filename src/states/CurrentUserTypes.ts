@@ -8,6 +8,19 @@ export const CURRENT_USER_RESET = 'CURRENT_USER_RESET';
 export const CURRENT_USER_LOAD = 'CURRENT_USER_LOAD';
 export const CURRENT_USER_SET = 'CURRENT_USER_SET';
 
+export const CurrentUserResetDispatch = (): CurrentUserResetAction => ({
+  type: CURRENT_USER_RESET,
+});
+
+export const CurrentUserLoadDispatch = (): CurrentUserLoadAction => ({
+  type: CURRENT_USER_LOAD,
+});
+
+export const CurrentUserSetDispatch = (user: User): CurrentUserSetAction => ({
+  type: CURRENT_USER_SET,
+  user,
+});
+
 export interface SignOutUserAction {
   type: typeof SIGN_OUT_USER;
 }
