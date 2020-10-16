@@ -15,7 +15,7 @@ const CurrentUserReducer = (
     case RESET_CURRENT_USER:
       return initialState;
     case SET_CURRENT_USER:
-      return action.user;
+      return { ...action.user };
     default:
       return state;
   }
