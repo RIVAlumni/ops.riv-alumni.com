@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { FirebaseService } from './services';
+import { Provider } from 'react-redux';
+import { rootStore, FirebaseService } from './services';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -9,7 +10,9 @@ FirebaseService.getInstance().sayHello();
 
 ReactDOM.render(
   <React.StrictMode>
-    <h1>Hello World</h1>
+    <Provider store={rootStore}>
+      <h1>Hello World</h1>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

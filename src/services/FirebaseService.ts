@@ -1,6 +1,4 @@
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 import { docData } from 'rxfire/firestore';
 
 import { auth, analytics, firestore, initializeApp } from 'firebase/app';
@@ -9,6 +7,7 @@ import 'firebase/analytics';
 import 'firebase/firestore';
 import 'firebase/remote-config';
 
+import { count } from '../pipes';
 import fbConfig from '../configs/firebase.json';
 
 class FirebaseService {
@@ -24,25 +23,25 @@ class FirebaseService {
 
   public getUserDoc<T>(uid: string): Observable<T> {
     return docData<T>(this.getUsersCol().doc(uid)).pipe(
-      tap(() => console.count('Firestore Reads'))
+      count('Firestore Reads')
     );
   }
 
   public getMemberDoc<T>(uid: string): Observable<T> {
     return docData<T>(this.getMembersCol().doc(uid)).pipe(
-      tap(() => console.count('Firestore Reads'))
+      count('Firestore Reads')
     );
   }
 
   public getEventDoc<T>(uid: string): Observable<T> {
     return docData<T>(this.getEventsCol().doc(uid)).pipe(
-      tap(() => console.count('Firestore Reads'))
+      count('Firestore Reads')
     );
   }
 
   public getParticipationDoc<T>(uid: string): Observable<T> {
     return docData<T>(this.getParticipationsCol().doc(uid)).pipe(
-      tap(() => console.count('Firestore Reads'))
+      count('Firestore Reads')
     );
   }
 
