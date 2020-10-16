@@ -1,20 +1,20 @@
-import { User } from '../models';
 import {
-  CURRENT_USER_RESET,
-  CURRENT_USER_SET,
+  RESET_CURRENT_USER,
+  SET_CURRENT_USER,
+  CurrentUserState,
   CurrentUserActionTypes,
 } from './CurrentUserTypes';
 
-const initialState: User | null = null;
+const initialState: CurrentUserState = null;
 
 const CurrentUserReducer = (
-  state: User | null = initialState,
+  state: CurrentUserState = initialState,
   action: CurrentUserActionTypes
-): User | null => {
+): CurrentUserState => {
   switch (action.type) {
-    case CURRENT_USER_RESET:
+    case RESET_CURRENT_USER:
       return initialState;
-    case CURRENT_USER_SET:
+    case SET_CURRENT_USER:
       return action.user;
     default:
       return state;

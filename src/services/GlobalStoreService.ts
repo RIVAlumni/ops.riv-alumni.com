@@ -3,8 +3,11 @@ import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import {
+  AggregationActionTypes,
   CurrentUserActionTypes,
+  AggregationReducer,
   CurrentUserReducer,
+  AggregationEpics,
   CurrentUserEpics,
 } from '../states';
 
@@ -23,10 +26,14 @@ const epicMiddleware = createEpicMiddleware<
   dependencies: epicServices,
 });
 
-export const rootEpic: EpicType = combineEpics(CurrentUserEpics);
+export const rootEpic: EpicType = combineEpics(
+  AggregationEpics,
+  CurrentUserEpics
+);
 
 export const rootReducer = combineReducers({
   user: CurrentUserReducer,
+  aggregation: AggregationReducer,
 });
 
 export const rootStore = createStore(
@@ -44,4 +51,4 @@ export type EpicType = Epic<
 >;
 
 export type AppState = ReturnType<typeof rootReducer>;
-export type AppActions = CurrentUserActionTypes;
+export type AppActions = AggregationActionTypes | CurrentUserActionTypes;

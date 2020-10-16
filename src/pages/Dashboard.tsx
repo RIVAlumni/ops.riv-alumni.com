@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { FirebaseService } from '../services';
-import { CurrentUserLoad } from '../states';
+import { LoadCurrentUser } from '../states';
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const firebase = FirebaseService.getInstance();
 
   useEffect(() => {
-    dispatch(CurrentUserLoad());
+    dispatch(LoadCurrentUser());
   }, [dispatch]);
 
   return (

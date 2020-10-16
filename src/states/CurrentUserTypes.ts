@@ -1,36 +1,38 @@
 import { User } from '../models';
 
-export const CURRENT_USER_RESET = 'CURRENT_USER_RESET';
-export const CURRENT_USER_LOAD = 'CURRENT_USER_LOAD';
-export const CURRENT_USER_SET = 'CURRENT_USER_SET';
+export const RESET_CURRENT_USER = 'RESET_CURRENT_USER';
+export const LOAD_CURRENT_USER = 'LOAD_CURRENT_USER';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
-export const CurrentUserReset = (): CurrentUserResetAction => ({
-  type: CURRENT_USER_RESET,
+export const ResetCurrentUser = (): ResetCurrentUserAction => ({
+  type: RESET_CURRENT_USER,
 });
 
-export const CurrentUserLoad = (): CurrentUserLoadAction => ({
-  type: CURRENT_USER_LOAD,
+export const LoadCurrentUser = (): LoadCurrentUserAction => ({
+  type: LOAD_CURRENT_USER,
 });
 
-export const CurrentUserSet = (user: User): CurrentUserSetAction => ({
-  type: CURRENT_USER_SET,
+export const SetCurrentUser = (user: User): SetCurrentUserAction => ({
+  type: SET_CURRENT_USER,
   user,
 });
 
-export interface CurrentUserResetAction {
-  type: typeof CURRENT_USER_RESET;
+export interface ResetCurrentUserAction {
+  type: typeof RESET_CURRENT_USER;
 }
 
-export interface CurrentUserLoadAction {
-  type: typeof CURRENT_USER_LOAD;
+export interface LoadCurrentUserAction {
+  type: typeof LOAD_CURRENT_USER;
 }
 
-export interface CurrentUserSetAction {
-  type: typeof CURRENT_USER_SET;
+export interface SetCurrentUserAction {
+  type: typeof SET_CURRENT_USER;
   user: User;
 }
 
+export type CurrentUserState = User | null;
+
 export type CurrentUserActionTypes =
-  | CurrentUserResetAction
-  | CurrentUserLoadAction
-  | CurrentUserSetAction;
+  | ResetCurrentUserAction
+  | LoadCurrentUserAction
+  | SetCurrentUserAction;
