@@ -7,7 +7,9 @@ import 'firebase/analytics';
 import 'firebase/firestore';
 import 'firebase/remote-config';
 
+import { User } from '../models';
 import { count } from '../pipes';
+
 import fbConfig from '../configs/firebase.json';
 
 class FirebaseService {
@@ -42,8 +44,8 @@ class FirebaseService {
     }
   }
 
-  public getUserDoc<T>(uid: string): Observable<T> {
-    return docData<T>(this.getUsersCol().doc(uid)).pipe(
+  public getUserDoc(uid: string): Observable<User> {
+    return docData<User>(this.getUsersCol().doc(uid)).pipe(
       count('Firestore Reads')
     );
   }
