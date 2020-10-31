@@ -3,7 +3,7 @@ import { combineEpics } from 'redux-observable';
 
 import { of } from 'rxjs';
 import { authState } from 'rxfire/auth';
-import { map, filter, switchMap, ignoreElements } from 'rxjs/operators';
+import { map, filter, mergeMap, switchMap } from 'rxjs/operators';
 
 import { EpicType } from '../services';
 import { ResetAggregations, LoadAggregations } from './AggregationTypes';
@@ -16,7 +16,10 @@ import {
 } from './CurrentUserTypes';
 
 export const CurrentUserResetEpic: EpicType = (action$, _state$) =>
-  action$.pipe(filter(isOfType(RESET_CURRENT_USER)), ignoreElements());
+  action$.pipe(
+    filter(isOfType(RESET_CURRENT_USER)),
+    mergeMap(() => [ResetAggregations()])
+  );
 
 export const CurrentUserLoadEpic: EpicType = (action$, _state$, { firebase }) =>
   action$.pipe(
@@ -29,10 +32,9 @@ export const CurrentUserLoadEpic: EpicType = (action$, _state$, { firebase }) =>
 export const CurrentUserSetEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(SET_CURRENT_USER)),
-    map(({ user }) => {
-      if (user['Access Level'] >= 2) return LoadAggregations();
-      return ResetAggregations();
-    })
+    mergeMap(({ user }) =>
+      user['Access Level'] >= 2 ? [LoadAggregations()] : []
+    )
   );
 
 export const CurrentUserEpics = combineEpics(

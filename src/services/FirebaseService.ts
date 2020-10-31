@@ -7,8 +7,14 @@ import 'firebase/analytics';
 import 'firebase/firestore';
 import 'firebase/remote-config';
 
-import { User } from '../models';
 import { count } from '../pipes';
+import {
+  User,
+  UserAggregation,
+  MemberAggregation,
+  EventAggregation,
+  ParticipationAggregation,
+} from '../models';
 
 import fbConfig from '../configs/firebase.json';
 
@@ -84,20 +90,28 @@ class FirebaseService {
     return this.database().collection('participations');
   }
 
-  public getUsersAgnDoc(): firestore.DocumentReference {
-    return this.database().doc('aggregations/users');
+  public getUsersAgnDoc(): Observable<UserAggregation> {
+    return docData<UserAggregation>(
+      this.database().doc('aggregations/users')
+    ).pipe(count('Firestore Reads'));
   }
 
-  public getMembersAgnDoc(): firestore.DocumentReference {
-    return this.database().doc('aggregations/members');
+  public getMembersAgnDoc(): Observable<MemberAggregation> {
+    return docData<MemberAggregation>(
+      this.database().doc('aggregations/members')
+    ).pipe(count('Firestore Reads'));
   }
 
-  public getEventsAgnDoc(): firestore.DocumentReference {
-    return this.database().doc('aggregations/events');
+  public getEventsAgnDoc(): Observable<EventAggregation> {
+    return docData<EventAggregation>(
+      this.database().doc('aggregations/events')
+    ).pipe(count('Firestore Reads'));
   }
 
-  public getParticipationsAgnDoc(): firestore.DocumentReference {
-    return this.database().doc('aggregations/participations');
+  public getParticipationsAgnDoc(): Observable<ParticipationAggregation> {
+    return docData<ParticipationAggregation>(
+      this.database().doc('aggregations/participations')
+    ).pipe(count('Firestore Reads'));
   }
 
   private constructor() {
