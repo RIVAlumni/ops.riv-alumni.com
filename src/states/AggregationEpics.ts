@@ -25,7 +25,7 @@ import {
 export const ResetAggregationsEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(RESET_AGGREGATIONS)),
-    tap(() => console.log('Reset Aggregations Triggered.')),
+    tap(() => console.log('[Sign Out] Resetting Aggregations...')),
     ignoreElements()
   );
 
