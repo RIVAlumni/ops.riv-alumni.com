@@ -74,6 +74,33 @@ class FirebaseService {
     );
   }
 
+  public updateUserDoc(uid: string, data: User): Promise<void> {
+    return this.database().doc(`users/${uid}`).set(data, { merge: true });
+  }
+
+  public updateMemberDoc(
+    uid: string,
+    data: firestore.DocumentData
+  ): Promise<void> {
+    return this.database().doc(`members/${uid}`).set(data, { merge: true });
+  }
+
+  public updateEventDoc(
+    uid: string,
+    data: firestore.DocumentData
+  ): Promise<void> {
+    return this.database().doc(`events/${uid}`).set(data, { merge: true });
+  }
+
+  public updateParticipationDoc(
+    uid: string,
+    data: firestore.DocumentData
+  ): Promise<void> {
+    return this.database()
+      .doc(`participations/${uid}`)
+      .set(data, { merge: true });
+  }
+
   public getUsersCol(): firestore.CollectionReference {
     return this.database().collection('users');
   }

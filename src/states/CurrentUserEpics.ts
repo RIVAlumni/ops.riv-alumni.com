@@ -15,14 +15,14 @@ import {
   SetCurrentUser,
 } from './CurrentUserTypes';
 
-export const CurrentUserResetEpic: EpicType = (action$, _state$) =>
+export const ResetCurrentUserEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(RESET_CURRENT_USER)),
     tap(() => console.info('[Sign Out] Resetting User...')),
     mergeMap(() => [ResetAggregations()])
   );
 
-export const CurrentUserLoadEpic: EpicType = (action$, _state$, { firebase }) =>
+export const LoadCurrentUserEpic: EpicType = (action$, _state$, { firebase }) =>
   action$.pipe(
     filter(isOfType(LOAD_CURRENT_USER)),
     switchMap(() => authState(firebase.auth())),
@@ -30,7 +30,7 @@ export const CurrentUserLoadEpic: EpicType = (action$, _state$, { firebase }) =>
     map((user) => (!user ? ResetCurrentUser() : SetCurrentUser(user)))
   );
 
-export const CurrentUserSetEpic: EpicType = (action$, _state$) =>
+export const SetCurrentUserEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(SET_CURRENT_USER)),
     tap(({ user }) => {
@@ -48,7 +48,7 @@ export const CurrentUserSetEpic: EpicType = (action$, _state$) =>
   );
 
 export const CurrentUserEpics = combineEpics(
-  CurrentUserResetEpic,
-  CurrentUserLoadEpic,
-  CurrentUserSetEpic
+  ResetCurrentUserEpic,
+  LoadCurrentUserEpic,
+  SetCurrentUserEpic
 );
