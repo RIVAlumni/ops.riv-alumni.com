@@ -8,6 +8,8 @@ import { rootStore } from './services';
 
 import * as serviceWorker from './serviceWorker';
 
+import './styles/base.scss';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={rootStore}>

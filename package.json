@@ -3,6 +3,7 @@
   "version": "2.4.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.5.3",
     "firebase": "^7.23.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -26,6 +27,7 @@
     "@types/redux": "^3.6.0",
     "react-scripts": "3.4.3",
     "redux-devtools-extension": "^2.13.8",
+    "sass": "^1.28.0",
     "typesafe-actions": "^5.1.0",
     "typescript": "~3.7.2"
   },
