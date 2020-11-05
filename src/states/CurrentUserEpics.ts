@@ -6,7 +6,7 @@ import { authState } from 'rxfire/auth';
 import { tap, map, filter, mergeMap, switchMap } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { ResetAggregations, LoadAggregations } from './AggregationTypes';
+import { LoadAggregations, ResetAggregations } from './AggregationTypes';
 import {
   RESET_CURRENT_USER,
   LOAD_CURRENT_USER,
@@ -18,7 +18,6 @@ import {
 export const ResetCurrentUserEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(RESET_CURRENT_USER)),
-    tap(() => console.info('[Sign Out] Resetting User...')),
     mergeMap(() => [ResetAggregations()])
   );
 
@@ -33,7 +32,8 @@ export const LoadCurrentUserEpic: EpicType = (action$, _state$, { firebase }) =>
 export const SetCurrentUserEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(SET_CURRENT_USER)),
-    tap(({ user }) => {
+    map(({ user }) => user),
+    tap((user) => {
       console.groupCollapsed('Successful Account Login');
       console.info('User ID: ' + user['User ID']);
       console.info('Email: ' + user['Email']);
@@ -42,9 +42,7 @@ export const SetCurrentUserEpic: EpicType = (action$, _state$) =>
       console.info('Access Level: ' + user['Access Level']);
       console.groupEnd();
     }),
-    mergeMap(({ user }) =>
-      user['Access Level'] >= 2 ? [LoadAggregations()] : []
-    )
+    mergeMap((user) => (user['Access Level'] >= 2 ? [LoadAggregations()] : []))
   );
 
 export const CurrentUserEpics = combineEpics(

@@ -12,7 +12,6 @@ import {
 } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { RESET_CURRENT_USER } from './CurrentUserTypes';
 import {
   RESET_AGGREGATIONS,
   LOAD_AGGREGATIONS,
@@ -34,7 +33,7 @@ export const LoadAggregationsEpic: EpicType = (
   _state$,
   { firebase }
 ) => {
-  const cancel$ = action$.pipe(filter(isOfType(RESET_CURRENT_USER)));
+  const cancel$ = action$.pipe(filter(isOfType(RESET_AGGREGATIONS)));
 
   return action$.pipe(
     filter(isOfType(LOAD_AGGREGATIONS)),
