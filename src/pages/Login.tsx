@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { PageHeader } from '../components';
 import { FirebaseService } from '../services';
 
 const Login: React.FC = () => {
@@ -7,8 +8,9 @@ const Login: React.FC = () => {
 
   return (
     <section>
-      <p onClick={() => firebase.signInWithGoogle()}>Click here to login.</p>
-      <p onClick={() => firebase.signOut()}>Click here to logout.</p>
+      <PageHeader>Login to RIVAlumni</PageHeader>
+
+      <p onClick={() => firebase.signInWithGoogle()}>Click here to sign in</p>
     </section>
   );
 };
