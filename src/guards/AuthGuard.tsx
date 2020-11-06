@@ -6,11 +6,11 @@ import { AppState } from '../services';
 import { AccessLevels } from '../models';
 import { Login, MembershipNotFound, InsufficientAccess } from '../pages';
 
-interface AuthGuard extends RouteProps {
+interface IAuthGuardProps extends RouteProps {
   role: AccessLevels;
 }
 
-const AuthGuard: React.FC<AuthGuard> = ({ role, component, ...rest }) => {
+const AuthGuard: React.FC<IAuthGuardProps> = ({ role, component, ...rest }) => {
   const Component = component as React.FC<RouteComponentProps>;
   const currentUser = useSelector((state: AppState) => state.user);
 
