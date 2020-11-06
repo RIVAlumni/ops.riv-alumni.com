@@ -2,14 +2,7 @@ import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
 import { combineLatest } from 'rxjs';
-import {
-  tap,
-  filter,
-  mergeMap,
-  takeUntil,
-  switchMap,
-  ignoreElements,
-} from 'rxjs/operators';
+import { filter, mergeMap, takeUntil, switchMap } from 'rxjs/operators';
 
 import { EpicType } from '../services';
 import {
@@ -20,13 +13,6 @@ import {
   SetAggregationEvent,
   SetAggregationParticipation,
 } from './AggregationTypes';
-
-export const ResetAggregationsEpic: EpicType = (action$, _state$) =>
-  action$.pipe(
-    filter(isOfType(RESET_AGGREGATIONS)),
-    tap(() => console.log('[Sign Out] Resetting Aggregations...')),
-    ignoreElements()
-  );
 
 export const LoadAggregationsEpic: EpicType = (
   action$,
@@ -54,7 +40,4 @@ export const LoadAggregationsEpic: EpicType = (
   );
 };
 
-export const AggregationEpics = combineEpics(
-  ResetAggregationsEpic,
-  LoadAggregationsEpic
-);
+export const AggregationEpics = combineEpics(LoadAggregationsEpic);
