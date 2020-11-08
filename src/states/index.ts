@@ -1,8 +1,8 @@
 export * from './AggregationTypes';
-export * from './CurrentUserTypes';
+export * from './AuthUserTypes';
 
 export * from './AggregationReducer';
-export * from './CurrentUserReducer';
+export * from './AuthUserReducer';
 
 export * from './AggregationEpics';
-export * from './CurrentUserEpics';
+export * from './AuthUserEpics';

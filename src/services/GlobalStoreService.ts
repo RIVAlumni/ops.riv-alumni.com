@@ -4,16 +4,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import {
   AggregationActionTypes,
-  CurrentUserActionTypes,
+  AuthUserActionTypes,
   AggregationReducer,
-  CurrentUserReducer,
+  AuthUserReducer,
   AggregationEpics,
-  CurrentUserEpics,
+  AuthUserEpics,
 } from '../states';
 
 import { FirebaseService } from '../services';
 
-const epicServices = {
+export const AppServices = {
   firebase: FirebaseService.getInstance(),
 };
 
@@ -21,18 +21,15 @@ const epicMiddleware = createEpicMiddleware<
   AppActions,
   AppActions,
   AppState,
-  typeof epicServices
+  typeof AppServices
 >({
-  dependencies: epicServices,
+  dependencies: AppServices,
 });
 
-export const rootEpic: EpicType = combineEpics(
-  AggregationEpics,
-  CurrentUserEpics
-);
+export const rootEpic: EpicType = combineEpics(AggregationEpics, AuthUserEpics);
 
 export const rootReducer = combineReducers({
-  user: CurrentUserReducer,
+  user: AuthUserReducer,
   aggregation: AggregationReducer,
 });
 
@@ -47,8 +44,8 @@ export type EpicType = Epic<
   AppActions,
   AppActions,
   AppState,
-  typeof epicServices
+  typeof AppServices
 >;
 
 export type AppState = ReturnType<typeof rootReducer>;
-export type AppActions = AggregationActionTypes | CurrentUserActionTypes;
+export type AppActions = AggregationActionTypes | AuthUserActionTypes;
