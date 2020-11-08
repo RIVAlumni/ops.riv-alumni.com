@@ -5,7 +5,7 @@ import { FirebaseService } from '../services';
 import { PageHeader, SectionHeader } from '../components';
 
 import { WidgetGuard } from '../guards';
-import { DashboardStatisticsWidget } from '../widgets';
+import { DashboardStatisticsWidget, ProfileStatisticsWidget } from '../widgets';
 
 const Dashboard: React.FC = () => {
   const firebase = FirebaseService.getInstance();
@@ -21,6 +21,8 @@ const Dashboard: React.FC = () => {
       />
 
       <SectionHeader>My Profile</SectionHeader>
+
+      <ProfileStatisticsWidget />
     </section>
   );
 };
