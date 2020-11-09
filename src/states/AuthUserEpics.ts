@@ -42,7 +42,7 @@ export const LoadAuthUserRequestEpic: EpicType = (
     switchMap(() => authState(firebase.auth())),
     switchMap((user) => (!user ? of(null) : firebase.getUserDoc(user.uid))),
     map((user) => (!user ? ResetAuthUser() : LoadAuthUserSuccess(user))),
-    catchError((err: auth.Error) => of(LoadAuthUserFailure(err.message)))
+    catchError((err: auth.Error) => of(LoadAuthUserFailure(err)))
   );
 
 export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
@@ -64,7 +64,7 @@ export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
 export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_FAILURE)),
-    tap((err) => console.error(`Error Occurred: ${err.message}`)),
+    tap(({ error }) => console.error(`Error Occurred: ${error.message}`)),
     ignoreElements()
   );
 

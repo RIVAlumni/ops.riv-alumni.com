@@ -1,4 +1,5 @@
-import { User } from '../models';
+import { auth } from 'firebase/app';
+import { User, AppStatus } from '../models';
 
 export const RESET_AUTH_USER = 'RESET_AUTH_USER';
 export const LOAD_AUTH_USER_REQUEST = 'LOAD_AUTH_USER_REQUEST';
@@ -19,10 +20,10 @@ export const LoadAuthUserSuccess = (user: User): LoadAuthUserSuccessAction => ({
 });
 
 export const LoadAuthUserFailure = (
-  message: string
+  error: auth.AuthError
 ): LoadAuthUserFailureAction => ({
   type: LOAD_AUTH_USER_FAILURE,
-  message,
+  error,
 });
 
 export interface ResetAuthUserAction {
@@ -40,10 +41,11 @@ export interface LoadAuthUserSuccessAction {
 
 export interface LoadAuthUserFailureAction {
   type: typeof LOAD_AUTH_USER_FAILURE;
-  message: string;
+  error: auth.AuthError;
 }
 
 export type AuthUserState = User | null;
+export type AuthUserStatus = AppStatus;
 
 export type AuthUserActionTypes =
   | ResetAuthUserAction

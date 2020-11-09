@@ -7,6 +7,7 @@ import {
   AuthUserActionTypes,
   AggregationReducer,
   AuthUserReducer,
+  AuthUserStatusReducer,
   AggregationEpics,
   AuthUserEpics,
 } from '../states';
@@ -30,6 +31,7 @@ export const rootEpic: EpicType = combineEpics(AggregationEpics, AuthUserEpics);
 
 export const rootReducer = combineReducers({
   user: AuthUserReducer,
+  user_status: AuthUserStatusReducer,
   aggregation: AggregationReducer,
 });
 
