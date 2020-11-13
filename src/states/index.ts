@@ -6,3 +6,5 @@ export * from './AuthUserReducer';
 
 export * from './AggregationEpics';
 export * from './AuthUserEpics';
+
+export * from './AppStatusReducer';

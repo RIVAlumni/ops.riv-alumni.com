@@ -15,7 +15,7 @@ import {
 } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { LoadAggregations, ResetAggregations } from './AggregationTypes';
+import { ResetAggregations } from './AggregationTypes';
 import {
   RESET_AUTH_USER,
   LOAD_AUTH_USER_REQUEST,
@@ -58,7 +58,7 @@ export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
       console.info('Access Level: ' + user['Access Level']);
       console.groupEnd();
     }),
-    mergeMap((user) => (user['Access Level'] >= 2 ? [LoadAggregations()] : []))
+    ignoreElements()
   );
 
 export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>

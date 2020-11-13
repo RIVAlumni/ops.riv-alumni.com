@@ -1,43 +1,100 @@
+import { firestore } from 'firebase/app';
 import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
-import { combineLatest } from 'rxjs';
-import { filter, mergeMap, takeUntil, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, filter, takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
+import { RESET_AUTH_USER, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 import {
-  RESET_AGGREGATIONS,
-  LOAD_AGGREGATIONS,
-  SetAggregationUser,
-  SetAggregationMember,
-  SetAggregationEvent,
-  SetAggregationParticipation,
+  LoadAggregationsUserSuccess,
+  LoadAggregationsUserFailure,
+  LoadAggregationsMemberSuccess,
+  LoadAggregationsMemberFailure,
+  LoadAggregationsEventSuccess,
+  LoadAggregationsEventFailure,
+  LoadAggregationsParticipationSuccess,
+  LoadAggregationsParticipationFailure,
 } from './AggregationTypes';
 
-export const LoadAggregationsEpic: EpicType = (
+export const LoadAggregationsUserRequestEpic: EpicType = (
   action$,
   _state$,
   { firebase }
 ) => {
-  const cancel$ = action$.pipe(filter(isOfType(RESET_AGGREGATIONS)));
+  const cancel$ = action$.pipe(filter(isOfType(RESET_AUTH_USER)));
 
   return action$.pipe(
-    filter(isOfType(LOAD_AGGREGATIONS)),
-    switchMap(() =>
-      combineLatest([
-        firebase.getUsersAgnDoc(),
-        firebase.getMembersAgnDoc(),
-        firebase.getEventsAgnDoc(),
-        firebase.getParticipationsAgnDoc(),
-      ]).pipe(takeUntil(cancel$))
-    ),
-    mergeMap(([users, members, events, participations]) => [
-      SetAggregationUser(users),
-      SetAggregationMember(members),
-      SetAggregationEvent(events),
-      SetAggregationParticipation(participations),
-    ])
+    filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
+    filter(({ user }) => user['Access Level'] >= 2),
+    switchMap(() => firebase.getUsersAgnDoc().pipe(takeUntil(cancel$))),
+    map(LoadAggregationsUserSuccess),
+    catchError((err: firestore.FirestoreError) =>
+      of(LoadAggregationsUserFailure(err))
+    )
   );
 };
 
-export const AggregationEpics = combineEpics(LoadAggregationsEpic);
+export const LoadAggregationsMemberRequestEpic: EpicType = (
+  action$,
+  _state$,
+  { firebase }
+) => {
+  const cancel$ = action$.pipe(filter(isOfType(RESET_AUTH_USER)));
+
+  return action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
+    filter(({ user }) => user['Access Level'] >= 2),
+    switchMap(() => firebase.getMembersAgnDoc().pipe(takeUntil(cancel$))),
+    map(LoadAggregationsMemberSuccess),
+    catchError((err: firestore.FirestoreError) =>
+      of(LoadAggregationsMemberFailure(err))
+    )
+  );
+};
+
+export const LoadAggregationsEventRequestEpic: EpicType = (
+  action$,
+  _state$,
+  { firebase }
+) => {
+  const cancel$ = action$.pipe(filter(isOfType(RESET_AUTH_USER)));
+
+  return action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
+    filter(({ user }) => user['Access Level'] >= 2),
+    switchMap(() => firebase.getEventsAgnDoc().pipe(takeUntil(cancel$))),
+    map(LoadAggregationsEventSuccess),
+    catchError((err: firestore.FirestoreError) =>
+      of(LoadAggregationsEventFailure(err))
+    )
+  );
+};
+
+export const LoadAggregationsParticipationRequestEpic: EpicType = (
+  action$,
+  _state$,
+  { firebase }
+) => {
+  const cancel$ = action$.pipe(filter(isOfType(RESET_AUTH_USER)));
+
+  return action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
+    filter(({ user }) => user['Access Level'] >= 2),
+    switchMap(() =>
+      firebase.getParticipationsAgnDoc().pipe(takeUntil(cancel$))
+    ),
+    map(LoadAggregationsParticipationSuccess),
+    catchError((err: firestore.FirestoreError) =>
+      of(LoadAggregationsParticipationFailure(err))
+    )
+  );
+};
+
+export const AggregationEpics = combineEpics(
+  LoadAggregationsUserRequestEpic,
+  LoadAggregationsMemberRequestEpic,
+  LoadAggregationsEventRequestEpic,
+  LoadAggregationsParticipationRequestEpic
+);

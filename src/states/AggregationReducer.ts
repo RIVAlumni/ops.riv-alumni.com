@@ -1,9 +1,9 @@
 import {
   RESET_AGGREGATIONS,
-  SET_AGGREGATION_USER,
-  SET_AGGREGATION_MEMBER,
-  SET_AGGREGATION_EVENT,
-  SET_AGGREGATION_PARTICIPATION,
+  LOAD_AGGREGATIONS_USER_SUCCESS,
+  LOAD_AGGREGATIONS_MEMBER_SUCCESS,
+  LOAD_AGGREGATIONS_EVENT_SUCCESS,
+  LOAD_AGGREGATIONS_PARTICIPATION_SUCCESS,
   AggregationState,
   AggregationActionTypes,
 } from './AggregationTypes';
@@ -22,13 +22,13 @@ const AggregationReducer = (
   switch (action.type) {
     case RESET_AGGREGATIONS:
       return initialState;
-    case SET_AGGREGATION_USER:
+    case LOAD_AGGREGATIONS_USER_SUCCESS:
       return { ...state, ...action.aggregation };
-    case SET_AGGREGATION_MEMBER:
+    case LOAD_AGGREGATIONS_MEMBER_SUCCESS:
       return { ...state, ...action.aggregation };
-    case SET_AGGREGATION_EVENT:
+    case LOAD_AGGREGATIONS_EVENT_SUCCESS:
       return { ...state, ...action.aggregation };
-    case SET_AGGREGATION_PARTICIPATION:
+    case LOAD_AGGREGATIONS_PARTICIPATION_SUCCESS:
       return { ...state, ...action.aggregation };
     default:
       return state;

@@ -1,5 +1,6 @@
 import { auth } from 'firebase/app';
-import { User, AppStatus } from '../models';
+
+import { User } from '../models';
 
 export const RESET_AUTH_USER = 'RESET_AUTH_USER';
 export const LOAD_AUTH_USER_REQUEST = 'LOAD_AUTH_USER_REQUEST';
@@ -45,7 +46,6 @@ export interface LoadAuthUserFailureAction {
 }
 
 export type AuthUserState = User | null;
-export type AuthUserStatus = AppStatus;
 
 export type AuthUserActionTypes =
   | ResetAuthUserAction
