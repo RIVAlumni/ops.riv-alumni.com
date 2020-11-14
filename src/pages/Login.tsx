@@ -6,9 +6,7 @@ import { PageHeader, LoadingStatus } from '../components';
 
 const Login: React.FC = () => {
   const firebase = FirebaseService.getInstance();
-  const loading = useSelector(
-    (state: AppState) => state.status.loading.auth_user
-  );
+  const loading = useSelector((state: AppState) => state.status.loading.auth);
 
   if (loading) return <LoadingStatus />;
 

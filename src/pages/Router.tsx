@@ -5,7 +5,7 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import { Dashboard, Profile } from '.';
 import { Navbar, Container } from '../components';
 
-import { LoadAuthUserRequest } from '../states';
+import { LoadAuthUserAsync } from '../states';
 
 import { AuthGuard } from '../guards';
 import { AccessLevels } from '../models';
@@ -14,7 +14,7 @@ const Router: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(LoadAuthUserRequest());
+    dispatch(LoadAuthUserAsync.request());
   }, [dispatch]);
 
   return (

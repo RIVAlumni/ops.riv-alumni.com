@@ -15,21 +15,19 @@ import {
 } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { ResetAggregations } from './AggregationTypes';
+import { LoadAggregationsAsync } from './AggregationTypes';
 import {
-  RESET_AUTH_USER,
+  LOAD_AUTH_USER_CANCEL,
   LOAD_AUTH_USER_REQUEST,
   LOAD_AUTH_USER_SUCCESS,
   LOAD_AUTH_USER_FAILURE,
-  ResetAuthUser,
-  LoadAuthUserSuccess,
-  LoadAuthUserFailure,
+  LoadAuthUserAsync,
 } from './AuthUserTypes';
 
-export const ResetAuthUserEpic: EpicType = (action$, _state$) =>
+export const LoadAuthUserCancelEpic: EpicType = (action$, _state$) =>
   action$.pipe(
-    filter(isOfType(RESET_AUTH_USER)),
-    mergeMap(() => [ResetAggregations()])
+    filter(isOfType(LOAD_AUTH_USER_CANCEL)),
+    mergeMap(() => [LoadAggregationsAsync.cancel()])
   );
 
 export const LoadAuthUserRequestEpic: EpicType = (
@@ -41,14 +39,16 @@ export const LoadAuthUserRequestEpic: EpicType = (
     filter(isOfType(LOAD_AUTH_USER_REQUEST)),
     switchMap(() => authState(firebase.auth())),
     switchMap((user) => (!user ? of(null) : firebase.getUserDoc(user.uid))),
-    map((user) => (!user ? ResetAuthUser() : LoadAuthUserSuccess(user))),
-    catchError((err: auth.Error) => of(LoadAuthUserFailure(err)))
+    map((user) =>
+      !user ? LoadAuthUserAsync.cancel() : LoadAuthUserAsync.success(user)
+    ),
+    catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))
   );
 
 export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
-    map((user) => user.user),
+    map((user) => user.payload),
     tap((user) => {
       console.groupCollapsed('Successful Account Login');
       console.info('User ID: ' + user['User ID']);
@@ -64,12 +64,12 @@ export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
 export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_FAILURE)),
-    tap(({ error }) => console.error(`Error Occurred: ${error.message}`)),
+    tap(({ payload }) => console.error(`Error Occurred: ${payload.message}`)),
     ignoreElements()
   );
 
 export const AuthUserEpics = combineEpics(
-  ResetAuthUserEpic,
+  LoadAuthUserCancelEpic,
   LoadAuthUserRequestEpic,
   LoadAuthUserSuccessEpic,
   LoadAuthUserFailureEpic

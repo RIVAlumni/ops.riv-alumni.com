@@ -1,12 +1,7 @@
-import {
-  RESET_AGGREGATIONS,
-  LOAD_AGGREGATIONS_USER_SUCCESS,
-  LOAD_AGGREGATIONS_MEMBER_SUCCESS,
-  LOAD_AGGREGATIONS_EVENT_SUCCESS,
-  LOAD_AGGREGATIONS_PARTICIPATION_SUCCESS,
-  AggregationState,
-  AggregationActionTypes,
-} from './AggregationTypes';
+import { createReducer } from 'typesafe-actions';
+
+import { AppActions } from '../services';
+import { AggregationState, LoadAggregationsAsync } from './AggregationTypes';
 
 const initialState: AggregationState = {
   usersCount: 0,
@@ -15,24 +10,12 @@ const initialState: AggregationState = {
   participationsCount: 0,
 };
 
-const AggregationReducer = (
-  state: AggregationState = initialState,
-  action: AggregationActionTypes
-): AggregationState => {
-  switch (action.type) {
-    case RESET_AGGREGATIONS:
-      return initialState;
-    case LOAD_AGGREGATIONS_USER_SUCCESS:
-      return { ...state, ...action.aggregation };
-    case LOAD_AGGREGATIONS_MEMBER_SUCCESS:
-      return { ...state, ...action.aggregation };
-    case LOAD_AGGREGATIONS_EVENT_SUCCESS:
-      return { ...state, ...action.aggregation };
-    case LOAD_AGGREGATIONS_PARTICIPATION_SUCCESS:
-      return { ...state, ...action.aggregation };
-    default:
-      return state;
-  }
-};
+const AggregationReducer = createReducer<AggregationState, AppActions>(
+  initialState
+)
+  .handleAction(LoadAggregationsAsync.cancel, () => initialState)
+  .handleAction(LoadAggregationsAsync.success, (_state, action) => ({
+    ...action.payload,
+  }));
 
 export { AggregationReducer };

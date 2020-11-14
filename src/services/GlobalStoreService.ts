@@ -1,20 +1,25 @@
+import { ActionType } from 'typesafe-actions';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
+import { FirebaseService } from '../services';
 import {
-  AggregationActionTypes,
-  AuthUserActionTypes,
   AggregationReducer,
   AuthUserReducer,
   AppStatusReducer,
   AggregationEpics,
   AuthUserEpics,
+  LoadAuthUserAsync,
+  LoadAggregationsAsync,
 } from '../states';
 
-import { FirebaseService } from '../services';
+const rootActions = {
+  LoadAuthUserAsync,
+  LoadAggregationsAsync,
+};
 
-export const AppServices = {
+const rootServices = {
   firebase: FirebaseService.getInstance(),
 };
 
@@ -22,9 +27,9 @@ const epicMiddleware = createEpicMiddleware<
   AppActions,
   AppActions,
   AppState,
-  typeof AppServices
+  typeof rootServices
 >({
-  dependencies: AppServices,
+  dependencies: rootServices,
 });
 
 export const rootEpic: EpicType = combineEpics(AggregationEpics, AuthUserEpics);
@@ -46,8 +51,8 @@ export type EpicType = Epic<
   AppActions,
   AppActions,
   AppState,
-  typeof AppServices
+  typeof rootServices
 >;
 
 export type AppState = ReturnType<typeof rootReducer>;
-export type AppActions = AggregationActionTypes | AuthUserActionTypes;
+export type AppActions = ActionType<typeof rootActions>;
