@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AccessLevels } from '../models';
+import { UserAccessLevels } from '../models';
 import { FirebaseService } from '../services';
 import { PageHeader, SectionHeader } from '../components';
 
@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
       <p onClick={() => firebase.signOut()}>Click here to logout?</p>
 
       <WidgetGuard
-        role={AccessLevels.Editor}
+        role={UserAccessLevels.Editor}
         widget={DashboardStatisticsWidget}
       />
 

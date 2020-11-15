@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import { AppState } from '../services';
-import { AccessLevels } from '../models';
+import { UserAccessLevels } from '../models';
 import { Login, MembershipNotFound, InsufficientAccess } from '../pages';
 
 interface IAuthGuardProps extends RouteProps {
-  role: AccessLevels;
+  role: UserAccessLevels;
 }
 
 const AuthGuard: React.FC<IAuthGuardProps> = ({ role, component, ...rest }) => {
@@ -24,7 +24,7 @@ const AuthGuard: React.FC<IAuthGuardProps> = ({ role, component, ...rest }) => {
 
         const isAlumni =
           currentUser['Membership ID'] &&
-          currentUser['Access Level'] >= AccessLevels.Alumni;
+          currentUser['Access Level'] >= UserAccessLevels.Alumni;
 
         if (!isAlumni) return <MembershipNotFound />;
         if (!isAccessGranted) return <InsufficientAccess />;

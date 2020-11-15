@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-import { AccessLevels } from './AccessLevels';
+import { UserAccessLevels } from './AccessLevels';
 
 export interface User {
   /**
@@ -30,7 +30,7 @@ export interface User {
   /**
    * Levels of access granted to the registered user.
    */
-  'Access Level': AccessLevels;
+  'Access Level': UserAccessLevels;
   /**
    * @readonly
    * Timestamp of the last document update.
@@ -38,7 +38,7 @@ export interface User {
   'updatedAt': firestore.FieldValue;
   /**
    * @readonly
-   * Timestamp of when the document is created.
+   * Timestamp of when the document was created.
    */
   'createdAt': firestore.FieldValue;
 }

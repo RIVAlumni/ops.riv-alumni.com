@@ -8,7 +8,7 @@ import { Navbar, Container } from '../components';
 import { LoadAuthUserAsync } from '../states';
 
 import { AuthGuard } from '../guards';
-import { AccessLevels } from '../models';
+import { UserAccessLevels } from '../models';
 
 const Router: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,13 +26,13 @@ const Router: React.FC = () => {
             exact
             path='/'
             component={Dashboard}
-            role={AccessLevels.Alumni}
+            role={UserAccessLevels.Alumni}
           />
           <AuthGuard
             exact
             path='/manage/members/me'
             component={Profile}
-            role={AccessLevels.Alumni}
+            role={UserAccessLevels.Alumni}
           />
         </Container>
       </Switch>

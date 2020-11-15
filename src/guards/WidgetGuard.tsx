@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
-import { AccessLevels } from '../models';
+import { UserAccessLevels } from '../models';
 
 interface IWidgetGuardProps {
-  role: AccessLevels;
+  role: UserAccessLevels;
   widget: React.FC;
 }
 
