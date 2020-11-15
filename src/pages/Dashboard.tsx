@@ -5,7 +5,12 @@ import { FirebaseService } from '../services';
 import { PageHeader, SectionHeader } from '../components';
 
 import { WidgetGuard } from '../guards';
-import { DashboardStatisticsWidget, ProfileStatisticsWidget } from '../widgets';
+import {
+  DashboardStatisticsWidget,
+  ProfileStatisticsWidget,
+  UpcomingEventsWidget,
+  RecentEventsWidget,
+} from '../widgets';
 
 const Dashboard: React.FC = () => {
   const firebase = FirebaseService.getInstance();
@@ -23,6 +28,14 @@ const Dashboard: React.FC = () => {
       <SectionHeader>My Profile</SectionHeader>
 
       <ProfileStatisticsWidget />
+
+      <SectionHeader>Upcoming Events</SectionHeader>
+
+      <UpcomingEventsWidget />
+
+      <SectionHeader>Recent Events</SectionHeader>
+
+      <RecentEventsWidget />
     </section>
   );
 };
