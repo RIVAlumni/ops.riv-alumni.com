@@ -15,4 +15,4 @@ export const LoadParticipationsAsync = createAsyncAction(
   LOAD_PARTICIPATIONS_CANCEL
 )<undefined, Participation[], firestore.FirestoreError, undefined>();
 
-export type ParticipationState = Participation[] | null;
+export type ParticipationState = Participation[];

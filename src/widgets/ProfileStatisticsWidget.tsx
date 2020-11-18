@@ -1,15 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import { AppState } from '../services';
 import { StaticCard } from '../components';
 
 const ProfileStatisticsWidget: React.FC = () => {
+  const participations = useSelector((state: AppState) => state.participations);
+
+  const getHoursCompleted = participations.reduce(
+    (total, event) => total + event['VIA Hours'],
+    0.0
+  );
+
   return (
     <div className='row mb-2'>
       <div className='mb-3 col-sm-12 col-md-6 col-lg-6 col-12'>
         <StaticCard
           icon='fas fa-calendar-alt'
           title='EVENTS COMPLETED'
-          value='0 Events'
+          value={`${participations.length} Events`}
         />
       </div>
 
@@ -17,7 +26,7 @@ const ProfileStatisticsWidget: React.FC = () => {
         <StaticCard
           icon='fas fa-clock'
           title='HOURS COMPLETED'
-          value='0 Hours'
+          value={`${getHoursCompleted} Hours`}
         />
       </div>
     </div>

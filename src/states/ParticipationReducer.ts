@@ -6,7 +6,7 @@ import {
   LoadParticipationsAsync,
 } from './ParticipationTypes';
 
-const initialState: ParticipationState = null;
+const initialState: ParticipationState = [];
 
 const ParticipationReducer = createReducer<ParticipationState, AppActions>(
   initialState

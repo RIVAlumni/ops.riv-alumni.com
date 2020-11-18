@@ -47,7 +47,7 @@ export const rootReducer = combineReducers({
   user: AuthUserReducer,
   status: AppStatusReducer,
   aggregation: AggregationReducer,
-  participation: ParticipationReducer,
+  participations: ParticipationReducer,
 });
 
 export const rootStore = createStore(

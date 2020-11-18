@@ -20,7 +20,7 @@ const StaticCard: React.FC<IStaticCardProps> = ({ icon, title, value }) => {
           </div>
 
           <div className='col-auto'>
-            <span className='card-text'>{value}</span>
+            <span className='card-text font-weight-normal'>{value}</span>
           </div>
         </div>
       </div>
