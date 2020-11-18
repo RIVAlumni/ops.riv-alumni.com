@@ -1,22 +1,27 @@
 import { ActionType } from 'typesafe-actions';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
+
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { FirebaseService } from '../services';
 import {
-  AggregationReducer,
-  AuthUserReducer,
   AppStatusReducer,
+  AuthUserReducer,
+  AggregationReducer,
+  ParticipationReducer,
   AggregationEpics,
   AuthUserEpics,
   LoadAuthUserAsync,
   LoadAggregationsAsync,
+  LoadParticipationsAsync,
+  ParticipationEpics,
 } from '../states';
 
 const rootActions = {
   LoadAuthUserAsync,
   LoadAggregationsAsync,
+  LoadParticipationsAsync,
 };
 
 const rootServices = {
@@ -32,12 +37,17 @@ const epicMiddleware = createEpicMiddleware<
   dependencies: rootServices,
 });
 
-export const rootEpic: EpicType = combineEpics(AggregationEpics, AuthUserEpics);
+export const rootEpic: EpicType = combineEpics(
+  AuthUserEpics,
+  AggregationEpics,
+  ParticipationEpics
+);
 
 export const rootReducer = combineReducers({
   user: AuthUserReducer,
   status: AppStatusReducer,
   aggregation: AggregationReducer,
+  participation: ParticipationReducer,
 });
 
 export const rootStore = createStore(
