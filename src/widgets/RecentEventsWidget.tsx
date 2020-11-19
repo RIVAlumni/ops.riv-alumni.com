@@ -1,6 +1,46 @@
 import React from 'react';
+import { DateTime } from 'luxon';
+import { useSelector } from 'react-redux';
 
+import { AppState } from '../services';
 import { DynamicCard } from '../components';
+
+const RecentEventsWidgetData: React.FC = () => {
+  const events = useSelector((state: AppState) => state.events);
+  const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
+  const yearAgoDate = Number(
+    DateTime.local().minus({ years: 1 }).toFormat('yyyyLLdd')
+  );
+
+  const filteredEvents = events.filter(
+    (event) =>
+      event['Event Code'] >= yearAgoDate && event['Event Code'] <= currentDate
+  );
+
+  if (filteredEvents.length === 0)
+    return (
+      <tr>
+        <td colSpan={6} className='text-center'>
+          No recent events found.
+        </td>
+      </tr>
+    );
+
+  return (
+    <React.Fragment>
+      {filteredEvents.map((evt, idx) => (
+        <tr key={evt['Event Code']}>
+          <td>{idx + 1}</td>
+          <td>{evt['Event Code']}</td>
+          <td>{evt['Event Name']}</td>
+          <td>{evt['Event Overall In-Charge']}</td>
+          <td>{evt['Event Assistant In-Charge']}</td>
+          <td> | </td>
+        </tr>
+      ))}
+    </React.Fragment>
+  );
+};
 
 const RecentEventsWidget: React.FC = () => {
   return (
@@ -19,17 +59,10 @@ const RecentEventsWidget: React.FC = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>20201211</td>
-              <td>DEVELOPMENT TESTING</td>
-              <td>Testing</td>
-              <td>Testing 2</td>
-              <td> | </td>
-            </tr>
+            <RecentEventsWidgetData />
           </tbody>
 
-          <caption>Note: Limited to 5 results only.</caption>
+          <caption>Note: Limited to 10 results only.</caption>
         </table>
       </div>
     </DynamicCard>
