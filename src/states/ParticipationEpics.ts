@@ -27,11 +27,13 @@ export const LoadParticipationsRequestEpic: EpicType = (
           .getParticipationsCol()
           .where('Membership ID', '==', payload['Membership ID'])
           .limit(10)
-      ).pipe(takeUntil(cancel$))
-    ),
-    map(LoadParticipationsAsync.success),
-    catchError((err: firestore.FirestoreError) =>
-      of(LoadParticipationsAsync.failure(err))
+      ).pipe(
+        takeUntil(cancel$),
+        map(LoadParticipationsAsync.success),
+        catchError((err: firestore.FirestoreError) =>
+          of(LoadParticipationsAsync.failure(err))
+        )
+      )
     )
   );
 };

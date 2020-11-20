@@ -38,24 +38,26 @@ export const LoadAuthUserRequestEpic: EpicType = (
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_REQUEST)),
     switchMap(() => authState(firebase.auth())),
-    switchMap((user) => (!user ? of(null) : firebase.getUserDoc(user.uid))),
-    map((user) =>
-      !user ? LoadAuthUserAsync.cancel() : LoadAuthUserAsync.success(user)
-    ),
-    catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))
+    switchMap((user) =>
+      !user
+        ? of(null).pipe(map(LoadAuthUserAsync.cancel))
+        : firebase.getUserDoc(user.uid).pipe(
+            map(LoadAuthUserAsync.success),
+            catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))
+          )
+    )
   );
 
 export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
-    map((user) => user.payload),
-    tap((user) => {
+    tap(({ payload }) => {
       console.groupCollapsed('Successful Account Login');
-      console.info('User ID: ' + user['User ID']);
-      console.info('Email: ' + user['Email']);
-      console.info('Display Name: ' + user['Display Name']);
-      console.info('Membership ID: ' + user['Membership ID']);
-      console.info('Access Level: ' + user['Access Level']);
+      console.info('User ID: ' + payload['User ID']);
+      console.info('Email: ' + payload['Email']);
+      console.info('Display Name: ' + payload['Display Name']);
+      console.info('Membership ID: ' + payload['Membership ID']);
+      console.info('Access Level: ' + payload['Access Level']);
       console.groupEnd();
     }),
     ignoreElements()

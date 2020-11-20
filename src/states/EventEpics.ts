@@ -22,12 +22,12 @@ export const LoadEventRequestEpic: EpicType = (
     filter(({ payload }) => !!payload && !!payload['Membership ID']),
     switchMap(() =>
       collectionData<Event>(firebase.getEventsCol().limit(10)).pipe(
-        takeUntil(cancel$)
+        takeUntil(cancel$),
+        map(LoadEventsAsync.success),
+        catchError((err: firestore.FirestoreError) =>
+          of(LoadEventsAsync.failure(err))
+        )
       )
-    ),
-    map(LoadEventsAsync.success),
-    catchError((err: firestore.FirestoreError) =>
-      of(LoadEventsAsync.failure(err))
     )
   );
 };

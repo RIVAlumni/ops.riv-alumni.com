@@ -25,18 +25,20 @@ export const LoadAggregationsRequestEpic: EpicType = (
         firebase.getMembersAgnDoc(),
         firebase.getEventsAgnDoc(),
         firebase.getParticipationsAgnDoc(),
-      ]).pipe(takeUntil(cancel$))
-    ),
-    map(([users, members, events, participations]) =>
-      LoadAggregationsAsync.success({
-        ...users,
-        ...members,
-        ...events,
-        ...participations,
-      })
-    ),
-    catchError((err: firestore.FirestoreError) =>
-      of(LoadAggregationsAsync.failure(err))
+      ]).pipe(
+        takeUntil(cancel$),
+        map(([users, members, events, participations]) =>
+          LoadAggregationsAsync.success({
+            ...users,
+            ...members,
+            ...events,
+            ...participations,
+          })
+        ),
+        catchError((err: firestore.FirestoreError) =>
+          of(LoadAggregationsAsync.failure(err))
+        )
+      )
     )
   );
 };
