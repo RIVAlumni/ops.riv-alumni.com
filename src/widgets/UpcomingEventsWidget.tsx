@@ -16,7 +16,7 @@ const UpcomingEventsWidgetData: React.FC = () => {
   if (filteredEvents.length === 0)
     return (
       <tr>
-        <td colSpan={6} className='text-center'>
+        <td colSpan={4} className='text-center'>
           No upcoming events found.
         </td>
       </tr>
@@ -29,8 +29,6 @@ const UpcomingEventsWidgetData: React.FC = () => {
           <td>{idx + 1}</td>
           <td>{event['Event Code']}</td>
           <td>{event['Event Name']}</td>
-          <td>{event['Event Overall In-Charge']}</td>
-          <td>{event['Event Assistant In-Charge']}</td>
           <td> | </td>
         </tr>
       ))}
@@ -48,8 +46,6 @@ const UpcomingEventsWidget: React.FC = () => {
               <th>No.</th>
               <th>Event Code</th>
               <th>Event Name</th>
-              <th>Overall In-Charge</th>
-              <th>Assistant In-Charge</th>
               <th>Action</th>
             </tr>
           </thead>

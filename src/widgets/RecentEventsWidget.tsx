@@ -20,7 +20,7 @@ const RecentEventsWidgetData: React.FC = () => {
   if (filteredEvents.length === 0)
     return (
       <tr>
-        <td colSpan={6} className='text-center'>
+        <td colSpan={4} className='text-center'>
           No recent events found.
         </td>
       </tr>
@@ -33,8 +33,6 @@ const RecentEventsWidgetData: React.FC = () => {
           <td>{idx + 1}</td>
           <td>{evt['Event Code']}</td>
           <td>{evt['Event Name']}</td>
-          <td>{evt['Event Overall In-Charge']}</td>
-          <td>{evt['Event Assistant In-Charge']}</td>
           <td> | </td>
         </tr>
       ))}
@@ -52,8 +50,6 @@ const RecentEventsWidget: React.FC = () => {
               <th>No.</th>
               <th>Event Code</th>
               <th>Event Name</th>
-              <th>Overall In-Charge</th>
-              <th>Assistant In-Charge</th>
               <th>Action</th>
             </tr>
           </thead>
