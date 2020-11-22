@@ -2,7 +2,7 @@ import { firestore } from 'firebase/app';
 import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
-import { of, combineLatest } from 'rxjs';
+import { of, concat, combineLatest } from 'rxjs';
 import { map, filter, takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
@@ -20,23 +20,26 @@ export const LoadAggregationsRequestEpic: EpicType = (
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
     filter(({ payload }) => payload['Access Level'] >= 2),
     switchMap(() =>
-      combineLatest([
-        firebase.getUsersAgnDoc(),
-        firebase.getMembersAgnDoc(),
-        firebase.getEventsAgnDoc(),
-        firebase.getParticipationsAgnDoc(),
-      ]).pipe(
-        takeUntil(cancel$),
-        map(([users, members, events, participations]) =>
-          LoadAggregationsAsync.success({
-            ...users,
-            ...members,
-            ...events,
-            ...participations,
-          })
-        ),
-        catchError((err: firestore.FirestoreError) =>
-          of(LoadAggregationsAsync.failure(err))
+      concat(
+        of(LoadAggregationsAsync.request()),
+        combineLatest([
+          firebase.getUsersAgnDoc(),
+          firebase.getMembersAgnDoc(),
+          firebase.getEventsAgnDoc(),
+          firebase.getParticipationsAgnDoc(),
+        ]).pipe(
+          takeUntil(cancel$),
+          map(([users, members, events, participations]) =>
+            LoadAggregationsAsync.success({
+              ...users,
+              ...members,
+              ...events,
+              ...participations,
+            })
+          ),
+          catchError((err: firestore.FirestoreError) =>
+            of(LoadAggregationsAsync.failure(err))
+          )
         )
       )
     )
