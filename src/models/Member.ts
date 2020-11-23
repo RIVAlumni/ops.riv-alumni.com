@@ -7,15 +7,15 @@ export interface Member {
    */
   'Membership ID': string;
   /**
-   * Legal full name of the alumnus.
+   * Legal full name of the alumni.
    */
   'Full Name': string;
   /**
-   * Legal gender of the alumnus.
+   * Legal gender of the alumni.
    */
   'Gender': string;
   /**
-   * Email address of the alumnus.
+   * Email address of the alumni.
    *
    * @remarks
    * Email addresses are used for identifying and linking pre-existing/new
@@ -24,37 +24,37 @@ export interface Member {
    */
   'Email': string | null;
   /**
-   * Contactable phone number of the alumnus.
+   * Contactable phone number of the alumni.
    */
   'Contact Number': number;
   /**
-   * Secondary contactable phone number of the alumnus.
+   * Secondary contactable phone number of the alumni.
    */
   'Home Number': number | null;
   /**
-   * Current school of study of the alumnus.
+   * Current school of study of the alumni.
    */
   'Current School': string | null;
   /**
-   * Graduating class of the alumnus.
+   * Graduating class of the alumni.
    */
   'Graduating Class': string;
   /**
-   * Graduating year of the alumnus.
+   * Graduating year of the alumni.
    */
   'Graduating Year': number;
   /**
-   * Name of the parent/guardian of the alumnus.
+   * Name of the parent/guardian of the alumni.
    */
-  'Name of Next-Of-Kin': string;
+  'Name Of Next-Of-Kin': string;
   /**
-   * Relationship of the parent/guardian with the alumnus.
+   * Relationship of the parent/guardian with the alumni.
    */
-  'Relationship with Next-Of-Kin': string;
+  'Relationship With Next-Of-Kin': string;
   /**
-   * Contactable number of the parent/guardian of the alumnus.
+   * Contactable number of the parent/guardian of the alumni.
    */
-  'Contact Number of Next-Of-Kin': number;
+  'Contact Number Of Next-Of-Kin': number;
   /**
    * @readonly
    * Timestamp of the last document update.

@@ -1,36 +1,29 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { DynamicCard, PageHeader, SectionHeader } from '../components';
+import { AppState } from '../services';
+import { LoadingStatus, PageHeader, SectionHeader } from '../components';
+import {
+  ProfileEmergencyDataWidget,
+  ProfileGeneralDataWidget,
+} from '../widgets';
 
 const Profile: React.FC = () => {
+  const status = useSelector(({ status }: AppState) => status.loading.member);
+
+  if (status) return <LoadingStatus />;
+
   return (
     <section>
       <PageHeader>Profile Page</PageHeader>
 
       <SectionHeader>Membership Profile</SectionHeader>
 
-      <DynamicCard>
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-            <div className='w-100 font-weight-light'>Membership ID</div>
-            <h5 className='w-100 texxt-monospace'>yzpfkGl1uRvDc1WqIlrz</h5>
-          </div>
+      <ProfileGeneralDataWidget />
 
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
+      <SectionHeader>Emergency Contact Details</SectionHeader>
 
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'></div>
-        </div>
-      </DynamicCard>
+      <ProfileEmergencyDataWidget />
     </section>
   );
 };
