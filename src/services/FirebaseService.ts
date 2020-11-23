@@ -38,16 +38,11 @@ class FirebaseService {
     }
   }
 
-  public async signInWithGoogle(): Promise<void> {
+  public async signInWithGoogle(): Promise<auth.UserCredential> {
     const provider = new auth.GoogleAuthProvider();
 
-    try {
-      await auth().setPersistence(auth.Auth.Persistence.LOCAL);
-      await auth().signInWithPopup(provider);
-    } catch (e) {
-      const { message }: auth.AuthError = e;
-      console.error(message);
-    }
+    await auth().setPersistence(auth.Auth.Persistence.LOCAL);
+    return auth().signInWithPopup(provider);
   }
 
   public getUserDoc(uid: string): Observable<User> {

@@ -16,9 +16,3 @@ export const LoadAuthUserAsync = createAsyncAction(
 )<undefined, User, auth.AuthError, undefined>();
 
 export type AuthUserState = User | null;
-
-// export type AuthUserActionTypes =
-//   | ResetAuthUserAction
-//   | LoadAuthUserRequestAction
-//   | LoadAuthUserSuccessAction
-//   | LoadAuthUserFailureAction;
