@@ -9,14 +9,17 @@ import {
   AppStatusReducer,
   AuthUserReducer,
   AggregationReducer,
+  MembershipReducer,
   EventReducer,
   ParticipationReducer,
   AuthUserEpics,
   AggregationEpics,
+  MembershipEpics,
   EventEpics,
   ParticipationEpics,
   LoadAuthUserAsync,
   LoadAggregationsAsync,
+  LoadMembershipAsync,
   LoadEventsAsync,
   LoadParticipationsAsync,
 } from '../states';
@@ -25,6 +28,7 @@ const rootActions = {
   LoadAuthUserAsync,
   LoadAggregationsAsync,
   LoadEventsAsync,
+  LoadMembershipAsync,
   LoadParticipationsAsync,
 };
 
@@ -44,6 +48,7 @@ const epicMiddleware = createEpicMiddleware<
 export const rootEpic: EpicType = combineEpics(
   AuthUserEpics,
   AggregationEpics,
+  MembershipEpics,
   EventEpics,
   ParticipationEpics
 );
@@ -52,6 +57,7 @@ export const rootReducer = combineReducers({
   status: AppStatusReducer,
   user: AuthUserReducer,
   aggregation: AggregationReducer,
+  member: MembershipReducer,
   events: EventReducer,
   participations: ParticipationReducer,
 });

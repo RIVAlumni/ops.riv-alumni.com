@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { docData } from 'rxfire/firestore';
 
 import { auth, analytics, firestore, initializeApp } from 'firebase/app';
@@ -10,6 +10,9 @@ import 'firebase/remote-config';
 import { count } from '../pipes';
 import {
   User,
+  Member,
+  Event,
+  Participation,
   UserAggregation,
   MemberAggregation,
   EventAggregation,
@@ -30,54 +33,25 @@ class FirebaseService {
   }
 
   public getUserDoc(uid: string): Observable<User> {
-    return docData<User>(this.getUsersCol().doc(uid)).pipe(
-      count('Firestore Reads')
-    );
+    const ref = this.database().doc(`users/${uid}`);
+    return docData<User>(ref).pipe(count('Firestore Reads'));
   }
 
-  public getMemberDoc<T>(uid: string): Observable<T> {
-    return docData<T>(this.getMembersCol().doc(uid)).pipe(
-      count('Firestore Reads')
-    );
+  public getMemberDoc(uid: string | null): Observable<Member | never> {
+    if (!uid) return throwError(new Error('Parameter `uid` is undefined.'));
+
+    const ref = this.database().doc(`members/${uid}`);
+    return docData<Member>(ref).pipe(count('Firestore Reads'));
   }
 
-  public getEventDoc<T>(uid: string): Observable<T> {
-    return docData<T>(this.getEventsCol().doc(uid)).pipe(
-      count('Firestore Reads')
-    );
+  public getEventDoc(uid: string): Observable<Event> {
+    const ref = this.database().doc(`events/${uid}`);
+    return docData<Event>(ref).pipe(count('Firestore Reads'));
   }
 
-  public getParticipationDoc<T>(uid: string): Observable<T> {
-    return docData<T>(this.getParticipationsCol().doc(uid)).pipe(
-      count('Firestore Reads')
-    );
-  }
-
-  public updateUserDoc(uid: string, data: User): Promise<void> {
-    return this.database().doc(`users/${uid}`).set(data, { merge: true });
-  }
-
-  public updateMemberDoc(
-    uid: string,
-    data: firestore.DocumentData
-  ): Promise<void> {
-    return this.database().doc(`members/${uid}`).set(data, { merge: true });
-  }
-
-  public updateEventDoc(
-    uid: string,
-    data: firestore.DocumentData
-  ): Promise<void> {
-    return this.database().doc(`events/${uid}`).set(data, { merge: true });
-  }
-
-  public updateParticipationDoc(
-    uid: string,
-    data: firestore.DocumentData
-  ): Promise<void> {
-    return this.database()
-      .doc(`participations/${uid}`)
-      .set(data, { merge: true });
+  public getParticipationDoc(uid: string): Observable<Participation> {
+    const ref = this.database().doc(`participations/${uid}`);
+    return docData<Participation>(ref).pipe(count('Firestore Reads'));
   }
 
   public getUsersCol(): firestore.CollectionReference {
@@ -97,27 +71,25 @@ class FirebaseService {
   }
 
   public getUsersAgnDoc(): Observable<UserAggregation> {
-    return docData<UserAggregation>(
-      this.database().doc('aggregations/users')
-    ).pipe(count('Firestore Reads'));
+    const ref = this.database().doc('aggregations/users');
+    return docData<UserAggregation>(ref).pipe(count('Firestore Reads'));
   }
 
   public getMembersAgnDoc(): Observable<MemberAggregation> {
-    return docData<MemberAggregation>(
-      this.database().doc('aggregations/members')
-    ).pipe(count('Firestore Reads'));
+    const ref = this.database().doc('aggregations/members');
+    return docData<MemberAggregation>(ref).pipe(count('Firestore Reads'));
   }
 
   public getEventsAgnDoc(): Observable<EventAggregation> {
-    return docData<EventAggregation>(
-      this.database().doc('aggregations/events')
-    ).pipe(count('Firestore Reads'));
+    const ref = this.database().doc('aggregations/events');
+    return docData<EventAggregation>(ref).pipe(count('Firestore Reads'));
   }
 
   public getParticipationsAgnDoc(): Observable<ParticipationAggregation> {
-    return docData<ParticipationAggregation>(
-      this.database().doc('aggregations/participations')
-    ).pipe(count('Firestore Reads'));
+    const ref = this.database().doc('aggregations/participations');
+    return docData<ParticipationAggregation>(ref).pipe(
+      count('Firestore Reads')
+    );
   }
 
   private constructor() {
