@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState, FirebaseService } from '../services';
+import { useAuth } from '../hooks';
+import { AppState } from '../services';
 import { PageHeader, LoadingStatus } from '../components';
 
 const Login: React.FC = () => {
-  const firebase = FirebaseService.getInstance();
+  const { signInWithGoogle } = useAuth();
+
   const loading = useSelector((state: AppState) => state.status.loading.auth);
 
   if (loading) return <LoadingStatus />;
@@ -14,7 +16,7 @@ const Login: React.FC = () => {
     <section>
       <PageHeader>Login to RIVAlumni</PageHeader>
 
-      <p onClick={() => firebase.signInWithGoogle()}>Click here to sign in</p>
+      <p onClick={signInWithGoogle}>Click here to sign in</p>
     </section>
   );
 };

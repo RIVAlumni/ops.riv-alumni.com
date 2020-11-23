@@ -29,22 +29,6 @@ class FirebaseService {
     return firestore;
   }
 
-  public async signOut(): Promise<void> {
-    try {
-      await auth().signOut();
-    } catch (e) {
-      const { message }: auth.AuthError = e;
-      console.error(message);
-    }
-  }
-
-  public async signInWithGoogle(): Promise<auth.UserCredential> {
-    const provider = new auth.GoogleAuthProvider();
-
-    await auth().setPersistence(auth.Auth.Persistence.LOCAL);
-    return auth().signInWithPopup(provider);
-  }
-
   public getUserDoc(uid: string): Observable<User> {
     return docData<User>(this.getUsersCol().doc(uid)).pipe(
       count('Firestore Reads')
