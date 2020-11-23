@@ -2,9 +2,9 @@ import { produce } from 'immer';
 import { createReducer } from 'typesafe-actions';
 
 import { AppActions } from '../services';
-
 import { LoadEventsAsync } from './EventTypes';
 import { LoadAuthUserAsync } from './AuthUserTypes';
+import { LoadMembershipAsync } from './MembershipTypes';
 import { LoadAggregationsAsync } from './AggregationTypes';
 import { LoadParticipationsAsync } from './ParticipationTypes';
 
@@ -12,6 +12,7 @@ interface AppStatusState {
   loading: {
     auth: boolean;
     events: boolean;
+    member: boolean;
     aggregation: boolean;
     participation: boolean;
   };
@@ -22,6 +23,7 @@ const initialState: AppStatusState = {
   loading: {
     auth: false,
     events: false,
+    member: false,
     aggregation: false,
     participation: false,
   },
@@ -41,6 +43,13 @@ const AppStatusReducer = createReducer<AppStatusState, AppActions>(initialState)
     (state, _action) =>
       produce(state, (draft) => {
         draft.loading.events = false;
+      })
+  )
+  .handleAction(
+    [LoadMembershipAsync.cancel, LoadMembershipAsync.success],
+    (state, _action) =>
+      produce(state, (draft) => {
+        draft.loading.member = false;
       })
   )
   .handleAction(
@@ -67,6 +76,11 @@ const AppStatusReducer = createReducer<AppStatusState, AppActions>(initialState)
       draft.loading.events = true;
     })
   )
+  .handleAction(LoadMembershipAsync.request, (state, _action) =>
+    produce(state, (draft) => {
+      draft.loading.member = true;
+    })
+  )
   .handleAction(LoadAggregationsAsync.request, (state, _action) =>
     produce(state, (draft) => {
       draft.loading.aggregation = true;
@@ -81,6 +95,7 @@ const AppStatusReducer = createReducer<AppStatusState, AppActions>(initialState)
     [
       LoadAuthUserAsync.failure,
       LoadEventsAsync.failure,
+      LoadMembershipAsync.failure,
       LoadAggregationsAsync.failure,
       LoadParticipationsAsync.failure,
     ],
