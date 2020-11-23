@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { useAuth } from '../hooks';
 import { PageHeader } from '../components';
-import { FirebaseService } from '../services';
 
 const MembershipNotFound: React.FC = () => {
-  const firebase = FirebaseService.getInstance();
+  const { signOut } = useAuth();
 
   return (
     <section>
@@ -12,9 +12,7 @@ const MembershipNotFound: React.FC = () => {
 
       <pre>Please contact the organising committee for assistance.</pre>
 
-      <button
-        className='btn btn-dark px-5 py-2'
-        onClick={() => firebase.signOut()}>
+      <button className='btn btn-dark px-5 py-2' onClick={signOut}>
         Sign Out
       </button>
     </section>
