@@ -36,4 +36,13 @@ export const LoadEventRequestEpic: EpicType = (
   );
 };
 
-export const EventEpics = combineEpics(LoadEventRequestEpic);
+export const LoadEventCancelEpic: EpicType = (action$, _state$) =>
+  action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_CANCEL)),
+    map(LoadEventsAsync.cancel)
+  );
+
+export const EventEpics = combineEpics(
+  LoadEventRequestEpic,
+  LoadEventCancelEpic
+);

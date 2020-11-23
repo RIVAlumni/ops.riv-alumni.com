@@ -6,8 +6,8 @@ import { of, concat, combineLatest } from 'rxjs';
 import { map, filter, takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { LOAD_AUTH_USER_CANCEL, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 import { LoadAggregationsAsync } from './AggregationTypes';
+import { LOAD_AUTH_USER_CANCEL, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 
 export const LoadAggregationsRequestEpic: EpicType = (
   action$,
@@ -46,4 +46,13 @@ export const LoadAggregationsRequestEpic: EpicType = (
   );
 };
 
-export const AggregationEpics = combineEpics(LoadAggregationsRequestEpic);
+export const LoadAggregationsCancelEpic: EpicType = (action$, _state$) =>
+  action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_CANCEL)),
+    map(LoadAggregationsAsync.cancel)
+  );
+
+export const AggregationEpics = combineEpics(
+  LoadAggregationsRequestEpic,
+  LoadAggregationsCancelEpic
+);

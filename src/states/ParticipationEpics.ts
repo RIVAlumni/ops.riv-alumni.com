@@ -41,4 +41,13 @@ export const LoadParticipationsRequestEpic: EpicType = (
   );
 };
 
-export const ParticipationEpics = combineEpics(LoadParticipationsRequestEpic);
+export const LoadParticipationsCancelEpic: EpicType = (action$, _state$) =>
+  action$.pipe(
+    filter(isOfType(LOAD_AUTH_USER_CANCEL)),
+    map(LoadParticipationsAsync.cancel)
+  );
+
+export const ParticipationEpics = combineEpics(
+  LoadParticipationsRequestEpic,
+  LoadParticipationsCancelEpic
+);

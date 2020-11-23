@@ -14,8 +14,9 @@ const AggregationReducer = createReducer<AggregationState, AppActions>(
   initialState
 )
   .handleAction(LoadAggregationsAsync.cancel, () => initialState)
-  .handleAction(LoadAggregationsAsync.success, (_state, action) => ({
-    ...action.payload,
-  }));
+  .handleAction(
+    LoadAggregationsAsync.success,
+    (_state, action) => action.payload
+  );
 
 export { AggregationReducer };

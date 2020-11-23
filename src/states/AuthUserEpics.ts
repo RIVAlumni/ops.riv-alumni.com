@@ -8,27 +8,18 @@ import {
   tap,
   map,
   filter,
-  mergeMap,
   switchMap,
   catchError,
   ignoreElements,
 } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { LoadAggregationsAsync } from './AggregationTypes';
 import {
-  LOAD_AUTH_USER_CANCEL,
   LOAD_AUTH_USER_REQUEST,
   LOAD_AUTH_USER_SUCCESS,
   LOAD_AUTH_USER_FAILURE,
   LoadAuthUserAsync,
 } from './AuthUserTypes';
-
-export const LoadAuthUserCancelEpic: EpicType = (action$, _state$) =>
-  action$.pipe(
-    filter(isOfType(LOAD_AUTH_USER_CANCEL)),
-    mergeMap(() => [LoadAggregationsAsync.cancel()])
-  );
 
 export const LoadAuthUserRequestEpic: EpicType = (
   action$,
@@ -71,7 +62,6 @@ export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>
   );
 
 export const AuthUserEpics = combineEpics(
-  LoadAuthUserCancelEpic,
   LoadAuthUserRequestEpic,
   LoadAuthUserSuccessEpic,
   LoadAuthUserFailureEpic
