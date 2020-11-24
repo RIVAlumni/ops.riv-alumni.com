@@ -14,97 +14,31 @@ const ProfileGeneralDataWidget: React.FC = () => {
       </pre>
     );
 
+  const profile = [
+    { key: 'Membership ID', value: membership['Membership ID'] },
+    { key: 'Full Name', value: membership['Full Name'] },
+    { key: 'Gender', value: membership['Gender'] },
+    { key: 'Email Address', value: membership['Email'] },
+    { key: 'Contact Number', value: membership['Contact Number'] },
+    { key: 'Home Number', value: membership['Home Number'] },
+    { key: 'Current School', value: membership['Current School'] },
+    { key: 'Graduating Class', value: membership['Graduating Class'] },
+    { key: 'Graduating Year', value: membership['Graduating Year'] },
+  ];
+
   return (
     <DynamicCard>
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Membership ID</div>
-        </div>
+      {profile.map((data) => (
+        <div key={data['key']} className='row'>
+          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+            <div className='w-100'>{data['key']}</div>
+          </div>
 
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Membership ID']}</h5>
+          <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+            <h5 className='w-100'>{data['value'] || '-'}</h5>
+          </div>
         </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Full Name</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Full Name']}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Gender</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Gender']}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Email Address</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Email'] || '-'}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Contact Number</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Contact Number']}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Home Number</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Home Number'] || '-'}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Current School</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Current School'] || '-'}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Graduating Class</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Graduating Class']}</h5>
-        </div>
-      </div>
-
-      <div className='row'>
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100'>Graduating Year</div>
-        </div>
-
-        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <h5 className='w-100'>{membership['Graduating Year']}</h5>
-        </div>
-      </div>
+      ))}
     </DynamicCard>
   );
 };
