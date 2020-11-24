@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../services';
 import { LoadingStatus, PageHeader, SectionHeader } from '../components';
 import {
-  ProfileEmergencyDataWidget,
   ProfileGeneralDataWidget,
+  ProfileEmergencyDataWidget,
   ProfileEventsParticipatedWidget,
 } from '../widgets';
 

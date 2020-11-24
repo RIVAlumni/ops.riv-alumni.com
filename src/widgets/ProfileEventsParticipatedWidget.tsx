@@ -1,13 +1,38 @@
 import React from 'react';
+import { merge } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
-const ProfileEventsParticipatedWidget = () => {
+const ProfileEventsParticipatedData: React.FC = () => {
   const events = useSelector((state: AppState) => state.events);
   const participations = useSelector((state: AppState) => state.participations);
 
+  const result = events.map((e) =>
+    merge(
+      participations.find((p) => p['Event Code'] === e['Event Code']),
+      e
+    )
+  );
+
+  return (
+    <React.Fragment>
+      {result.map((r, idx) => (
+        <tr key={r['Event Code']}>
+          <td>{idx + 1}</td>
+          <td>{r['Event Year']}</td>
+          <td>{r['Event Code']}</td>
+          <td>{r['Event Name']}</td>
+          <td>{r['VIA Hours'] || 0}</td>
+          <td> | </td>
+        </tr>
+      ))}
+    </React.Fragment>
+  );
+};
+
+const ProfileEventsParticipatedWidget = () => {
   return (
     <DynamicCard>
       <div className='table-responsive'>
@@ -24,22 +49,7 @@ const ProfileEventsParticipatedWidget = () => {
           </thead>
 
           <tbody>
-            {events.map((evt, idx) => {
-              const participation = participations.find(
-                (p) => p['Event Code'] === evt['Event Code']
-              );
-
-              return (
-                <tr key={evt['Event Code']}>
-                  <td>{idx + 1}</td>
-                  <td>{evt['Event Year']}</td>
-                  <td>{evt['Event Code']}</td>
-                  <td>{evt['Event Name']}</td>
-                  <td>{!participation ? 0 : participation['VIA Hours']}</td>
-                  <td> | </td>
-                </tr>
-              );
-            })}
+            <ProfileEventsParticipatedData />
           </tbody>
         </table>
       </div>

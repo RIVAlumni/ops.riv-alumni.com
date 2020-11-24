@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Dashboard, Profile } from '.';
+import { Dashboard, Profile, PageNotFound } from '.';
 import { Navbar, Container } from '../components';
 
 import { LoadAuthUserAsync } from '../states';
@@ -20,8 +20,8 @@ const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Navbar />
-      <Switch>
-        <Container>
+      <Container>
+        <Switch>
           <AuthGuard
             exact
             path='/'
@@ -34,8 +34,9 @@ const Router: React.FC = () => {
             component={Profile}
             role={UserAccessLevels.Alumni}
           />
-        </Container>
-      </Switch>
+          <Route exact path='*' component={PageNotFound} />
+        </Switch>
+      </Container>
     </BrowserRouter>
   );
 };
