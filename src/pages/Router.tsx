@@ -2,8 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Dashboard, Profile, Users, PageNotFound } from '.';
 import { Navbar, Container } from '../components';
+import {
+  Dashboard,
+  Profile,
+  Users,
+  Members,
+  Events,
+  Participations,
+  PageNotFound,
+} from '.';
 
 import { LoadAuthUserAsync } from '../states';
 
@@ -38,6 +46,24 @@ const Router: React.FC = () => {
             exact
             path='/manage/users'
             component={Users}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
+            path='/manage/members'
+            component={Members}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
+            path='/manage/events'
+            component={Events}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
+            path='/manage/participations'
+            component={Participations}
             role={UserAccessLevels.Editor}
           />
           <Route exact path='*' component={PageNotFound} />
