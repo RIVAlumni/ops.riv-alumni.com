@@ -5,3 +5,4 @@ export * from './RecentEventsWidget';
 
 export * from './ProfileGeneralDataWidget';
 export * from './ProfileEmergencyDataWidget';
+export * from './ProfileEventsParticipatedWidget';

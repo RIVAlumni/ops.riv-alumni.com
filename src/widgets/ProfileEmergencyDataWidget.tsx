@@ -17,24 +17,33 @@ const ProfileEmergencyDataWidget: React.FC = () => {
   return (
     <DynamicCard>
       <div className='row'>
-        <div className='col-sm-12 col-md-12 col-lg-12 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Name Of Next-Of-Kin</div>
-          <h5 className='w-100'>{membership['Name Of Next-Of-Kin']}</h5>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Name Of Next-Of-Kin</div>
         </div>
 
-        <div className='col-sm-12 col-md-12 col-lg-12 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>
-            Relationship With Next-Of-Kin
-          </div>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <h5 className='w-100'>{membership['Name Of Next-Of-Kin']}</h5>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Relationship With Next-Of-Kin</div>
+        </div>
+
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
           <h5 className='w-100'>
             {membership['Relationship With Next-Of-Kin']}
           </h5>
         </div>
+      </div>
 
-        <div className='col-sm-12 col-md-12 col-lg-12 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>
-            Contact Number of Next-Of-Kin
-          </div>
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Contact Number Of Next-Of-Kin</div>
+        </div>
+
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
           <h5 className='w-100'>
             {membership['Contact Number Of Next-Of-Kin']}
           </h5>

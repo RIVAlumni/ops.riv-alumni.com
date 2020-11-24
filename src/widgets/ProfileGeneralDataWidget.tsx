@@ -18,43 +18,81 @@ const ProfileGeneralDataWidget: React.FC = () => {
     <DynamicCard>
       <div className='row'>
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Membership ID</div>
+          <div className='w-100'>Membership ID</div>
+        </div>
+
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
           <h5 className='w-100'>{membership['Membership ID']}</h5>
         </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Full Name</div>
+        </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Full Name</div>
           <h5 className='w-100'>{membership['Full Name']}</h5>
         </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Email Address</div>
+        </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Email Address</div>
           <h5 className='w-100'>{membership['Email']}</h5>
         </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Gender</div>
+        </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Gender</div>
           <h5 className='w-100'>{membership['Gender']}</h5>
         </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Graduating Class</div>
+        </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Graduating Class</div>
           <h5 className='w-100'>{membership['Graduating Class']}</h5>
         </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Graduating Year</div>
+        </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Graduating Year</div>
           <h5 className='w-100'>{membership['Graduating Year']}</h5>
         </div>
+      </div>
 
+      <div className='row'>
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Contact Number</div>
-          <h5 className='w-100'>{membership['Contact Number']}</h5>
+          <div className='w-100'>Contact Number</div>
         </div>
 
         <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
-          <div className='w-100 font-weight-light'>Home Number</div>
-          <h5 className='w-100'>{membership['Home Number']}</h5>
+          <h5 className='w-100'>{membership['Contact Number']}</h5>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <div className='w-100'>Home Number</div>
+        </div>
+
+        <div className='col-sm-12 col-md-6 col-lg-6 mb-2 mb-md-0 mb-lg-0'>
+          <h5 className='w-100'>{membership['Home Number'] || '-'}</h5>
         </div>
       </div>
     </DynamicCard>

@@ -6,6 +6,7 @@ import { LoadingStatus, PageHeader, SectionHeader } from '../components';
 import {
   ProfileEmergencyDataWidget,
   ProfileGeneralDataWidget,
+  ProfileEventsParticipatedWidget,
 } from '../widgets';
 
 const Profile: React.FC = () => {
@@ -24,6 +25,10 @@ const Profile: React.FC = () => {
       <SectionHeader>Emergency Contact Details</SectionHeader>
 
       <ProfileEmergencyDataWidget />
+
+      <SectionHeader>Events Participated</SectionHeader>
+
+      <ProfileEventsParticipatedWidget />
     </section>
   );
 };
