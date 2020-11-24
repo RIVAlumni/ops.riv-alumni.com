@@ -1,20 +1,35 @@
-import React from 'react';
-import { merge } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import { from } from 'rxjs';
+import { map, take, filter, switchMap, toArray } from 'rxjs/operators';
 
 import { AppState } from '../services';
 import { DynamicCard } from '../components';
+import { Event, Participation } from '../models';
 
 const ProfileEventsParticipatedData: React.FC = () => {
+  const [result, setResult] = useState<(Event & Participation)[]>([]);
+
   const events = useSelector((state: AppState) => state.events);
   const participations = useSelector((state: AppState) => state.participations);
 
-  const result = events.map((e) =>
-    merge(
-      participations.find((p) => p['Event Code'] === e['Event Code']),
-      e
-    )
-  );
+  useEffect(() => {
+    from(events)
+      .pipe(
+        filter(() => events.length > 0 && participations.length > 0),
+        switchMap((e) =>
+          from(participations).pipe(
+            filter((p) => p['Event Code'] === e['Event Code']),
+            map((p) => ({ ...e, ...p }))
+          )
+        ),
+        toArray(),
+        filter((c) => c.length > 0),
+        take(events.length)
+      )
+      .subscribe(setResult);
+  }, [events, participations]);
 
   return (
     <React.Fragment>
@@ -24,6 +39,7 @@ const ProfileEventsParticipatedData: React.FC = () => {
           <td>{r['Event Year']}</td>
           <td>{r['Event Code']}</td>
           <td>{r['Event Name']}</td>
+          <td>{r['Role']}</td>
           <td>{r['VIA Hours'] || 0}</td>
           <td> | </td>
         </tr>
@@ -43,6 +59,7 @@ const ProfileEventsParticipatedWidget = () => {
               <th>Event Year</th>
               <th>Event Code</th>
               <th>Event Name</th>
+              <th>Role</th>
               <th>VIA Hours</th>
               <th>Action</th>
             </tr>

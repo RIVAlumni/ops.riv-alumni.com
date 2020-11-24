@@ -10,6 +10,11 @@ import * as serviceWorker from './serviceWorker';
 
 import './styles/base.scss';
 
+// if (process.env.NODE_ENV !== 'production') {
+//   const { whyDidYouUpdate } = require('why-did-you-update');
+//   whyDidYouUpdate(React);
+// }
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={rootStore}>
