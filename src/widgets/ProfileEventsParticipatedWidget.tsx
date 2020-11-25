@@ -31,6 +31,15 @@ const ProfileEventsParticipatedData: React.FC = () => {
       .subscribe(setResult);
   }, [events, participations]);
 
+  if (result.length === 0)
+    return (
+      <tr>
+        <td colSpan={6} className='text-center'>
+          No events participated.
+        </td>
+      </tr>
+    );
+
   return (
     <React.Fragment>
       {result.map((r, idx) => (
@@ -39,7 +48,6 @@ const ProfileEventsParticipatedData: React.FC = () => {
           <td>{r['Event Year']}</td>
           <td>{r['Event Code']}</td>
           <td>{r['Event Name']}</td>
-          <td>{r['Role']}</td>
           <td>{r['VIA Hours'] || 0}</td>
           <td> | </td>
         </tr>
@@ -59,7 +67,6 @@ const ProfileEventsParticipatedWidget = () => {
               <th>Event Year</th>
               <th>Event Code</th>
               <th>Event Name</th>
-              <th>Role</th>
               <th>VIA Hours</th>
               <th>Action</th>
             </tr>
