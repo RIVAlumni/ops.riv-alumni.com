@@ -11,16 +11,19 @@ import {
   MembershipReducer,
   EventReducer,
   ParticipationReducer,
+  RemoteUsersReducer,
   AuthUserEpics,
   AggregationEpics,
   MembershipEpics,
   EventEpics,
   ParticipationEpics,
+  RemoteUsersEpics,
   LoadAuthUserAsync,
   LoadAggregationsAsync,
   LoadMembershipAsync,
   LoadEventsAsync,
   LoadParticipationsAsync,
+  LoadRemoteUsersAsync,
 } from '../states';
 
 const rootActions = {
@@ -29,6 +32,7 @@ const rootActions = {
   LoadEventsAsync,
   LoadMembershipAsync,
   LoadParticipationsAsync,
+  LoadRemoteUsersAsync,
 };
 
 const rootServices = {
@@ -49,7 +53,8 @@ export const rootEpic: EpicType = combineEpics(
   AggregationEpics,
   MembershipEpics,
   EventEpics,
-  ParticipationEpics
+  ParticipationEpics,
+  RemoteUsersEpics
 );
 
 export const rootReducer = combineReducers({
@@ -60,6 +65,7 @@ export const rootReducer = combineReducers({
     participations: ParticipationReducer,
   }),
   remote: combineReducers({
+    users: RemoteUsersReducer,
     aggregations: AggregationReducer,
   }),
 });

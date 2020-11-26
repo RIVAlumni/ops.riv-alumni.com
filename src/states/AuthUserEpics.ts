@@ -31,7 +31,7 @@ export const LoadAuthUserRequestEpic: EpicType = (
     switchMap(() => authState(firebase.auth())),
     switchMap((user) =>
       !user
-        ? of(null).pipe(map(LoadAuthUserAsync.cancel))
+        ? map(LoadAuthUserAsync.cancel)
         : firebase.getUserDoc(user.uid).pipe(
             map(LoadAuthUserAsync.success),
             catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))
@@ -45,7 +45,7 @@ export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
     tap(({ payload }) => {
       console.groupCollapsed('Successful Account Login');
       console.info('User ID: ' + payload['User ID']);
-      console.info('Email: ' + payload['Email']);
+      console.info('Email Address: ' + payload['Email']);
       console.info('Display Name: ' + payload['Display Name']);
       console.info('Membership ID: ' + payload['Membership ID']);
       console.info('Access Level: ' + payload['Access Level']);

@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { collectionData } from 'rxfire/firestore';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { User } from '../models';
-import { FirebaseService } from '../services';
+import { AppState } from '../services';
 import { PageHeader, DynamicCard } from '../components';
 
 const UsersData: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const firebase = FirebaseService.getInstance();
-    const ref = firebase.getUsersCol().orderBy('Display Name', 'asc').limit(10);
-
-    const subscription = collectionData<User>(ref).subscribe(setUsers);
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const users = useSelector(({ remote }: AppState) => remote.users.data);
 
   if (users.length === 0)
     return (
