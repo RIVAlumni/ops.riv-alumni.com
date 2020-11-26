@@ -10,7 +10,7 @@ const DashboardStatisticsWidget: React.FC = () => {
     membersCount,
     eventsCount,
     participationsCount,
-  } = useSelector((state: AppState) => state.aggregation);
+  } = useSelector(({ remote }: AppState) => remote.aggregations.data);
 
   return (
     <div className='row mb-2'>

@@ -11,8 +11,10 @@ import { Event, Participation } from '../models';
 const ProfileEventsParticipatedData: React.FC = () => {
   const [result, setResult] = useState<(Event & Participation)[]>([]);
 
-  const events = useSelector((state: AppState) => state.events);
-  const participations = useSelector((state: AppState) => state.participations);
+  const events = useSelector(({ local }: AppState) => local.events.data);
+  const participations = useSelector(
+    ({ local }: AppState) => local.participations.data
+  );
 
   useEffect(() => {
     from(events)

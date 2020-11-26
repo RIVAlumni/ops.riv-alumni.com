@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { createReducer } from 'typesafe-actions';
 
 import { AppActions } from '../services';
@@ -6,15 +7,32 @@ import {
   LoadParticipationsAsync,
 } from './ParticipationTypes';
 
-const initialState: ParticipationState = [];
+const initialState: ParticipationState = {
+  data: [],
+  loading: false,
+  errors: [],
+};
 
 const ParticipationReducer = createReducer<ParticipationState, AppActions>(
   initialState
 )
-  .handleAction(LoadParticipationsAsync.cancel, () => initialState)
-  .handleAction(
-    LoadParticipationsAsync.success,
-    (_state, action) => action.payload
-  );
+  .handleAction(LoadParticipationsAsync.request, (state, _action) =>
+    produce(state, (draft) => {
+      draft.loading = true;
+    })
+  )
+  .handleAction(LoadParticipationsAsync.success, (state, action) =>
+    produce(state, (draft) => {
+      draft.loading = false;
+      draft.data = action.payload;
+    })
+  )
+  .handleAction(LoadParticipationsAsync.failure, (state, action) =>
+    produce(state, (draft) => {
+      draft.loading = false;
+      draft.errors.push(action.payload);
+    })
+  )
+  .handleAction(LoadParticipationsAsync.cancel, () => initialState);
 
 export { ParticipationReducer };

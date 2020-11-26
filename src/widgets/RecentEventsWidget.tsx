@@ -6,7 +6,7 @@ import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
 const RecentEventsWidgetData: React.FC = () => {
-  const events = useSelector((state: AppState) => state.events);
+  const events = useSelector(({ local }: AppState) => local.events.data);
   const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
   const yearAgoDate = Number(
     DateTime.local().minus({ years: 1 }).toFormat('yyyyLLdd')

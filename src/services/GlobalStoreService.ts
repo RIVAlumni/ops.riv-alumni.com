@@ -6,7 +6,6 @@ import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { FirebaseService } from '../services';
 import {
-  AppStatusReducer,
   AuthUserReducer,
   AggregationReducer,
   MembershipReducer,
@@ -54,12 +53,15 @@ export const rootEpic: EpicType = combineEpics(
 );
 
 export const rootReducer = combineReducers({
-  status: AppStatusReducer,
-  user: AuthUserReducer,
-  aggregation: AggregationReducer,
-  member: MembershipReducer,
-  events: EventReducer,
-  participations: ParticipationReducer,
+  auth: AuthUserReducer,
+  membership: MembershipReducer,
+  local: combineReducers({
+    events: EventReducer,
+    participations: ParticipationReducer,
+  }),
+  remote: combineReducers({
+    aggregations: AggregationReducer,
+  }),
 });
 
 export const rootStore = createStore(

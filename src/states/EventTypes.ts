@@ -1,7 +1,7 @@
 import { firestore } from 'firebase/app';
 import { createAsyncAction } from 'typesafe-actions';
 
-import { Event } from '../models';
+import { Event, AppStatus } from '../models';
 
 export const LOAD_EVENT_REQUEST = 'LOAD_EVENT_REQUEST';
 export const LOAD_EVENT_SUCCESS = 'LOAD_EVENT_SUCCESS';
@@ -15,4 +15,6 @@ export const LoadEventsAsync = createAsyncAction(
   LOAD_EVENT_CANCEL
 )<undefined, Event[], firestore.FirestoreError, undefined>();
 
-export type EventState = Event[];
+export type EventState = AppStatus & {
+  data: Event[];
+};

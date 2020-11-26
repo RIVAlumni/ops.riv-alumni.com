@@ -5,7 +5,9 @@ import { AppState } from '../services';
 import { StaticCard } from '../components';
 
 const ProfileStatisticsWidget: React.FC = () => {
-  const participations = useSelector((state: AppState) => state.participations);
+  const participations = useSelector(
+    ({ local }: AppState) => local.participations.data
+  );
 
   const getHoursCompleted = participations.reduce(
     (total, event) => total + event['VIA Hours'],

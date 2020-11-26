@@ -11,7 +11,7 @@ interface IWidgetGuardProps {
 
 const WidgetGuard: React.FC<IWidgetGuardProps> = ({ role, widget }) => {
   const Widget = widget;
-  const currentUser = useSelector((state: AppState) => state.user);
+  const currentUser = useSelector(({ auth }: AppState) => auth.user);
 
   if (!currentUser) return null;
   const isAccessGranted = currentUser['Access Level'] >= role;

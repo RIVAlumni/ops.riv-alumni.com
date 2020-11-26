@@ -5,7 +5,7 @@ import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
 const ProfileEmergencyDataWidget: React.FC = () => {
-  const membership = useSelector((state: AppState) => state.member);
+  const membership = useSelector(({ membership }: AppState) => membership.data);
 
   if (!membership)
     return (

@@ -6,7 +6,7 @@ import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
 const UpcomingEventsWidgetData: React.FC = () => {
-  const events = useSelector((state: AppState) => state.events);
+  const events = useSelector(({ local }: AppState) => local.events.data);
   const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
 
   const filteredEvents = events.filter(

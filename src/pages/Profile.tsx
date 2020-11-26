@@ -10,7 +10,7 @@ import {
 } from '../widgets';
 
 const Profile: React.FC = () => {
-  const status = useSelector(({ status }: AppState) => status.loading.member);
+  const status = useSelector(({ membership }: AppState) => membership.loading);
 
   if (status) return <LoadingStatus />;
 

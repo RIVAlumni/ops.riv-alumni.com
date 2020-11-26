@@ -12,7 +12,7 @@ interface IAuthGuardProps extends RouteProps {
 
 const AuthGuard: React.FC<IAuthGuardProps> = ({ role, component, ...rest }) => {
   const Component = component as React.FC<RouteComponentProps>;
-  const currentUser = useSelector((state: AppState) => state.user);
+  const currentUser = useSelector(({ auth }: AppState) => auth.user);
 
   return (
     <Route
