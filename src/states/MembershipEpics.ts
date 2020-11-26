@@ -19,8 +19,10 @@ export const LoadMembershipRequestEpic: EpicType = (
   return action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
     filter(({ payload }) => !!payload && !!payload['Membership ID']),
-    switchMap(({ payload }) =>
-      concat(
+    switchMap(({ payload }) => {
+      if (!payload['Membership ID']) return of(LoadMembershipAsync.cancel());
+
+      return concat(
         of(LoadMembershipAsync.request()),
         firebase.getMemberDoc(payload['Membership ID']).pipe(
           takeUntil(cancel$),
@@ -29,8 +31,8 @@ export const LoadMembershipRequestEpic: EpicType = (
             of(LoadMembershipAsync.failure(err))
           )
         )
-      )
-    )
+      );
+    })
   );
 };
 

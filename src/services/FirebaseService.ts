@@ -37,7 +37,7 @@ class FirebaseService {
     return this.fetchDocument<User>(ref);
   }
 
-  public getMemberDoc(uid: string | null): Observable<Member | never> {
+  public getMemberDoc(uid: string): Observable<Member> {
     if (!uid) return throwError(new Error('Parameter `uid` is undefined.'));
 
     const ref = this.database().doc(`members/${uid}`);
