@@ -31,7 +31,7 @@ export const LoadAuthUserRequestEpic: EpicType = (
     switchMap(() => authState(firebase.auth())),
     switchMap((user) =>
       !user
-        ? map(LoadAuthUserAsync.cancel)
+        ? of(null).pipe(map(LoadAuthUserAsync.cancel))
         : firebase.getUserDoc(user.uid).pipe(
             map(LoadAuthUserAsync.success),
             catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))

@@ -3,11 +3,10 @@ import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
 import { of, concat } from 'rxjs';
-import { collectionData } from 'rxfire/firestore';
 import { map, filter, switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { User, UserAccessLevels } from '../models';
+import { UserAccessLevels } from '../models';
 import { LoadRemoteUsersAsync } from './RemoteUsersTypes';
 import { LOAD_AUTH_USER_SUCCESS, LOAD_AUTH_USER_CANCEL } from './AuthUserTypes';
 
@@ -16,7 +15,6 @@ export const LoadRemoteUsersRequestEpic: EpicType = (
   _state$,
   { firebase }
 ) => {
-  const ref = firebase.getUsersCol().orderBy('Display Name', 'asc').limit(10);
   const cancel$ = action$.pipe(filter(isOfType(LOAD_AUTH_USER_CANCEL)));
 
   return action$.pipe(
@@ -28,7 +26,7 @@ export const LoadRemoteUsersRequestEpic: EpicType = (
     switchMap(() =>
       concat(
         of(LoadRemoteUsersAsync.request()),
-        collectionData<User>(ref).pipe(
+        firebase.getUsersCol().pipe(
           takeUntil(cancel$),
           map(LoadRemoteUsersAsync.success),
           catchError((err: firestore.FirestoreError) =>

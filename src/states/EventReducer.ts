@@ -14,6 +14,7 @@ const EventReducer = createReducer<EventState, AppActions>(initialState)
   )
   .handleAction(LoadEventsAsync.success, (state, action) =>
     produce(state, (draft) => {
+      draft.loading = false;
       draft.data = action.payload;
     })
   )
