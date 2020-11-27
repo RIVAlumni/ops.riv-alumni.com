@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
-const UpcomingEventsWidgetData: React.FC = () => {
+const UpcomingEventsWidgetData: React.FC = memo(() => {
   const events = useSelector(({ local }: AppState) => local.events.data);
   const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
 
@@ -34,9 +34,9 @@ const UpcomingEventsWidgetData: React.FC = () => {
       ))}
     </React.Fragment>
   );
-};
+});
 
-const UpcomingEventsWidget: React.FC = () => {
+const UpcomingEventsWidget: React.FC = memo(() => {
   return (
     <DynamicCard>
       <div className='table-responsive'>
@@ -59,6 +59,6 @@ const UpcomingEventsWidget: React.FC = () => {
       </div>
     </DynamicCard>
   );
-};
+});
 
 export { UpcomingEventsWidget };

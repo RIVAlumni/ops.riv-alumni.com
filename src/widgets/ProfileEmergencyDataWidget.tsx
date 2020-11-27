@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
 import { DynamicCard } from '../components';
 
-const ProfileEmergencyDataWidget: React.FC = () => {
+const ProfileEmergencyDataWidget: React.FC = memo(() => {
   const membership = useSelector(({ membership }: AppState) => membership.data);
 
   if (!membership)
@@ -41,6 +41,6 @@ const ProfileEmergencyDataWidget: React.FC = () => {
       ))}
     </DynamicCard>
   );
-};
+});
 
 export { ProfileEmergencyDataWidget };

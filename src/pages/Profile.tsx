@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
@@ -9,7 +9,7 @@ import {
   ProfileEventsParticipatedWidget,
 } from '../widgets';
 
-const Profile: React.FC = () => {
+const Profile: React.FC = memo(() => {
   const status = useSelector(({ membership }: AppState) => membership.loading);
 
   if (status) return <LoadingStatus />;
@@ -31,6 +31,6 @@ const Profile: React.FC = () => {
       <ProfileEventsParticipatedWidget />
     </section>
   );
-};
+});
 
 export { Profile };

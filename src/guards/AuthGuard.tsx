@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
 
@@ -10,29 +10,31 @@ interface IAuthGuardProps extends RouteProps {
   role: UserAccessLevels;
 }
 
-const AuthGuard: React.FC<IAuthGuardProps> = ({ role, component, ...rest }) => {
-  const Component = component as React.FC<RouteComponentProps>;
-  const currentUser = useSelector(({ auth }: AppState) => auth.user);
+const AuthGuard: React.FC<IAuthGuardProps> = memo(
+  ({ role, component, ...rest }) => {
+    const Component = component as React.FC<RouteComponentProps>;
+    const currentUser = useSelector(({ auth }: AppState) => auth.user);
 
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (!currentUser) return <Login />;
+    return (
+      <Route
+        {...rest}
+        render={(props) => {
+          if (!currentUser) return <Login />;
 
-        const isAccessGranted = currentUser['Access Level'] >= role;
+          const isAccessGranted = currentUser['Access Level'] >= role;
 
-        const isAlumni =
-          currentUser['Membership ID'] &&
-          currentUser['Access Level'] >= UserAccessLevels.Alumni;
+          const isAlumni =
+            currentUser['Membership ID'] &&
+            currentUser['Access Level'] >= UserAccessLevels.Alumni;
 
-        if (!isAlumni) return <MembershipNotFound />;
-        if (!isAccessGranted) return <InsufficientAccess />;
+          if (!isAlumni) return <MembershipNotFound />;
+          if (!isAccessGranted) return <InsufficientAccess />;
 
-        return <Component {...props} />;
-      }}
-    />
-  );
-};
+          return <Component {...props} />;
+        }}
+      />
+    );
+  }
+);
 
 export { AuthGuard };

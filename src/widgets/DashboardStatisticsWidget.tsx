@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
 import { StaticCard } from '../components';
 
-const DashboardStatisticsWidget: React.FC = () => {
+const DashboardStatisticsWidget: React.FC = memo(() => {
   const {
     usersCount,
     membersCount,
@@ -47,6 +47,6 @@ const DashboardStatisticsWidget: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export { DashboardStatisticsWidget };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { from } from 'rxjs';
@@ -8,7 +8,7 @@ import { AppState } from '../services';
 import { DynamicCard } from '../components';
 import { Event, Participation } from '../models';
 
-const ProfileEventsParticipatedData: React.FC = () => {
+const ProfileEventsParticipatedData: React.FC = memo(() => {
   const [result, setResult] = useState<(Event & Participation)[]>([]);
 
   const events = useSelector(({ local }: AppState) => local.events.data);
@@ -56,9 +56,9 @@ const ProfileEventsParticipatedData: React.FC = () => {
       ))}
     </React.Fragment>
   );
-};
+});
 
-const ProfileEventsParticipatedWidget = () => {
+const ProfileEventsParticipatedWidget: React.FC = memo(() => {
   return (
     <DynamicCard>
       <div className='table-responsive'>
@@ -81,6 +81,6 @@ const ProfileEventsParticipatedWidget = () => {
       </div>
     </DynamicCard>
   );
-};
+});
 
 export { ProfileEventsParticipatedWidget };

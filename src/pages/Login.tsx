@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useAuth } from '../hooks';
 import { PageHeader } from '../components';
 
-const Login: React.FC = () => {
+const Login: React.FC = memo(() => {
   const { signInWithGoogle } = useAuth();
 
   return (
@@ -13,6 +13,6 @@ const Login: React.FC = () => {
       <p onClick={signInWithGoogle}>Click here to sign in</p>
     </section>
   );
-};
+});
 
 export { Login };

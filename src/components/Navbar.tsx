@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from '../assets/svgs/logo.svg';
@@ -41,7 +41,7 @@ const routes = [
   },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC = memo(() => {
   return (
     <nav className='navbar'>
       <ul className='navbar-nav'>
@@ -65,6 +65,6 @@ const Navbar: React.FC = () => {
       </ul>
     </nav>
   );
-};
+});
 
 export { Navbar };

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
 import { StaticCard } from '../components';
 
-const ProfileStatisticsWidget: React.FC = () => {
+const ProfileStatisticsWidget: React.FC = memo(() => {
   const participations = useSelector(
     ({ local }: AppState) => local.participations.data
   );
@@ -33,6 +33,6 @@ const ProfileStatisticsWidget: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export { ProfileStatisticsWidget };

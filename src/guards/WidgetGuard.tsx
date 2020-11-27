@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../services';
@@ -9,7 +9,7 @@ interface IWidgetGuardProps {
   widget: React.FC;
 }
 
-const WidgetGuard: React.FC<IWidgetGuardProps> = ({ role, widget }) => {
+const WidgetGuard: React.FC<IWidgetGuardProps> = memo(({ role, widget }) => {
   const Widget = widget;
   const currentUser = useSelector(({ auth }: AppState) => auth.user);
 
@@ -18,6 +18,6 @@ const WidgetGuard: React.FC<IWidgetGuardProps> = ({ role, widget }) => {
 
   if (!isAccessGranted) return null;
   return <Widget />;
-};
+});
 
 export { WidgetGuard };

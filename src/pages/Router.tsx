@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ import { AuthGuard } from '../guards';
 import { AuthUserAsync } from '../states';
 import { UserAccessLevels } from '../models';
 
-const Router: React.FC = () => {
+const Router: React.FC = memo(() => {
   const dispatch = useDispatch();
   const { loading } = useSelector(({ auth }: AppState) => auth);
 
@@ -74,6 +74,6 @@ const Router: React.FC = () => {
       </Container>
     </BrowserRouter>
   );
-};
+});
 
 export { Router };
