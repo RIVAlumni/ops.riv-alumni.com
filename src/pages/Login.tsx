@@ -7,8 +7,7 @@ import { PageHeader, LoadingStatus } from '../components';
 
 const Login: React.FC = () => {
   const { signInWithGoogle } = useAuth();
-
-  const loading = useSelector(({ auth }: AppState) => auth.loading);
+  const { loading } = useSelector(({ auth }: AppState) => auth);
 
   if (loading) return <LoadingStatus />;
 

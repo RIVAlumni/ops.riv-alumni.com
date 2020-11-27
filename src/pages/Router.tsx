@@ -13,7 +13,7 @@ import {
   PageNotFound,
 } from '.';
 
-import { LoadAuthUserAsync } from '../states';
+import { AuthUserAsync } from '../states';
 
 import { AuthGuard } from '../guards';
 import { UserAccessLevels } from '../models';
@@ -22,7 +22,7 @@ const Router: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(LoadAuthUserAsync.request());
+    dispatch(AuthUserAsync.request());
   }, [dispatch]);
 
   return (

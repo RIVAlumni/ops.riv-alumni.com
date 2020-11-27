@@ -8,7 +8,7 @@ export const LOAD_REMOTE_USERS_SUCCESS = 'LOAD_REMOTE_USERS_SUCCESS';
 export const LOAD_REMOTE_USERS_FAILURE = 'LOAD_REMOTE_USERS_FAILURE';
 export const LOAD_REMOTE_USERS_CANCEL = 'LOAD_REMOTE_USERS_CANCEL';
 
-export const LoadRemoteUsersAsync = createAsyncAction(
+export const RemoteUsersAsync = createAsyncAction(
   LOAD_REMOTE_USERS_REQUEST,
   LOAD_REMOTE_USERS_SUCCESS,
   LOAD_REMOTE_USERS_FAILURE,

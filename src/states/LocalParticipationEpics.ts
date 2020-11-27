@@ -6,10 +6,10 @@ import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
 import { EpicType } from '../services';
-import { LoadEventsAsync } from './EventTypes';
+import { LocalParticipationsAsync } from './LocalParticipationTypes';
 import { LOAD_AUTH_USER_CANCEL, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 
-export const LoadEventRequestEpic: EpicType = (
+export const LocalParticipationsRequestEpic: EpicType = (
   action$,
   _state$,
   { firebase }
@@ -19,28 +19,34 @@ export const LoadEventRequestEpic: EpicType = (
   return action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
     filter(({ payload }) => !!payload && !!payload['Membership ID']),
-    switchMap(() =>
-      concat(
-        of(LoadEventsAsync.request()),
-        firebase.getEventsCol().pipe(
+    switchMap(({ payload }) => {
+      const ref = firebase
+        .database()
+        .collection('participations')
+        .where('Membership ID', '==', payload['Membership ID'])
+        .limit(10);
+
+      return concat(
+        of(LocalParticipationsAsync.request()),
+        firebase.getParticipationsCol(ref).pipe(
           takeUntil(cancel$),
-          map(LoadEventsAsync.success),
+          map(LocalParticipationsAsync.success),
           catchError((err: firestore.FirestoreError) =>
-            of(LoadEventsAsync.failure(err))
+            of(LocalParticipationsAsync.failure(err))
           )
         )
-      )
-    )
+      );
+    })
   );
 };
 
-export const LoadEventCancelEpic: EpicType = (action$, _state$) =>
+export const LocalParticipationsCancelEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_CANCEL)),
-    map(LoadEventsAsync.cancel)
+    map(LocalParticipationsAsync.cancel)
   );
 
-export const EventEpics = combineEpics(
-  LoadEventRequestEpic,
-  LoadEventCancelEpic
+export const LocalParticipationEpics = combineEpics(
+  LocalParticipationsRequestEpic,
+  LocalParticipationsCancelEpic
 );

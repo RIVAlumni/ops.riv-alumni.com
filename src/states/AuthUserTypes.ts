@@ -8,7 +8,7 @@ export const LOAD_AUTH_USER_REQUEST = 'LOAD_AUTH_USER_REQUEST';
 export const LOAD_AUTH_USER_SUCCESS = 'LOAD_AUTH_USER_SUCCESS';
 export const LOAD_AUTH_USER_FAILURE = 'LOAD_AUTH_USER_FAILURE';
 
-export const LoadAuthUserAsync = createAsyncAction(
+export const AuthUserAsync = createAsyncAction(
   LOAD_AUTH_USER_REQUEST,
   LOAD_AUTH_USER_SUCCESS,
   LOAD_AUTH_USER_FAILURE,

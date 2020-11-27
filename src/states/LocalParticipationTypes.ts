@@ -8,13 +8,13 @@ export const LOAD_PARTICIPATIONS_SUCCESS = 'LOAD_PARTICIPATIONS_SUCCESS';
 export const LOAD_PARTICIPATIONS_FAILURE = 'LOAD_PARTICIPATIONS_FAILURE';
 export const LOAD_PARTICIPATIONS_CANCEL = 'LOAD_PARTICIPATIONS_CANCEL';
 
-export const LoadParticipationsAsync = createAsyncAction(
+export const LocalParticipationsAsync = createAsyncAction(
   LOAD_PARTICIPATIONS_REQUEST,
   LOAD_PARTICIPATIONS_SUCCESS,
   LOAD_PARTICIPATIONS_FAILURE,
   LOAD_PARTICIPATIONS_CANCEL
 )<undefined, Participation[], firestore.FirestoreError, undefined>();
 
-export type ParticipationState = AppStatus & {
+export type LocalParticipationState = AppStatus & {
   data: Participation[];
 };

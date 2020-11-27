@@ -6,10 +6,10 @@ import { of, concat, combineLatest } from 'rxjs';
 import { map, filter, takeUntil, switchMap, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
-import { LoadAggregationsAsync } from './AggregationTypes';
+import { RemoteAggregationsAsync } from './RemoteAggregationTypes';
 import { LOAD_AUTH_USER_CANCEL, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 
-export const LoadAggregationsRequestEpic: EpicType = (
+export const RemoteAggregationsRequestEpic: EpicType = (
   action$,
   _state$,
   { firebase }
@@ -21,7 +21,7 @@ export const LoadAggregationsRequestEpic: EpicType = (
     filter(({ payload }) => payload['Access Level'] >= 2),
     switchMap(() =>
       concat(
-        of(LoadAggregationsAsync.request()),
+        of(RemoteAggregationsAsync.request()),
         combineLatest([
           firebase.getUsersAgnDoc(),
           firebase.getMembersAgnDoc(),
@@ -30,7 +30,7 @@ export const LoadAggregationsRequestEpic: EpicType = (
         ]).pipe(
           takeUntil(cancel$),
           map(([users, members, events, participations]) =>
-            LoadAggregationsAsync.success({
+            RemoteAggregationsAsync.success({
               ...users,
               ...members,
               ...events,
@@ -38,7 +38,7 @@ export const LoadAggregationsRequestEpic: EpicType = (
             })
           ),
           catchError((err: firestore.FirestoreError) =>
-            of(LoadAggregationsAsync.failure(err))
+            of(RemoteAggregationsAsync.failure(err))
           )
         )
       )
@@ -46,13 +46,13 @@ export const LoadAggregationsRequestEpic: EpicType = (
   );
 };
 
-export const LoadAggregationsCancelEpic: EpicType = (action$, _state$) =>
+export const RemoteAggregationsCancelEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_CANCEL)),
-    map(LoadAggregationsAsync.cancel)
+    map(RemoteAggregationsAsync.cancel)
   );
 
-export const AggregationEpics = combineEpics(
-  LoadAggregationsRequestEpic,
-  LoadAggregationsCancelEpic
+export const RemoteAggregationEpics = combineEpics(
+  RemoteAggregationsRequestEpic,
+  RemoteAggregationsCancelEpic
 );

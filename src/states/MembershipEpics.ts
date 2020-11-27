@@ -6,10 +6,10 @@ import { isOfType } from 'typesafe-actions';
 import { combineEpics } from 'redux-observable';
 
 import { EpicType } from '../services';
-import { LoadMembershipAsync } from './MembershipTypes';
+import { MembershipAsync } from './MembershipTypes';
 import { LOAD_AUTH_USER_CANCEL, LOAD_AUTH_USER_SUCCESS } from './AuthUserTypes';
 
-export const LoadMembershipRequestEpic: EpicType = (
+export const MembershipRequestEpic: EpicType = (
   action$,
   _state$,
   { firebase }
@@ -20,15 +20,15 @@ export const LoadMembershipRequestEpic: EpicType = (
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
     filter(({ payload }) => !!payload && !!payload['Membership ID']),
     switchMap(({ payload }) => {
-      if (!payload['Membership ID']) return of(LoadMembershipAsync.cancel());
+      if (!payload['Membership ID']) return of(MembershipAsync.cancel());
 
       return concat(
-        of(LoadMembershipAsync.request()),
+        of(MembershipAsync.request()),
         firebase.getMemberDoc(payload['Membership ID']).pipe(
           takeUntil(cancel$),
-          map(LoadMembershipAsync.success),
+          map(MembershipAsync.success),
           catchError((err: firestore.FirestoreError) =>
-            of(LoadMembershipAsync.failure(err))
+            of(MembershipAsync.failure(err))
           )
         )
       );
@@ -36,10 +36,10 @@ export const LoadMembershipRequestEpic: EpicType = (
   );
 };
 
-export const LoadMembershipFailureEpic: EpicType = (action$, _state$) =>
+export const MembershipFailureEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_CANCEL)),
-    map(LoadMembershipAsync.cancel)
+    map(MembershipAsync.cancel)
   );
 
-export const MembershipEpics = combineEpics(LoadMembershipRequestEpic);
+export const MembershipEpics = combineEpics(MembershipRequestEpic);

@@ -5,34 +5,29 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { combineEpics, createEpicMiddleware, Epic } from 'redux-observable';
 
 import { FirebaseService } from '../services';
-import {
-  AuthUserReducer,
-  AggregationReducer,
-  MembershipReducer,
-  EventReducer,
-  ParticipationReducer,
-  RemoteUsersReducer,
-  AuthUserEpics,
-  AggregationEpics,
-  MembershipEpics,
-  EventEpics,
-  ParticipationEpics,
-  RemoteUsersEpics,
-  LoadAuthUserAsync,
-  LoadAggregationsAsync,
-  LoadMembershipAsync,
-  LoadEventsAsync,
-  LoadParticipationsAsync,
-  LoadRemoteUsersAsync,
-} from '../states';
+
+// Epics
+import { AuthUserEpics, MembershipEpics } from '../states';
+import { LocalEventEpics, LocalParticipationEpics } from '../states';
+import { RemoteUsersEpics, RemoteAggregationEpics } from '../states';
+
+// Reducers
+import { AuthUserReducer, MembershipReducer } from '../states';
+import { LocalEventReducer, LocalParticipationReducer } from '../states';
+import { RemoteUsersReducer, RemoteAggregationReducer } from '../states';
+
+// Async Actions
+import { AuthUserAsync, MembershipAsync } from '../states';
+import { LocalEventsAsync, LocalParticipationsAsync } from '../states';
+import { RemoteUsersAsync, RemoteAggregationsAsync } from '../states';
 
 const rootActions = {
-  LoadAuthUserAsync,
-  LoadAggregationsAsync,
-  LoadEventsAsync,
-  LoadMembershipAsync,
-  LoadParticipationsAsync,
-  LoadRemoteUsersAsync,
+  AuthUserAsync,
+  MembershipAsync,
+  LocalEventsAsync,
+  LocalParticipationsAsync,
+  RemoteUsersAsync,
+  RemoteAggregationsAsync,
 };
 
 const rootServices = {
@@ -50,23 +45,23 @@ const epicMiddleware = createEpicMiddleware<
 
 export const rootEpic: EpicType = combineEpics(
   AuthUserEpics,
-  AggregationEpics,
   MembershipEpics,
-  EventEpics,
-  ParticipationEpics,
-  RemoteUsersEpics
+  LocalEventEpics,
+  LocalParticipationEpics,
+  RemoteUsersEpics,
+  RemoteAggregationEpics
 );
 
 export const rootReducer = combineReducers({
   auth: AuthUserReducer,
   membership: MembershipReducer,
   local: combineReducers({
-    events: EventReducer,
-    participations: ParticipationReducer,
+    events: LocalEventReducer,
+    participations: LocalParticipationReducer,
   }),
   remote: combineReducers({
     users: RemoteUsersReducer,
-    aggregations: AggregationReducer,
+    aggregations: RemoteAggregationReducer,
   }),
 });
 

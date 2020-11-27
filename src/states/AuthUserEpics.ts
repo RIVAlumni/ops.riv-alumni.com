@@ -18,28 +18,24 @@ import {
   LOAD_AUTH_USER_REQUEST,
   LOAD_AUTH_USER_SUCCESS,
   LOAD_AUTH_USER_FAILURE,
-  LoadAuthUserAsync,
+  AuthUserAsync,
 } from './AuthUserTypes';
 
-export const LoadAuthUserRequestEpic: EpicType = (
-  action$,
-  _state$,
-  { firebase }
-) =>
+export const AuthUserRequestEpic: EpicType = (action$, _state$, { firebase }) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_REQUEST)),
     switchMap(() => authState(firebase.auth())),
     switchMap((user) =>
       !user
-        ? of(null).pipe(map(LoadAuthUserAsync.cancel))
+        ? of(null).pipe(map(AuthUserAsync.cancel))
         : firebase.getUserDoc(user.uid).pipe(
-            map(LoadAuthUserAsync.success),
-            catchError((err: auth.Error) => of(LoadAuthUserAsync.failure(err)))
+            map(AuthUserAsync.success),
+            catchError((err: auth.Error) => of(AuthUserAsync.failure(err)))
           )
     )
   );
 
-export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
+export const AuthUserSuccessEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_SUCCESS)),
     tap(({ payload }) => {
@@ -54,7 +50,7 @@ export const LoadAuthUserSuccessEpic: EpicType = (action$, _state$) =>
     ignoreElements()
   );
 
-export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>
+export const AuthUserFailureEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_FAILURE)),
     tap(({ payload }) => console.error(`Error Occurred: ${payload.message}`)),
@@ -62,7 +58,7 @@ export const LoadAuthUserFailureEpic: EpicType = (action$, _state$) =>
   );
 
 export const AuthUserEpics = combineEpics(
-  LoadAuthUserRequestEpic,
-  LoadAuthUserSuccessEpic,
-  LoadAuthUserFailureEpic
+  AuthUserRequestEpic,
+  AuthUserSuccessEpic,
+  AuthUserFailureEpic
 );

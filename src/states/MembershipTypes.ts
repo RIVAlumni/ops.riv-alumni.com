@@ -8,7 +8,7 @@ export const LOAD_MEMBERSHIP_SUCCESS = 'LOAD_MEMBERSHIP_SUCCESS';
 export const LOAD_MEMBERSHIP_FAILURE = 'LOAD_MEMBERSHIP_FAILURE';
 export const LOAD_MEMBERSHIP_CANCEL = 'LOAD_MEMBERSHIP_CANCEL';
 
-export const LoadMembershipAsync = createAsyncAction(
+export const MembershipAsync = createAsyncAction(
   LOAD_MEMBERSHIP_REQUEST,
   LOAD_MEMBERSHIP_SUCCESS,
   LOAD_MEMBERSHIP_FAILURE,

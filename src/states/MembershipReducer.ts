@@ -2,7 +2,7 @@ import { produce } from 'immer';
 import { createReducer } from 'typesafe-actions';
 
 import { AppActions } from '../services';
-import { MembershipState, LoadMembershipAsync } from './MembershipTypes';
+import { MembershipState, MembershipAsync } from './MembershipTypes';
 
 const initialState: MembershipState = {
   data: null,
@@ -13,23 +13,23 @@ const initialState: MembershipState = {
 const MembershipReducer = createReducer<MembershipState, AppActions>(
   initialState
 )
-  .handleAction(LoadMembershipAsync.request, (state, _action) =>
+  .handleAction(MembershipAsync.request, (state, _action) =>
     produce(state, (draft) => {
       draft.loading = true;
     })
   )
-  .handleAction(LoadMembershipAsync.success, (state, action) =>
+  .handleAction(MembershipAsync.success, (state, action) =>
     produce(state, (draft) => {
       draft.loading = false;
       draft.data = action.payload;
     })
   )
-  .handleAction(LoadMembershipAsync.failure, (state, action) =>
+  .handleAction(MembershipAsync.failure, (state, action) =>
     produce(state, (draft) => {
       draft.loading = false;
       draft.errors.push(action.payload);
     })
   )
-  .handleAction(LoadMembershipAsync.cancel, () => initialState);
+  .handleAction(MembershipAsync.cancel, () => initialState);
 
 export { MembershipReducer };

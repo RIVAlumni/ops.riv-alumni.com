@@ -7,10 +7,10 @@ import { map, filter, switchMap, takeUntil, catchError } from 'rxjs/operators';
 
 import { EpicType } from '../services';
 import { UserAccessLevels } from '../models';
-import { LoadRemoteUsersAsync } from './RemoteUsersTypes';
+import { RemoteUsersAsync } from './RemoteUsersTypes';
 import { LOAD_AUTH_USER_SUCCESS, LOAD_AUTH_USER_CANCEL } from './AuthUserTypes';
 
-export const LoadRemoteUsersRequestEpic: EpicType = (
+export const RemoteUsersRequestEpic: EpicType = (
   action$,
   _state$,
   { firebase }
@@ -25,12 +25,12 @@ export const LoadRemoteUsersRequestEpic: EpicType = (
     ),
     switchMap(() =>
       concat(
-        of(LoadRemoteUsersAsync.request()),
+        of(RemoteUsersAsync.request()),
         firebase.getUsersCol().pipe(
           takeUntil(cancel$),
-          map(LoadRemoteUsersAsync.success),
+          map(RemoteUsersAsync.success),
           catchError((err: firestore.FirestoreError) =>
-            of(LoadRemoteUsersAsync.failure(err))
+            of(RemoteUsersAsync.failure(err))
           )
         )
       )
@@ -38,13 +38,13 @@ export const LoadRemoteUsersRequestEpic: EpicType = (
   );
 };
 
-export const LoadRemoteUsersCancelEpic: EpicType = (action$, _state$) =>
+export const RemoteUsersCancelEpic: EpicType = (action$, _state$) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_CANCEL)),
-    map(LoadRemoteUsersAsync.cancel)
+    map(RemoteUsersAsync.cancel)
   );
 
 export const RemoteUsersEpics = combineEpics(
-  LoadRemoteUsersRequestEpic,
-  LoadRemoteUsersCancelEpic
+  RemoteUsersRequestEpic,
+  RemoteUsersCancelEpic
 );
