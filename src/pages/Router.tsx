@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Navbar, Container } from '../components';
+import { Navbar, Container, LoadingStatus } from '../components';
 import {
   Dashboard,
   Profile,
@@ -13,17 +13,20 @@ import {
   PageNotFound,
 } from '.';
 
-import { AuthUserAsync } from '../states';
-
+import { AppState } from '../services';
 import { AuthGuard } from '../guards';
+import { AuthUserAsync } from '../states';
 import { UserAccessLevels } from '../models';
 
 const Router: React.FC = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector(({ auth }: AppState) => auth);
 
   useEffect(() => {
     dispatch(AuthUserAsync.request());
   }, [dispatch]);
+
+  if (loading) return <LoadingStatus />;
 
   return (
     <BrowserRouter>
