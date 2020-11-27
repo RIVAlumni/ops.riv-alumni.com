@@ -9,3 +9,4 @@ export * from './ProfileEventsParticipatedWidget';
 
 export * from './UsersTableDataWidget';
 export * from './MembersTableDataWidget';
+export * from './EventsTableDataWidget';
