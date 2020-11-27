@@ -1,35 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
+import { UsersTableDataWidget } from '../widgets';
 import { PageHeader, DynamicCard } from '../components';
-
-const UsersData: React.FC = () => {
-  const users = useSelector(({ remote }: AppState) => remote.users.data);
-
-  if (users.length === 0)
-    return (
-      <tr>
-        <td colSpan={6} className='text-center'>
-          No users found.
-        </td>
-      </tr>
-    );
-
-  return (
-    <React.Fragment>
-      {users.map((u, idx) => (
-        <tr key={u['User ID']}>
-          <td>{idx + 1}</td>
-          <td>{u['Display Name']}</td>
-          <td>{u['Email']}</td>
-          <td>{u['Membership ID'] ? 'Yes' : 'No'}</td>
-          <td> | </td>
-        </tr>
-      ))}
-    </React.Fragment>
-  );
-};
 
 const Users: React.FC = () => {
   return (
@@ -50,7 +22,7 @@ const Users: React.FC = () => {
             </thead>
 
             <tbody>
-              <UsersData />
+              <UsersTableDataWidget />
             </tbody>
           </table>
         </div>

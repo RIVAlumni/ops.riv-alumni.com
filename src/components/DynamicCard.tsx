@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const DynamicCard: React.FC = ({ children }) => {
+const DynamicCard: React.FC = memo(({ children }) => {
   return (
     <div className='mb-4'>
       <div className='card'>
@@ -8,6 +8,6 @@ const DynamicCard: React.FC = ({ children }) => {
       </div>
     </div>
   );
-};
+});
 
 export { DynamicCard };
