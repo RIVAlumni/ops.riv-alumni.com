@@ -11,7 +11,7 @@ import { Event, Participation } from '../models';
 const ProfileEventsParticipatedData: React.FC = memo(() => {
   const [result, setResult] = useState<(Event & Participation)[]>([]);
 
-  const events = useSelector(({ local }: AppState) => local.events.data);
+  const events = useSelector(({ remote }: AppState) => remote.events.data);
   const participations = useSelector(
     ({ local }: AppState) => local.participations.data
   );
