@@ -86,7 +86,7 @@ class FirebaseService {
   ): Observable<Participation[]> {
     const dRef = this.database()
       .collection('participations')
-      .orderBy('Event Year', 'asc')
+      .orderBy('Event Code', 'asc')
       .limit(10);
 
     return this.fetchCollection<Participation>(ref || dRef);
