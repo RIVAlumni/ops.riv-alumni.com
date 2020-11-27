@@ -8,3 +8,4 @@ export * from './ProfileEmergencyDataWidget';
 export * from './ProfileEventsParticipatedWidget';
 
 export * from './UsersTableDataWidget';
+export * from './MembersTableDataWidget';

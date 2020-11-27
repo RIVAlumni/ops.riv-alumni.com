@@ -24,6 +24,8 @@ const Users: React.FC = () => {
             <tbody>
               <UsersTableDataWidget />
             </tbody>
+
+            <caption>Results limited to 10 only.</caption>
           </table>
         </div>
       </DynamicCard>
