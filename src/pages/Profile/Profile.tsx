@@ -1,13 +1,12 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
-import { LoadingStatus, PageHeader, SectionHeader } from '../components';
-import {
-  ProfileGeneralDataWidget,
-  ProfileEmergencyDataWidget,
-  ProfileEventsParticipatedWidget,
-} from '../widgets';
+import { AppState } from '../../services';
+import { LoadingStatus, PageHeader, SectionHeader } from '../../components';
+
+import { GeneralDataWidget } from './GeneralDataWidget';
+import { EmergencyDataWidget } from './EmergencyDataWidget';
+import { EventsParticipatedWidget } from './EventsParticipatedWidget';
 
 const Profile: React.FC = memo(() => {
   const status = useSelector(({ membership }: AppState) => membership.loading);
@@ -20,15 +19,15 @@ const Profile: React.FC = memo(() => {
 
       <SectionHeader>Membership Profile</SectionHeader>
 
-      <ProfileGeneralDataWidget />
+      <GeneralDataWidget />
 
       <SectionHeader>Emergency Contact Details</SectionHeader>
 
-      <ProfileEmergencyDataWidget />
+      <EmergencyDataWidget />
 
       <SectionHeader>Events Participated</SectionHeader>
 
-      <ProfileEventsParticipatedWidget />
+      <EventsParticipatedWidget />
     </section>
   );
 });

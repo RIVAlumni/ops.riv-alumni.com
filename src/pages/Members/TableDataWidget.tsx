@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
+import { AppState } from '../../services';
 
-const MembersTableDataWidget: React.FC = memo(() => {
+const TableDataWidget: React.FC = memo(() => {
   const members = useSelector(({ remote }: AppState) => remote.members.data);
 
   if (members.length === 0)
@@ -30,4 +30,4 @@ const MembersTableDataWidget: React.FC = memo(() => {
   );
 });
 
-export { MembersTableDataWidget };
+export { TableDataWidget };

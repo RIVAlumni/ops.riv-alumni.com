@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { from } from 'rxjs';
 import { map, take, filter, switchMap, toArray } from 'rxjs/operators';
 
-import { AppState } from '../services';
-import { DynamicCard } from '../components';
-import { Event, Participation } from '../models';
+import { AppState } from '../../services';
+import { DynamicCard } from '../../components';
+import { Event, Participation } from '../../models';
 
-const ProfileEventsParticipatedData: React.FC = memo(() => {
+const EventsParticipatedData: React.FC = memo(() => {
   const [result, setResult] = useState<(Event & Participation)[]>([]);
 
   const events = useSelector(({ remote }: AppState) => remote.events.data);
@@ -58,7 +58,7 @@ const ProfileEventsParticipatedData: React.FC = memo(() => {
   );
 });
 
-const ProfileEventsParticipatedWidget: React.FC = memo(() => {
+const EventsParticipatedWidget: React.FC = memo(() => {
   return (
     <DynamicCard>
       <div className='table-responsive'>
@@ -75,7 +75,7 @@ const ProfileEventsParticipatedWidget: React.FC = memo(() => {
           </thead>
 
           <tbody>
-            <ProfileEventsParticipatedData />
+            <EventsParticipatedData />
           </tbody>
         </table>
       </div>
@@ -83,4 +83,4 @@ const ProfileEventsParticipatedWidget: React.FC = memo(() => {
   );
 });
 
-export { ProfileEventsParticipatedWidget };
+export { EventsParticipatedWidget };

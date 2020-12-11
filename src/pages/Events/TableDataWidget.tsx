@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
+import { AppState } from '../../services';
 
-const EventsTableDataWidget: React.FC = memo(() => {
+const TableDataWidget: React.FC = memo(() => {
   const events = useSelector(({ remote }: AppState) => remote.events.data);
 
   if (events.length === 0)
@@ -30,4 +30,4 @@ const EventsTableDataWidget: React.FC = memo(() => {
   );
 });
 
-export { EventsTableDataWidget };
+export { TableDataWidget };

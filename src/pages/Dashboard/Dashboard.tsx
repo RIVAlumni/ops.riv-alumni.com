@@ -1,16 +1,14 @@
 import React from 'react';
 
-import { useAuth } from '../hooks';
-import { UserAccessLevels } from '../models';
-import { PageHeader, SectionHeader } from '../components';
+import { useAuth } from '../../hooks';
+import { UserAccessLevels } from '../../models';
+import { PageHeader, SectionHeader } from '../../components';
 
-import { WidgetGuard } from '../guards';
-import {
-  DashboardStatisticsWidget,
-  ProfileStatisticsWidget,
-  UpcomingEventsWidget,
-  RecentEventsWidget,
-} from '../widgets';
+import { WidgetGuard } from '../../guards';
+import { RecentEventsWidget } from './RecentEventsWidget';
+import { UpcomingEventsWidget } from './UpcomingEventsWidget';
+import { SystemStatisticsWidget } from './SystemStatisticsWidget';
+import { ProfileStatisticsWidget } from './ProfileStatisticsWidget';
 
 const Dashboard: React.FC = () => {
   const { signOut } = useAuth();
@@ -22,7 +20,7 @@ const Dashboard: React.FC = () => {
 
       <WidgetGuard
         role={UserAccessLevels.Editor}
-        widget={DashboardStatisticsWidget}
+        widget={SystemStatisticsWidget}
       />
 
       <SectionHeader>My Profile</SectionHeader>

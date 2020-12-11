@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { UsersTableDataWidget } from '../widgets';
-import { PageHeader, DynamicCard } from '../components';
+import { TableDataWidget } from './TableDataWidget'
+import { PageHeader, DynamicCard } from '../../components';
 
 const Users: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ const Users: React.FC = () => {
             </thead>
 
             <tbody>
-              <UsersTableDataWidget />
+              <TableDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>

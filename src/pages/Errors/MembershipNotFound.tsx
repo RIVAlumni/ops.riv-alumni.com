@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useAuth } from '../hooks';
-import { PageHeader } from '../components';
+import { useAuth } from '../../hooks';
+import { PageHeader } from '../../components';
 
 const MembershipNotFound: React.FC = () => {
   const { signOut } = useAuth();

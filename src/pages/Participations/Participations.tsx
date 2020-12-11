@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { PageHeader, DynamicCard } from '../components';
-import { ParticipationsTableDataWidget } from '../widgets';
+import { TableDataWidget } from './TableDataWidget';
+import { PageHeader, DynamicCard } from '../../components';
 
 const Participations: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ const Participations: React.FC = () => {
             </thead>
 
             <tbody>
-              <ParticipationsTableDataWidget />
+              <TableDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>

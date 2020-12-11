@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
-import { DynamicCard } from '../components';
+import { AppState } from '../../services';
+import { DynamicCard } from '../../components';
 
 const RecentEventsWidgetData: React.FC = memo(() => {
   const events = useSelector(({ remote }: AppState) => remote.events.data);

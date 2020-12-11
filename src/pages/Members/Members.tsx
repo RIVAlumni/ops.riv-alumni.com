@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { EventsTableDataWidget } from '../widgets';
-import { PageHeader, DynamicCard } from '../components';
+import { TableDataWidget } from './TableDataWidget';
+import { PageHeader, DynamicCard } from '../../components';
 
-const Events: React.FC = () => {
+const Members: React.FC = () => {
   return (
     <section>
-      <PageHeader>Manage Events</PageHeader>
+      <PageHeader>Manage Members</PageHeader>
 
       <DynamicCard>
         <div className='table-responsive'>
@@ -14,15 +14,15 @@ const Events: React.FC = () => {
             <thead>
               <tr>
                 <th>No.</th>
-                <th>Event Year</th>
-                <th>Event Code</th>
-                <th>Event Name</th>
-                <th>Action</th>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Graduating Year</th>
+                <th>Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              <EventsTableDataWidget />
+              <TableDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>
@@ -33,4 +33,4 @@ const Events: React.FC = () => {
   );
 };
 
-export { Events };
+export { Members };

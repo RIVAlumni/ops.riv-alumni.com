@@ -1,13 +1,13 @@
 export * from './Router';
 export * from './Login';
 
-export * from './Dashboard';
-export * from './Profile';
-export * from './Users';
-export * from './Members';
-export * from './Events';
-export * from './Participations';
+export * from './Dashboard/Dashboard';
+export * from './Profile/Profile';
+export * from './Users/Users';
+export * from './Members/Members';
+export * from './Events/Events';
+export * from './Participations/Participations';
 
-export * from './PageNotFound';
-export * from './MembershipNotFound';
-export * from './InsufficientAccess';
+export * from './Errors/PageNotFound';
+export * from './Errors/MembershipNotFound';
+export * from './Errors/InsufficientAccess';

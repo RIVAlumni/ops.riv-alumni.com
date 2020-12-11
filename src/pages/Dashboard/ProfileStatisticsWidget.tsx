@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../services';
-import { StaticCard } from '../components';
+import { AppState } from '../../services';
+import { StaticCard } from '../../components';
 
 const ProfileStatisticsWidget: React.FC = memo(() => {
   const participations = useSelector(
