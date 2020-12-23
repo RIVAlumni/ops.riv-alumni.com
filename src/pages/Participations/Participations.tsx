@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { TableDataWidget } from './TableDataWidget';
+import { AppState } from '../../services';
 import { PageHeader, DynamicCard } from '../../components';
+
+const ParticipationsDataWidget: React.FC = memo(() => {
+  const pp = useSelector(({ remote }: AppState) => remote.participations.data);
+
+  if (pp.length === 0)
+    return (
+      <tr>
+        <td colSpan={5} className='text-center'>
+          No participations found.
+        </td>
+      </tr>
+    );
+
+  return (
+    <React.Fragment>
+      {pp.map((p, idx) => {
+        return (
+          <tr key={`${p['Membership ID']} + ${p['Event Code']}`}>
+            <td>{idx + 1}</td>
+            <td>{p['Membership ID']}</td>
+            <td>{p['Event Code']}</td>
+            <td>{p['VIA Hours']}</td>
+            <td> | </td>
+          </tr>
+        );
+      })}
+    </React.Fragment>
+  );
+});
 
 const Participations: React.FC = () => {
   return (
@@ -22,7 +52,7 @@ const Participations: React.FC = () => {
             </thead>
 
             <tbody>
-              <TableDataWidget />
+              <ParticipationsDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>

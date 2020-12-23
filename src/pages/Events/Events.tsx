@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { TableDataWidget } from './TableDataWidget';
+import { AppState } from '../../services';
 import { PageHeader, DynamicCard } from '../../components';
+
+const EventsDataWidget: React.FC = memo(() => {
+  const events = useSelector(({ remote }: AppState) => remote.events.data);
+
+  if (events.length === 0)
+    return (
+      <tr>
+        <td colSpan={6} className='text-center'>
+          No events found.
+        </td>
+      </tr>
+    );
+
+  return (
+    <React.Fragment>
+      {events.map((e, idx) => (
+        <tr key={e['Event Code']}>
+          <td>{idx + 1}</td>
+          <td>{e['Event Year']}</td>
+          <td>{e['Event Code']}</td>
+          <td>{e['Event Name']}</td>
+          <td> | </td>
+        </tr>
+      ))}
+    </React.Fragment>
+  );
+});
 
 const Events: React.FC = () => {
   return (
@@ -22,7 +50,7 @@ const Events: React.FC = () => {
             </thead>
 
             <tbody>
-              <TableDataWidget />
+              <EventsDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>
