@@ -1,11 +1,9 @@
 import React, { memo } from 'react';
-import { useSelector } from 'react-redux';
 
-import { AppState } from '../../services';
 import { PageHeader, DynamicCard } from '../../components';
 
 const UsersDataWidget: React.FC = memo(() => {
-  const users = useSelector(({ remote }: AppState) => remote.users.data);
+  const users: unknown[] = [];
 
   if (users.length === 0)
     return (
@@ -17,18 +15,26 @@ const UsersDataWidget: React.FC = memo(() => {
     );
 
   return (
-    <React.Fragment>
-      {users.map((u, idx) => (
-        <tr key={u['User ID']}>
-          <td>{idx + 1}</td>
-          <td>{u['Display Name']}</td>
-          <td>{u['Email']}</td>
-          <td>{u['Membership ID'] ? 'Yes' : 'No'}</td>
-          <td> | </td>
-        </tr>
-      ))}
-    </React.Fragment>
+    <tr>
+      <td colSpan={6} className='text-center'>
+        Invalid data.
+      </td>
+    </tr>
   );
+
+  // return (
+  //   <React.Fragment>
+  //     {users.map((u, idx) => (
+  //       <tr key={u['User ID']}>
+  //         <td>{idx + 1}</td>
+  //         <td>{u['Display Name']}</td>
+  //         <td>{u['Email']}</td>
+  //         <td>{u['Membership ID'] ? 'Yes' : 'No'}</td>
+  //         <td> | </td>
+  //       </tr>
+  //     ))}
+  //   </React.Fragment>
+  // );
 });
 
 const Users: React.FC = () => {

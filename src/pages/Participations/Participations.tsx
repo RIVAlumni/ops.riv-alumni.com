@@ -1,11 +1,9 @@
 import React, { memo } from 'react';
-import { useSelector } from 'react-redux';
 
-import { AppState } from '../../services';
 import { PageHeader, DynamicCard } from '../../components';
 
 const ParticipationsDataWidget: React.FC = memo(() => {
-  const pp = useSelector(({ remote }: AppState) => remote.participations.data);
+  const pp: unknown[] = [];
 
   if (pp.length === 0)
     return (
@@ -17,20 +15,28 @@ const ParticipationsDataWidget: React.FC = memo(() => {
     );
 
   return (
-    <React.Fragment>
-      {pp.map((p, idx) => {
-        return (
-          <tr key={`${p['Membership ID']} + ${p['Event Code']}`}>
-            <td>{idx + 1}</td>
-            <td>{p['Membership ID']}</td>
-            <td>{p['Event Code']}</td>
-            <td>{p['VIA Hours']}</td>
-            <td> | </td>
-          </tr>
-        );
-      })}
-    </React.Fragment>
+    <tr>
+      <td colSpan={5} className='text-center'>
+        Invalid data.
+      </td>
+    </tr>
   );
+
+  // return (
+  //   <React.Fragment>
+  //     {pp.map((p, idx) => {
+  //       return (
+  //         <tr key={`${p['Membership ID']} + ${p['Event Code']}`}>
+  //           <td>{idx + 1}</td>
+  //           <td>{p['Membership ID']}</td>
+  //           <td>{p['Event Code']}</td>
+  //           <td>{p['VIA Hours']}</td>
+  //           <td> | </td>
+  //         </tr>
+  //       );
+  //     })}
+  //   </React.Fragment>
+  // );
 });
 
 const Participations: React.FC = () => {

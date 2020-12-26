@@ -9,44 +9,23 @@ import { FirebaseService } from '../services';
 // Epics
 import { AuthUserEpics, MembershipEpics } from '../states';
 import { LocalParticipationEpics } from '../states';
-import {
-  RemoteUsersEpics,
-  RemoteMembersEpics,
-  RemoteEventEpics,
-  RemoteParticipationsEpics,
-  RemoteAggregationEpics,
-} from '../states';
+import { RemoteEventEpics, RemoteAggregationEpics } from '../states';
 
 // Reducers
 import { AuthUserReducer, MembershipReducer } from '../states';
 import { LocalParticipationReducer } from '../states';
-import {
-  RemoteUsersReducer,
-  RemoteMembersReducer,
-  RemoteEventReducer,
-  RemoteParticipationsReducer,
-  RemoteAggregationReducer,
-} from '../states';
+import { RemoteEventReducer, RemoteAggregationReducer } from '../states';
 
 // Async Actions
 import { AuthUserAsync, MembershipAsync } from '../states';
 import { LocalParticipationsAsync } from '../states';
-import {
-  RemoteUsersAsync,
-  RemoteMembersAsync,
-  RemoteEventsAsync,
-  RemoteParticipationsAsync,
-  RemoteAggregationsAsync,
-} from '../states';
+import { RemoteEventsAsync, RemoteAggregationsAsync } from '../states';
 
 const rootActions = {
   AuthUserAsync,
   MembershipAsync,
   LocalParticipationsAsync,
-  RemoteUsersAsync,
-  RemoteMembersAsync,
   RemoteEventsAsync,
-  RemoteParticipationsAsync,
   RemoteAggregationsAsync,
 };
 
@@ -67,10 +46,7 @@ export const rootEpic: EpicType = combineEpics(
   AuthUserEpics,
   MembershipEpics,
   LocalParticipationEpics,
-  RemoteUsersEpics,
-  RemoteMembersEpics,
   RemoteEventEpics,
-  RemoteParticipationsEpics,
   RemoteAggregationEpics
 );
 
@@ -81,10 +57,7 @@ export const rootReducer = combineReducers({
     participations: LocalParticipationReducer,
   }),
   remote: combineReducers({
-    users: RemoteUsersReducer,
-    members: RemoteMembersReducer,
     events: RemoteEventReducer,
-    participations: RemoteParticipationsReducer,
     aggregations: RemoteAggregationReducer,
   }),
 });

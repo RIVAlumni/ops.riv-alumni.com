@@ -5,11 +5,9 @@ import { AppState } from '../../services';
 import { StaticCard } from '../../components';
 
 const ProfileStatisticsWidget: React.FC = memo(() => {
-  const participations = useSelector(
-    ({ local }: AppState) => local.participations.data
-  );
+  const pp = useSelector(({ local }: AppState) => local.participations.data);
 
-  const getHoursCompleted = participations.reduce(
+  const getHoursCompleted = pp.reduce(
     (total, event) => total + event['VIA Hours'],
     0.0
   );
@@ -20,7 +18,7 @@ const ProfileStatisticsWidget: React.FC = memo(() => {
         <StaticCard
           icon='fas fa-calendar-alt'
           title='EVENTS COMPLETED'
-          value={`${participations.length} Events`}
+          value={`${pp.length} Events`}
         />
       </div>
 
