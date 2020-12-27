@@ -1,64 +1,80 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
+import { firestore } from 'firebase/app';
 
+import { Subject } from 'rxjs';
+import { collectionData } from 'rxfire/firestore';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { Participation } from '../../models';
 import { PageHeader, DynamicCard } from '../../components';
 
-const ParticipationsDataWidget: React.FC = memo(() => {
-  const pp: unknown[] = [];
+const Participations: React.FC = memo(() => {
+  const onSearch$ = new Subject<number>();
 
-  if (pp.length === 0)
-    return (
-      <tr>
-        <td colSpan={5} className='text-center'>
-          No participations found.
-        </td>
-      </tr>
-    );
+  const [data, setData] = useState<Participation[]>([]);
+  const [search, setSearch] = useState<number>(0);
 
-  return (
-    <tr>
-      <td colSpan={5} className='text-center'>
-        Invalid data.
-      </td>
-    </tr>
-  );
+  useEffect(() => {
+    const sub = onSearch$
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(setSearch);
 
-  // return (
-  //   <React.Fragment>
-  //     {pp.map((p, idx) => {
-  //       return (
-  //         <tr key={`${p['Membership ID']} + ${p['Event Code']}`}>
-  //           <td>{idx + 1}</td>
-  //           <td>{p['Membership ID']}</td>
-  //           <td>{p['Event Code']}</td>
-  //           <td>{p['VIA Hours']}</td>
-  //           <td> | </td>
-  //         </tr>
-  //       );
-  //     })}
-  //   </React.Fragment>
-  // );
-});
+    return () => sub.unsubscribe();
+  }, [onSearch$]);
 
-const Participations: React.FC = () => {
+  useEffect(() => {
+    const start = search;
+    const end = start + '~';
+
+    const ref = firestore()
+      .collection('participations')
+      .orderBy('Event Code')
+      .startAt(start)
+      .endAt(end)
+      .limit(10);
+
+    const sub = collectionData<Participation>(ref).subscribe(setData);
+
+    return () => sub.unsubscribe();
+  }, [search]);
+
   return (
     <section>
       <PageHeader>Manage Participations</PageHeader>
 
       <DynamicCard>
+        <div className='input-group mb-3'>
+          <input
+            type='number'
+            className='form-control'
+            placeholder='Event Code'
+            aria-label='Event Code'
+            onChange={(e) => onSearch$.next(Number(e.target.value))}
+          />
+        </div>
+
         <div className='table-responsive'>
           <table className='table table-hover table-borderless mb-0'>
             <thead>
               <tr>
                 <th>No.</th>
-                <th>Member Name</th>
+                <th>Membership ID</th>
                 <th>Event Code</th>
+                <th>Role</th>
                 <th>VIA Hours</th>
-                <th>Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              <ParticipationsDataWidget />
+              {data.map((d, i) => (
+                <tr key={d['Membership ID'] + d['Event Code']}>
+                  <td>{i + 1}</td>
+                  <td>{d['Membership ID']}</td>
+                  <td>{d['Event Code']}</td>
+                  <td>{d['Role']}</td>
+                  <td>{d['VIA Hours']}</td>
+                </tr>
+              ))}
             </tbody>
 
             <caption>Results limited to 10 only.</caption>
@@ -67,6 +83,6 @@ const Participations: React.FC = () => {
       </DynamicCard>
     </section>
   );
-};
+});
 
 export { Participations };
