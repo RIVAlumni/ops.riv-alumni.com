@@ -1,57 +1,123 @@
 import React, { memo, useState, useEffect } from 'react';
 import { firestore } from 'firebase/app';
 
-import { Subject } from 'rxjs';
+import { flatten } from 'lodash';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { collectionData } from 'rxfire/firestore';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 
-import { Participation } from '../../models';
+import { Member, Participation } from '../../models';
 import { PageHeader, DynamicCard } from '../../components';
 
-const Participations: React.FC = memo(() => {
-  const onSearch$ = new Subject<number>();
+const onSearch$ = new BehaviorSubject<number>(0);
 
-  const [data, setData] = useState<Participation[]>([]);
-  const [search, setSearch] = useState<number>(0);
+const SearchField: React.FC = () => {
+  return (
+    <div className='input-group mb-3'>
+      <input
+        type='number'
+        className='form-control'
+        placeholder='Event Code'
+        aria-label='Event Code'
+        onChange={(e) => onSearch$.next(Number(e.target.value))}
+      />
+    </div>
+  );
+};
+
+const ParticipationsDataWidget: React.FC = memo(() => {
+  const [mData, setMData] = useState<Member[]>([]);
+  const [pData, setPData] = useState<Participation[]>([]);
+
+  useEffect(() => {
+    console.log(mData);
+  }, [mData]);
 
   useEffect(() => {
     const sub = onSearch$
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(setSearch);
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((code) => {
+          const start = code;
+          const end = start + '~';
+
+          const ref = firestore()
+            .collection('participations')
+            .orderBy('Event Code')
+            .startAt(start)
+            .endAt(end)
+            .limit(10);
+
+          return collectionData<Participation>(ref).pipe(
+            map((d) => {
+              setPData(d);
+
+              return d;
+            }),
+            switchMap((pp) => {
+              const joins = pp.map((p) => {
+                const ref = firestore()
+                  .collection('members')
+                  .where('Membership ID', '==', p['Membership ID'])
+                  .limit(1);
+
+                return collectionData<Member>(ref);
+              });
+
+              return combineLatest(joins);
+            }),
+            map(flatten)
+          );
+        })
+      )
+      .subscribe(setMData);
 
     return () => sub.unsubscribe();
-  }, [onSearch$]);
+  }, []);
 
-  useEffect(() => {
-    const start = search;
-    const end = start + '~';
+  if (pData.length === 0)
+    return (
+      <tr>
+        <td colSpan={5} className='text-center'>
+          No participations found.
+        </td>
+      </tr>
+    );
 
-    const ref = firestore()
-      .collection('participations')
-      .orderBy('Event Code')
-      .startAt(start)
-      .endAt(end)
-      .limit(10);
+  return (
+    <React.Fragment>
+      {pData.map((d, i) => (
+        <tr key={d['Membership ID'] + d['Event Code']}>
+          <td>{i + 1}</td>
+          <td>
+            {
+              mData.find((m) => m['Membership ID'] === d['Membership ID'])?.[
+                'Full Name'
+              ]
+            }
+          </td>
+          <td>{d['Event Code']}</td>
+          <td>{d['Role']}</td>
+          <td>{d['VIA Hours']}</td>
+        </tr>
+      ))}
+    </React.Fragment>
+  );
+});
 
-    const sub = collectionData<Participation>(ref).subscribe(setData);
-
-    return () => sub.unsubscribe();
-  }, [search]);
-
+const Participations: React.FC = memo(() => {
   return (
     <section>
       <PageHeader>Manage Participations</PageHeader>
 
       <DynamicCard>
-        <div className='input-group mb-3'>
-          <input
-            type='number'
-            className='form-control'
-            placeholder='Event Code'
-            aria-label='Event Code'
-            onChange={(e) => onSearch$.next(Number(e.target.value))}
-          />
-        </div>
+        <SearchField />
 
         <div className='table-responsive'>
           <table className='table table-hover table-borderless mb-0'>
@@ -66,15 +132,7 @@ const Participations: React.FC = memo(() => {
             </thead>
 
             <tbody>
-              {data.map((d, i) => (
-                <tr key={d['Membership ID'] + d['Event Code']}>
-                  <td>{i + 1}</td>
-                  <td>{d['Membership ID']}</td>
-                  <td>{d['Event Code']}</td>
-                  <td>{d['Role']}</td>
-                  <td>{d['VIA Hours']}</td>
-                </tr>
-              ))}
+              <ParticipationsDataWidget />
             </tbody>
 
             <caption>Results limited to 10 only.</caption>
