@@ -1,12 +1,12 @@
 import React, { memo, useState, useEffect } from 'react';
 import { firestore } from 'firebase/app';
 
-import { flatten } from 'lodash';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { collectionData } from 'rxfire/firestore';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { docData, collectionData } from 'rxfire/firestore';
 import {
   map,
   switchMap,
+  catchError,
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { PageHeader, DynamicCard } from '../../components';
 
 const onSearch$ = new BehaviorSubject<number>(0);
 
-const SearchField: React.FC = () => {
+const SearchField: React.FC = memo(() => {
   return (
     <div className='input-group mb-3'>
       <input
@@ -24,64 +24,111 @@ const SearchField: React.FC = () => {
         className='form-control'
         placeholder='Event Code'
         aria-label='Event Code'
+        min='00000000'
+        max='99999999'
         onChange={(e) => onSearch$.next(Number(e.target.value))}
       />
     </div>
   );
-};
+});
 
 const ParticipationsDataWidget: React.FC = memo(() => {
-  const [mData, setMData] = useState<Member[]>([]);
-  const [pData, setPData] = useState<Participation[]>([]);
+  /**
+   * Create a state that will never be cleared upon re-render.
+   */
+  const [data, setData] = useState<(Member & Participation)[]>([]);
 
   useEffect(() => {
-    console.log(mData);
-  }, [mData]);
+    /**
+     * A really useful StackOverflow answer to merge relational data
+     * https://stackoverflow.com/questions/48234431/query-data-relationship-on-firebase-realtime-database-with-angularfire2
+     */
 
-  useEffect(() => {
+    /**
+     * Utility function to query the membership details.
+     *
+     * @param uid The unique membership identifer
+     */
+    const getMember = (uid: string): Observable<Member> => {
+      return docData(firestore().doc(`members/${uid}`));
+    };
+
+    /**
+     * Utility function to iterate through and merge membership data with
+     * the participation data together.
+     *
+     * @param participations An array of participation documents
+     */
+    const getFullDetails = (
+      participations: Participation[]
+    ): Observable<(Member & Participation)[]> => {
+      return combineLatest(
+        participations.map((participation) => {
+          return getMember(participation['Membership ID']).pipe(
+            map((member) => ({ ...participation, ...member }))
+          );
+        })
+      );
+    };
+
+    /**
+     * Utility function to query participation documents.
+     *
+     * @param eventCode The unique event code
+     */
+    const getParticipations = (
+      eventCode: number
+    ): Observable<Participation[]> => {
+      if (eventCode === 0) {
+        const ref = firestore()
+          .collection('participations')
+          .orderBy('VIA Hours', 'desc')
+          .limit(10);
+
+        return collectionData<Participation>(ref);
+      }
+
+      const start = eventCode;
+      const end = start + '~';
+
+      const ref = firestore()
+        .collection('participations')
+        .orderBy('Event Code')
+        .startAt(start)
+        .endAt(end)
+        .limit(10);
+
+      return collectionData<Participation>(ref);
+    };
+
     const sub = onSearch$
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        switchMap((code) => {
-          const start = code;
-          const end = start + '~';
+        switchMap(getParticipations),
+        switchMap(getFullDetails),
+        catchError((err, caught) => {
+          console.error(err);
+          console.error(caught);
 
-          const ref = firestore()
-            .collection('participations')
-            .orderBy('Event Code')
-            .startAt(start)
-            .endAt(end)
-            .limit(10);
-
-          return collectionData<Participation>(ref).pipe(
-            map((d) => {
-              setPData(d);
-
-              return d;
-            }),
-            switchMap((pp) => {
-              const joins = pp.map((p) => {
-                const ref = firestore()
-                  .collection('members')
-                  .where('Membership ID', '==', p['Membership ID'])
-                  .limit(1);
-
-                return collectionData<Member>(ref);
-              });
-
-              return combineLatest(joins);
-            }),
-            map(flatten)
-          );
+          return [];
         })
       )
-      .subscribe(setMData);
+      .subscribe(setData);
 
     return () => sub.unsubscribe();
   }, []);
 
-  if (pData.length === 0)
+  if (data.length === 0 && onSearch$.value === 0)
+    return (
+      <tr>
+        <td colSpan={5} className='text-center'>
+          Loading...
+        </td>
+      </tr>
+    );
+
+  if (data.length === 0 && onSearch$.value !== 0)
     return (
       <tr>
         <td colSpan={5} className='text-center'>
@@ -92,16 +139,10 @@ const ParticipationsDataWidget: React.FC = memo(() => {
 
   return (
     <React.Fragment>
-      {pData.map((d, i) => (
+      {data.map((d, i) => (
         <tr key={d['Membership ID'] + d['Event Code']}>
           <td>{i + 1}</td>
-          <td>
-            {
-              mData.find((m) => m['Membership ID'] === d['Membership ID'])?.[
-                'Full Name'
-              ]
-            }
-          </td>
+          <td>{d['Full Name'] ?? 'Invalid Data'}</td>
           <td>{d['Event Code']}</td>
           <td>{d['Role']}</td>
           <td>{d['VIA Hours']}</td>
