@@ -1,12 +1,13 @@
 import React, { memo, useState, useEffect } from 'react';
-import { firestore } from 'firebase/app';
 
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { firestore } from 'firebase/app';
 import { docData, collectionData } from 'rxfire/firestore';
+
+import { Observable, BehaviorSubject, combineLatest, from } from 'rxjs';
 import {
   map,
+  skip,
   switchMap,
-  catchError,
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs/operators';
@@ -62,6 +63,8 @@ const ParticipationsDataWidget: React.FC = memo(() => {
     const getFullDetails = (
       participations: Participation[]
     ): Observable<(Member & Participation)[]> => {
+      if (participations.length === 0) return from([]);
+
       return combineLatest(
         participations.map((participation) => {
           return getMember(participation['Membership ID']).pipe(
@@ -79,23 +82,20 @@ const ParticipationsDataWidget: React.FC = memo(() => {
     const getParticipations = (
       eventCode: number
     ): Observable<Participation[]> => {
+      const colRef = firestore().collection('participations');
+
       if (eventCode === 0) {
-        const ref = firestore()
-          .collection('participations')
+        const ref = colRef
           .orderBy('VIA Hours', 'desc')
+          .orderBy('Event Code', 'desc')
           .limit(10);
 
         return collectionData<Participation>(ref);
       }
 
-      const start = eventCode;
-      const end = start + '~';
-
-      const ref = firestore()
-        .collection('participations')
-        .orderBy('Event Code')
-        .startAt(start)
-        .endAt(end)
+      const ref = colRef
+        .where('Event Code', '==', eventCode)
+        .orderBy('VIA Hours', 'desc')
         .limit(10);
 
       return collectionData<Participation>(ref);
@@ -107,12 +107,7 @@ const ParticipationsDataWidget: React.FC = memo(() => {
         distinctUntilChanged(),
         switchMap(getParticipations),
         switchMap(getFullDetails),
-        catchError((err, caught) => {
-          console.error(err);
-          console.error(caught);
-
-          return [];
-        })
+        skip(1)
       )
       .subscribe(setData);
 
@@ -123,7 +118,7 @@ const ParticipationsDataWidget: React.FC = memo(() => {
     return (
       <tr>
         <td colSpan={5} className='text-center'>
-          Loading...
+          Loading participations...
         </td>
       </tr>
     );
@@ -142,7 +137,7 @@ const ParticipationsDataWidget: React.FC = memo(() => {
       {data.map((d, i) => (
         <tr key={d['Membership ID'] + d['Event Code']}>
           <td>{i + 1}</td>
-          <td>{d['Full Name'] ?? 'Invalid Data'}</td>
+          <td>{d['Full Name'] ?? d['Membership ID']}</td>
           <td>{d['Event Code']}</td>
           <td>{d['Role']}</td>
           <td>{d['VIA Hours']}</td>
