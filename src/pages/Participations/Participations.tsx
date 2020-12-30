@@ -1,9 +1,9 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useContext } from 'react';
 
 import { firestore } from 'firebase/app';
 import { docData, collectionData } from 'rxfire/firestore';
 
-import { Observable, BehaviorSubject, combineLatest, from } from 'rxjs';
+import { Observable, combineLatest, from } from 'rxjs';
 import {
   map,
   skip,
@@ -13,9 +13,10 @@ import {
 } from 'rxjs/operators';
 
 import { Member, Participation } from '../../models';
+import { StateContext, onSearch$ } from './StateContext';
 import { PageHeader, DynamicCard } from '../../components';
 
-const onSearch$ = new BehaviorSubject<number>(0);
+let ref: firestore.Query<firestore.DocumentData>;
 
 const SearchField: React.FC = memo(() => {
   return (
@@ -34,10 +35,7 @@ const SearchField: React.FC = memo(() => {
 });
 
 const ParticipationsDataWidget: React.FC = memo(() => {
-  /**
-   * Create a state that will never be cleared upon re-render.
-   */
-  const [data, setData] = useState<(Member & Participation)[]>([]);
+  const { data, setData } = useContext(StateContext);
 
   useEffect(() => {
     /**
@@ -82,10 +80,9 @@ const ParticipationsDataWidget: React.FC = memo(() => {
     const getParticipations = (
       eventCode: number
     ): Observable<Participation[]> => {
-      const colRef = firestore().collection('participations');
-
       if (eventCode === 0) {
-        const ref = colRef
+        ref = firestore()
+          .collection('participations')
           .orderBy('VIA Hours', 'desc')
           .orderBy('Event Code', 'desc')
           .limit(10);
@@ -93,7 +90,8 @@ const ParticipationsDataWidget: React.FC = memo(() => {
         return collectionData<Participation>(ref);
       }
 
-      const ref = colRef
+      ref = firestore()
+        .collection('participations')
         .where('Event Code', '==', eventCode)
         .orderBy('VIA Hours', 'desc')
         .limit(10);
@@ -112,7 +110,7 @@ const ParticipationsDataWidget: React.FC = memo(() => {
       .subscribe(setData);
 
     return () => sub.unsubscribe();
-  }, []);
+  }, [setData]);
 
   if (data.length === 0 && onSearch$.value === 0)
     return (
@@ -148,33 +146,68 @@ const ParticipationsDataWidget: React.FC = memo(() => {
 });
 
 const Participations: React.FC = memo(() => {
+  /**
+   * Create a state that will never be cleared upon re-render.
+   */
+  const [data, setData] = useState<(Member & Participation)[]>([]);
+
+  const onBack = () => {
+    console.log('onBack');
+  };
+
+  const onNext = () => {
+    console.log('onNext');
+  };
+
   return (
     <section>
-      <PageHeader>Manage Participations</PageHeader>
+      <StateContext.Provider value={{ data, setData }}>
+        <PageHeader>Manage Participations</PageHeader>
 
-      <DynamicCard>
-        <SearchField />
+        <DynamicCard>
+          <SearchField />
 
-        <div className='table-responsive'>
-          <table className='table table-hover table-borderless mb-0'>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Membership ID</th>
-                <th>Event Code</th>
-                <th>Role</th>
-                <th>VIA Hours</th>
-              </tr>
-            </thead>
+          <div className='table-responsive mb-2'>
+            <table className='table table-hover table-borderless mb-0'>
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Membership ID</th>
+                  <th>Event Code</th>
+                  <th>Role</th>
+                  <th>VIA Hours</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <ParticipationsDataWidget />
-            </tbody>
+              <tbody>
+                <ParticipationsDataWidget />
+              </tbody>
 
-            <caption>Results limited to 10 only.</caption>
-          </table>
-        </div>
-      </DynamicCard>
+              <caption>Results limited to 10 only.</caption>
+            </table>
+          </div>
+
+          <div className='row'>
+            <div className='col-12 d-flex justify-content-end'>
+              <button
+                type='button'
+                className='btn btn-danger mr-1'
+                onClick={onBack}>
+                <i className='fas fa-chevron-left mr-2' />
+                Back
+              </button>
+
+              <button
+                type='button'
+                className='btn btn-danger mr-1'
+                onClick={onNext}>
+                <i className='fas fa-chevron-right mr-2' />
+                Next
+              </button>
+            </div>
+          </div>
+        </DynamicCard>
+      </StateContext.Provider>
     </section>
   );
 });
