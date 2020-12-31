@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { onSearch$ } from './StateContext';
+import { onSearch$ } from './TableComponent';
 
 const SearchFieldComponent: React.FC = memo(() => {
   return (

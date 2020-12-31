@@ -1,4 +1,6 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable, from, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { collectionData, docData } from 'rxfire/firestore';
 
 import { auth, analytics, firestore, initializeApp } from 'firebase/app';
@@ -38,8 +40,6 @@ class FirebaseService {
   }
 
   public getMemberDoc(uid: string): Observable<Member> {
-    if (!uid) return throwError(new Error('Parameter `uid` is undefined.'));
-
     const ref = this.database().doc(`members/${uid}`);
     return this.fetchDocument<Member>(ref);
   }
@@ -110,6 +110,22 @@ class FirebaseService {
   public getParticipationsAgnDoc(): Observable<ParticipationAggregation> {
     const ref = this.database().doc('aggregations/participations');
     return this.fetchDocument<ParticipationAggregation>(ref);
+  }
+
+  public mergeParticipationDetails(
+    docs: Participation[]
+  ): Observable<(Member & Participation)[]> {
+    if (docs.length === 0) return from([]);
+
+    return combineLatest(
+      docs.map((participation) => {
+        const uid = participation['Membership ID'];
+
+        return FirebaseService.instance
+          .getMemberDoc(uid)
+          .pipe(map((member) => ({ ...member, ...participation })));
+      })
+    );
   }
 
   private constructor() {
