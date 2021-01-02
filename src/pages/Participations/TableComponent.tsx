@@ -95,11 +95,7 @@ const TableComponent: React.FC = memo(() => {
   }, []);
 
   return (
-    <div
-      className='table-responsive'
-      style={{
-        maxHeight: '70vh',
-      }}>
+    <div className='table-responsive'>
       <table className='table table-hover table-borderless mb-0'>
         <thead>
           <tr>
