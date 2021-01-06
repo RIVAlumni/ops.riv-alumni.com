@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 
 import { Observable, BehaviorSubject, of, combineLatest } from 'rxjs';
 import {
@@ -11,8 +11,8 @@ import {
 import { firestore } from 'firebase/app';
 import { collectionData } from 'rxfire/firestore';
 
-import { Member, Participation } from '../../models';
 import { FirebaseService } from '../../services';
+import { Member, Participation } from '../../models';
 
 /**
  * Configurable settings for Firestore queries.
@@ -22,7 +22,6 @@ const maxVIAHours = 9999;
 const maxEventCode = 99999999;
 
 const firebase = FirebaseService.getInstance();
-
 const onSearch$ = new BehaviorSubject<number>(0);
 
 const TableComponent: React.FC = memo(() => {
