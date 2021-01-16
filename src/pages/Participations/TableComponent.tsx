@@ -66,7 +66,7 @@ const TableComponent: React.FC = memo(() => {
       //   .collection('participations')
       //   .orderBy('Membership ID')
       //   .startAfter(lastDoc ? lastDoc['Membership ID'] : null)
-      //   .limit(queryLimit);
+      //   .limit(QUERY_LIMIT);
 
       return collectionData<Participation>(query);
     };
@@ -90,12 +90,12 @@ const TableComponent: React.FC = memo(() => {
         debounceTime(500),
         tap(() => setLoading(true)),
         switchMap(getParticipations),
-        switchMap(getFullParticipation),
         tap((docs) =>
           docs.length <= 0
             ? (lastDoc = null)
             : (lastDoc = docs[docs.length - 1])
         ),
+        switchMap(getFullParticipation),
         tap(() => setLoading(false))
       )
       .subscribe(setData);
