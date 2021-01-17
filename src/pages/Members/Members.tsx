@@ -1,41 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 
-import { PageHeader, DynamicCard } from '../../components';
+import { PageHeader, DynamicCard, SearchField } from '../../components';
 
-const MembersDataWidget: React.FC = memo(() => {
-  const members: unknown[] = [];
-
-  if (members.length === 0)
-    return (
-      <tr>
-        <td colSpan={6} className='text-center'>
-          No members found.
-        </td>
-      </tr>
-    );
-
-  return (
-    <tr>
-      <td colSpan={6} className='text-center'>
-        Invalid data.
-      </td>
-    </tr>
-  );
-
-  // return (
-  //   <React.Fragment>
-  //     {members.map((m, idx) => (
-  //       <tr key={m['Membership ID']}>
-  //         <td>{idx + 1}</td>
-  //         <td>{m['Full Name']}</td>
-  //         <td>{m['Gender']}</td>
-  //         <td>{m['Graduating Year']}</td>
-  //         <td> | </td>
-  //       </tr>
-  //     ))}
-  //   </React.Fragment>
-  // );
-});
+import { onSearch$, TableComponent } from './TableComponent';
 
 const Members: React.FC = () => {
   return (
@@ -43,25 +10,13 @@ const Members: React.FC = () => {
       <PageHeader>Manage Members</PageHeader>
 
       <DynamicCard>
-        <div className='table-responsive'>
-          <table className='table table-hover table-borderless mb-0'>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Full Name</th>
-                <th>Gender</th>
-                <th>Graduating Year</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+        <SearchField
+          type='string'
+          placeholder='Full Name'
+          onChangeFn={(e) => onSearch$.next(e.target.value)}
+        />
 
-            <tbody>
-              <MembersDataWidget />
-            </tbody>
-
-            <caption>Results limited to 10 only.</caption>
-          </table>
-        </div>
+        <TableComponent />
       </DynamicCard>
     </section>
   );

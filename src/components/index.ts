@@ -7,4 +7,6 @@ export * from './SectionHeader';
 export * from './DynamicCard';
 export * from './StaticCard';
 
+export * from './SearchField';
+
 export * from './LoadingStatus';

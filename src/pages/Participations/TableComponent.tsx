@@ -10,12 +10,7 @@ import { collectionData } from 'rxfire/firestore';
 import { FirebaseService } from '../../services';
 import { Member, Participation } from '../../models';
 
-/**
- * Configurable settings for Firestore queries.
- */
-const QUERY_LIMIT = 10;
-const MAX_VIA_HOURS = 9999;
-const MAX_EVENT_CODE = 99999999;
+import { QUERY_LIMIT, MAX_VIA_HOURS, MAX_EVENT_CODE } from '../../constants';
 
 const firebase = FirebaseService.getInstance();
 const onSearch$ = new BehaviorSubject<number>(0);
