@@ -43,7 +43,7 @@ const getMembers = (fullName: string): Observable<Member[]> => {
   return collectionData<Member>(query);
 };
 
-const TableComponent: React.FC = memo(() => {
+const InfiniteScrollComponent: React.FC = memo(() => {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -62,6 +62,65 @@ const TableComponent: React.FC = memo(() => {
     return () => sub.unsubscribe();
   }, []);
 
+  if (loading)
+    return (
+      <tr>
+        <td colSpan={4} className='text-center'>
+          Loading...
+        </td>
+      </tr>
+    );
+
+  if (!loading && members.length === 0)
+    return (
+      <tr>
+        <td colSpan={4} className='text-center'>
+          No members found.
+        </td>
+      </tr>
+    );
+
+  if (!loading)
+    return (
+      <React.Fragment>
+        {members.map((m) => (
+          <tr key={m['Membership ID']}>
+            <td>
+              <Link
+                className='text-dark text-truncate'
+                to={`/manage/members/${m['Membership ID']}`}>
+                {m['Full Name']}
+              </Link>
+            </td>
+            <td>{m['Gender']}</td>
+            <td>{m['Contact Number']}</td>
+            <td>{m['Graduating Year']}</td>
+          </tr>
+        ))}
+      </React.Fragment>
+    );
+
+  if (!loading && members.length === QUERY_LIMIT)
+    return (
+      <tr>
+        <td colSpan={4} className='text-center'>
+          <button onClick={() => onSearch$.next(onSearch$.value)}>
+            Load More
+          </button>
+        </td>
+      </tr>
+    );
+
+  return (
+    <tr>
+      <td colSpan={4} className='text-center'>
+        An error occurred.
+      </td>
+    </tr>
+  );
+});
+
+const TableComponent: React.FC = memo(() => {
   return (
     <div className='table-responsive'>
       <table className='table table-hover table-borderless mb-0'>
@@ -75,47 +134,7 @@ const TableComponent: React.FC = memo(() => {
         </thead>
 
         <tbody>
-          {loading && (
-            <tr>
-              <td colSpan={4} className='text-center'>
-                Loading members...
-              </td>
-            </tr>
-          )}
-
-          {!loading && members.length === 0 && (
-            <tr>
-              <td colSpan={4} className='text-center'>
-                No members found.
-              </td>
-            </tr>
-          )}
-
-          {!loading &&
-            members.map((m) => (
-              <tr key={m['Membership ID']}>
-                <td>
-                  <Link
-                    className='text-dark text-truncate'
-                    to={`/manage/members/${m['Membership ID']}`}>
-                    {m['Full Name']}
-                  </Link>
-                </td>
-                <td>{m['Gender']}</td>
-                <td>{m['Contact Number']}</td>
-                <td>{m['Graduating Year']}</td>
-              </tr>
-            ))}
-
-          {!loading && members.length === QUERY_LIMIT && (
-            <tr>
-              <td colSpan={4} className='text-center'>
-                <button onClick={() => onSearch$.next(onSearch$.value)}>
-                  Load More
-                </button>
-              </td>
-            </tr>
-          )}
+          <InfiniteScrollComponent />
         </tbody>
 
         <caption>Results limited to {QUERY_LIMIT} only.</caption>
