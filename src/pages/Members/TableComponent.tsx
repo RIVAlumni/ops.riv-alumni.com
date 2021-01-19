@@ -20,7 +20,7 @@ const adjustCursors = (docs: Member[]) => {
 };
 
 const getMembers = (fullName: string): Observable<Member[]> => {
-  if (fullName !== '') {
+  if (fullName) {
     const start = fullName;
     const end = start + '~';
 
@@ -97,18 +97,17 @@ const InfiniteScrollComponent: React.FC = memo(() => {
             <td>{m['Graduating Year']}</td>
           </tr>
         ))}
-      </React.Fragment>
-    );
 
-  if (!loading && members.length === QUERY_LIMIT)
-    return (
-      <tr>
-        <td colSpan={4} className='text-center'>
-          <button onClick={() => onSearch$.next(onSearch$.value)}>
-            Load More
-          </button>
-        </td>
-      </tr>
+        {!loading && members.length === QUERY_LIMIT && (
+          <tr>
+            <td colSpan={4} className='text-center'>
+              <button onClick={() => onSearch$.next(onSearch$.value)}>
+                Load More
+              </button>
+            </td>
+          </tr>
+        )}
+      </React.Fragment>
     );
 
   return (
