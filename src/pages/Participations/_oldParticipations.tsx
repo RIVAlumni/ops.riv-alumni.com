@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { PageHeader, DynamicCard, SearchField } from '../../components';
 
-import { onSearch$, TableComponent } from './TableComponent';
+import { onSearch$, TableComponent } from './_oldTableComponent';
 
 const Participations: React.FC = memo(() => {
   return (
