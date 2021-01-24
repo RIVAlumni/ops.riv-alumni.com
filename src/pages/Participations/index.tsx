@@ -64,6 +64,16 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
           <td>{prt['VIA Hours']}</td>
         </tr>
       ))}
+
+      {data.length === QUERY_LIMIT && (
+        <tr>
+          <td colSpan={4} className='text-center'>
+            <button onClick={() => onSearch$.next(onSearch$.value)}>
+              Load More
+            </button>
+          </td>
+        </tr>
+      )}
     </React.Fragment>
   );
 });
@@ -93,7 +103,7 @@ const Participants: React.FC = memo(() => {
     const query = baseRef
       .orderBy('VIA Hours', 'desc')
       .orderBy('Event Code', 'desc')
-      .startAfter(lastDoc.current || MAX_EVENT_CODE)
+      .startAfter(lastDoc.current ?? MAX_EVENT_CODE)
       .limit(QUERY_LIMIT);
 
     return collectionData<Participation>(query);
@@ -112,20 +122,14 @@ const Participants: React.FC = memo(() => {
   };
 
   useEffect(() => {
-    setTimeout(() => onSearch$.next(0), 3000);
-  }, []);
-
-  useEffect(() => {
     const sub = onSearch$
       .pipe(
         debounceTime(500),
         tap(() => setLoading(true)),
-        tap(() => console.log('lastDoc Before', lastDoc.current)),
         switchMap(getParticipations),
         tap(adjustCursors),
         switchMap(getFullParticipation),
-        tap(() => setLoading(false)),
-        tap(() => console.log('lastDoc After', lastDoc.current))
+        tap(() => setLoading(false))
       )
       .subscribe(setData);
 
