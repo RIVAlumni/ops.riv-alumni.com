@@ -2,6 +2,8 @@ import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, RouteProps, RouteComponentProps } from 'react-router-dom';
 
+import { FirebaseService } from '../services';
+
 import { AppState } from '../services';
 import { UserAccessLevels } from '../models';
 import { Login, MembershipNotFound, InsufficientAccess } from '../pages';
@@ -12,6 +14,9 @@ interface IAuthGuardProps extends RouteProps {
 
 const AuthGuard: React.FC<IAuthGuardProps> = memo(
   ({ role, component, ...rest }) => {
+    // Prevent Firebase from being uninitialised.
+    FirebaseService.getInstance();
+
     const Component = component as React.FC<RouteComponentProps>;
     const currentUser = useSelector(({ auth }: AppState) => auth.user);
 

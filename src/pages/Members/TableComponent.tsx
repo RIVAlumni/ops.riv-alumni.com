@@ -135,8 +135,6 @@ const TableComponent: React.FC = memo(() => {
         <tbody>
           <InfiniteScrollComponent />
         </tbody>
-
-        <caption>Results limited to {QUERY_LIMIT} only.</caption>
       </table>
     </div>
   );
