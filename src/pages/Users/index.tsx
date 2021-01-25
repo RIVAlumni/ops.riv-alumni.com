@@ -29,7 +29,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
     return (
       <tr>
-        <td colSpan={3} className='text-center'>
+        <td colSpan={4} className='text-center'>
           No users found.
         </td>
       </tr>
@@ -49,6 +49,9 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 
           <td>{user['Email']}</td>
           <td>{UserAccessLevels[user['Access Level']]}</td>
+          <td>
+            <Link to={`/manage/members/${user['Membership ID']}`}>Open</Link>
+          </td>
         </tr>
       ))}
 
@@ -130,11 +133,12 @@ const Users: React.FC = memo(() => {
                 <th>Display Name</th>
                 <th>Email Address</th>
                 <th>Access Level</th>
+                <th>Member Profile</th>
               </tr>
             </thead>
 
             <tbody>
-              <RenderTableLoading colspan={3} loading={loading} />
+              <RenderTableLoading colspan={4} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>
