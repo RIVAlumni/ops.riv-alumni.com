@@ -23,15 +23,21 @@ const Dashboard: React.FC = () => {
         widget={SystemStatisticsWidget}
       />
 
-      <SectionHeader>My Profile</SectionHeader>
+      <SectionHeader linkTo='/manage/members/me' linkText='Goto Profile'>
+        My Profile
+      </SectionHeader>
 
       <ProfileStatisticsWidget />
 
-      <SectionHeader>Upcoming Events</SectionHeader>
+      <SectionHeader linkTo='/manage/events' linkText='Goto Events'>
+        Upcoming Events
+      </SectionHeader>
 
       <UpcomingEventsWidget />
 
-      <SectionHeader>Recent Events</SectionHeader>
+      <SectionHeader linkTo='/manage/events' linkText='Goto Events'>
+        Recent Events
+      </SectionHeader>
 
       <RecentEventsWidget />
     </section>
