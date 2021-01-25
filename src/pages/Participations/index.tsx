@@ -9,12 +9,13 @@ import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { FirebaseService } from '../../services';
 import { Member, Participation } from '../../models';
-import { DynamicCard, PageHeader, SearchField } from '../../components';
 import { QUERY_LIMIT, MAX_VIA_HOURS, MAX_EVENT_CODE } from '../../constants';
-
-interface IRenderLoadingProps {
-  loading: boolean;
-}
+import {
+  PageHeader,
+  DynamicCard,
+  SearchField,
+  RenderTableLoading,
+} from '../../components';
 
 interface IRenderDataProps {
   data: (Member & Participation)[];
@@ -24,19 +25,6 @@ interface IRenderDataProps {
 const firebase = FirebaseService.getInstance();
 const onSearch$ = new BehaviorSubject<number>(0);
 const baseRef = firestore().collection('participations');
-
-const RenderLoading: React.FC<IRenderLoadingProps> = memo(({ loading }) => {
-  if (loading)
-    return (
-      <tr>
-        <td colSpan={4} className='text-center'>
-          Loading...
-        </td>
-      </tr>
-    );
-
-  return null;
-});
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
@@ -161,7 +149,7 @@ const Participants: React.FC = memo(() => {
             </thead>
 
             <tbody>
-              <RenderLoading loading={loading} />
+              <RenderTableLoading colspan={4} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>

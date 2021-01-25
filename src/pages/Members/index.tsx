@@ -9,11 +9,12 @@ import { tap, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
 import { QUERY_LIMIT } from '../../constants';
-import { PageHeader, DynamicCard, SearchField } from '../../components';
-
-interface IRenderLoadingProps {
-  loading: boolean;
-}
+import {
+  PageHeader,
+  DynamicCard,
+  SearchField,
+  RenderTableLoading,
+} from '../../components';
 
 interface IRenderDataProps {
   data: Member[];
@@ -22,16 +23,6 @@ interface IRenderDataProps {
 
 const onSearch$ = new BehaviorSubject<string>('');
 const baseRef = firestore().collection('members');
-
-const RenderLoading: React.FC<IRenderLoadingProps> = memo(({ loading }) =>
-  !loading ? null : (
-    <tr>
-      <td colSpan={4} className='text-center'>
-        Loading...
-      </td>
-    </tr>
-  )
-);
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
@@ -144,7 +135,7 @@ const Members: React.FC = memo(() => {
             </thead>
 
             <tbody>
-              <RenderLoading loading={loading} />
+              <RenderTableLoading colspan={4} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>

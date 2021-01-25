@@ -10,11 +10,12 @@ import { tap, debounceTime, switchMap } from 'rxjs/operators';
 import { User } from '../../models';
 import { QUERY_LIMIT } from '../../constants';
 import { UserAccessLevels } from '../../models';
-import { PageHeader, DynamicCard, SearchField } from '../../components';
-
-interface IRenderLoadingProps {
-  loading: boolean;
-}
+import {
+  PageHeader,
+  DynamicCard,
+  SearchField,
+  RenderTableLoading,
+} from '../../components';
 
 interface IRenderDataProps {
   data: User[];
@@ -23,16 +24,6 @@ interface IRenderDataProps {
 
 const baseRef = firestore().collection('users');
 const onSearch$ = new BehaviorSubject<string>('');
-
-const RenderLoading: React.FC<IRenderLoadingProps> = memo(({ loading }) =>
-  !loading ? null : (
-    <tr>
-      <td colSpan={3} className='text-center'>
-        Loading...
-      </td>
-    </tr>
-  )
-);
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
@@ -74,7 +65,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   );
 });
 
-const Users: React.FC = () => {
+const Users: React.FC = memo(() => {
   const lastDoc = useRef<User | undefined>(undefined);
 
   const [data, setData] = useState<User[]>([]);
@@ -143,7 +134,7 @@ const Users: React.FC = () => {
             </thead>
 
             <tbody>
-              <RenderLoading loading={loading} />
+              <RenderTableLoading colspan={3} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>
@@ -151,6 +142,6 @@ const Users: React.FC = () => {
       </DynamicCard>
     </section>
   );
-};
+});
 
 export default Users;

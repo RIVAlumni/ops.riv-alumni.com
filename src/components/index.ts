@@ -10,3 +10,4 @@ export * from './StaticCard';
 export * from './SearchField';
 
 export * from './LoadingStatus';
+export { default as RenderTableLoading } from './RenderTableLoading';
