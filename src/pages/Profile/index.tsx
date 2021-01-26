@@ -32,4 +32,4 @@ const Profile: React.FC = memo(() => {
   );
 });
 
-export { Profile };
+export default Profile;

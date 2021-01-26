@@ -41,7 +41,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
           <td>
             <Link
               className='text-dark text-truncate'
-              to={`/manage/members/${mem['Membership ID']}`}>
+              to={`/manage/members/${mem['Membership ID']}/view`}>
               {mem['Full Name']}
             </Link>
           </td>

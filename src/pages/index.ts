@@ -2,9 +2,13 @@ export * from './Router';
 export * from './Login';
 
 export * from './Dashboard/Dashboard';
-export * from './Profile/Profile';
+
+export { default as Profile } from './Profile';
 export { default as Users } from './Users';
+
 export { default as Members } from './Members';
+export { default as ViewMember } from './ViewMember';
+
 export { default as Events } from './Events';
 export { default as Participations } from './Participations';
 
