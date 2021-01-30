@@ -2,10 +2,10 @@ import React, { memo, useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
-import { collectionData } from 'rxfire/firestore';
+import { collection } from 'rxfire/firestore';
 
 import { BehaviorSubject } from 'rxjs';
-import { tap, debounceTime, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { User } from '../../models';
 import { QUERY_LIMIT } from '../../constants';
@@ -57,7 +57,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 
       {data.length === QUERY_LIMIT && (
         <tr>
-          <td colSpan={3} className='text-center'>
+          <td colSpan={4} className='text-center'>
             <button onClick={() => onSearch$.next(onSearch$.value)}>
               Load More
             </button>
@@ -69,12 +69,15 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 });
 
 const Users: React.FC = memo(() => {
-  const lastDoc = useRef<User | undefined>(undefined);
+  const lastDoc = useRef<firestore.QueryDocumentSnapshot | undefined>();
 
   const [data, setData] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const adjustCursors = (docs: User[]) =>
+  const resetCursors = () =>
+    onSearch$.value.length && (lastDoc.current = undefined);
+
+  const adjustCursors = (docs: firestore.QueryDocumentSnapshot[]) =>
     docs.length <= 0
       ? (lastDoc.current = undefined)
       : (lastDoc.current = docs[docs.length - 1]);
@@ -90,15 +93,15 @@ const Users: React.FC = memo(() => {
         .endAt(end)
         .limit(QUERY_LIMIT);
 
-      return collectionData<User>(query);
+      return collection(query);
     }
 
     const query = baseRef
       .orderBy('Display Name', 'asc')
-      .startAfter(lastDoc.current ? lastDoc.current['Display Name'] : null)
+      .startAfter(lastDoc.current ?? null)
       .limit(QUERY_LIMIT);
 
-    return collectionData<User>(query);
+    return collection(query);
   };
 
   useEffect(() => {
@@ -108,7 +111,9 @@ const Users: React.FC = memo(() => {
         tap(() => setLoading(true)),
         switchMap(getUsers),
         tap(adjustCursors),
-        tap(() => setLoading(false))
+        map((result) => result.map((r) => r.data() as User)),
+        tap(() => setLoading(false)),
+        tap(resetCursors)
       )
       .subscribe(setData);
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { memo, useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { of, combineLatest } from 'rxjs';
@@ -54,7 +54,7 @@ const RenderData: React.FC<IRenderDataProps> = ({ data, loading }) => {
   );
 };
 
-const EventsParticipated: React.FC<IEventsParticipated> = ({ member }) => {
+const EventsParticipated: React.FC<IEventsParticipated> = memo(({ member }) => {
   const lastDoc = useRef<firestore.QueryDocumentSnapshot | undefined>();
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -120,6 +120,6 @@ const EventsParticipated: React.FC<IEventsParticipated> = ({ member }) => {
       </table>
     </div>
   );
-};
+});
 
 export default EventsParticipated;

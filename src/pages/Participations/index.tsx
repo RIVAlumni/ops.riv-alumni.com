@@ -1,10 +1,10 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
-
-import { firestore } from 'firebase/app';
 import { Link } from 'react-router-dom';
 
-import { collectionData } from 'rxfire/firestore';
-import { BehaviorSubject, of, combineLatest } from 'rxjs';
+import { firestore } from 'firebase/app';
+import { collection } from 'rxfire/firestore';
+
+import { of, combineLatest, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { FirebaseService } from '../../services';
@@ -67,12 +67,14 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 });
 
 const Participants: React.FC = memo(() => {
-  const lastDoc = useRef<Participation | undefined>(undefined);
+  const lastDoc = useRef<firestore.QueryDocumentSnapshot | undefined>();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<(Member & Participation)[]>([]);
 
-  const adjustCursors = (docs: Participation[]) =>
+  const resetCursors = () => onSearch$.value && (lastDoc.current = undefined);
+
+  const adjustCursors = (docs: firestore.QueryDocumentSnapshot[]) =>
     docs.length <= 0
       ? (lastDoc.current = undefined)
       : (lastDoc.current = docs[docs.length - 1]);
@@ -82,10 +84,10 @@ const Participants: React.FC = memo(() => {
       const query = baseRef
         .where('Event Code', '==', eventCode)
         .orderBy('VIA Hours', 'desc')
-        .startAfter(lastDoc.current || MAX_VIA_HOURS)
+        .startAfter(lastDoc.current ?? MAX_VIA_HOURS)
         .limit(QUERY_LIMIT);
 
-      return collectionData<Participation>(query);
+      return collection(query);
     }
 
     const query = baseRef
@@ -94,7 +96,7 @@ const Participants: React.FC = memo(() => {
       .startAfter(lastDoc.current ?? MAX_EVENT_CODE)
       .limit(QUERY_LIMIT);
 
-    return collectionData<Participation>(query);
+    return collection(query);
   };
 
   const getFullParticipation = (participations: Participation[]) => {
@@ -116,8 +118,10 @@ const Participants: React.FC = memo(() => {
         tap(() => setLoading(true)),
         switchMap(getParticipations),
         tap(adjustCursors),
+        map((result) => result.map((r) => r.data() as Participation)),
         switchMap(getFullParticipation),
-        tap(() => setLoading(false))
+        tap(() => setLoading(false)),
+        tap(resetCursors)
       )
       .subscribe(setData);
 

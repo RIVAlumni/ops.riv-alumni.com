@@ -2,10 +2,10 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
-import { collectionData } from 'rxfire/firestore';
+import { collection } from 'rxfire/firestore';
 
 import { BehaviorSubject } from 'rxjs';
-import { tap, debounceTime, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Event } from '../../models';
 import { QUERY_LIMIT, MAX_EVENT_CODE } from '../../constants';
@@ -72,12 +72,14 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 });
 
 const Events: React.FC = memo(() => {
-  const lastDoc = useRef<Event | undefined>(undefined);
+  const lastDoc = useRef<firestore.QueryDocumentSnapshot | undefined>();
 
   const [data, setData] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const adjustCursors = (docs: Event[]) =>
+  const resetCursors = () => onSearch$.value && (lastDoc.current = undefined);
+
+  const adjustCursors = (docs: firestore.QueryDocumentSnapshot[]) =>
     docs.length <= 0
       ? (lastDoc.current = undefined)
       : (lastDoc.current = docs[docs.length - 1]);
@@ -88,7 +90,7 @@ const Events: React.FC = memo(() => {
         .where('Event Code', '==', eventCode)
         .limit(QUERY_LIMIT);
 
-      return collectionData<Event>(query);
+      return collection(query);
     }
 
     const query = baseRef
@@ -96,7 +98,7 @@ const Events: React.FC = memo(() => {
       .startAfter(lastDoc.current ?? MAX_EVENT_CODE)
       .limit(QUERY_LIMIT);
 
-    return collectionData<Event>(query);
+    return collection(query);
   };
 
   useEffect(() => {
@@ -106,7 +108,9 @@ const Events: React.FC = memo(() => {
         tap(() => setLoading(true)),
         switchMap(getEvents),
         tap(adjustCursors),
-        tap(() => setLoading(false))
+        map((result) => result.map((r) => r.data() as Event)),
+        tap(() => setLoading(false)),
+        tap(resetCursors)
       )
       .subscribe(setData);
 
