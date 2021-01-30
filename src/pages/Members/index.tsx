@@ -2,10 +2,10 @@ import React, { memo, useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
-import { collectionData } from 'rxfire/firestore';
+import { collection } from 'rxfire/firestore';
 
 import { BehaviorSubject } from 'rxjs';
-import { tap, switchMap, debounceTime } from 'rxjs/operators';
+import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
 import { QUERY_LIMIT } from '../../constants';
@@ -65,12 +65,15 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
 });
 
 const Members: React.FC = memo(() => {
-  const lastDoc = useRef<Member | undefined>(undefined);
+  const lastDoc = useRef<firestore.QueryDocumentSnapshot | undefined>();
 
   const [data, setData] = useState<Member[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const adjustCursors = (docs: Member[]) =>
+  const resetCursors = () =>
+    onSearch$.value.length && (lastDoc.current = undefined);
+
+  const adjustCursors = (docs: firestore.QueryDocumentSnapshot[]) =>
     docs.length <= 0
       ? (lastDoc.current = undefined)
       : (lastDoc.current = docs[docs.length - 1]);
@@ -86,15 +89,15 @@ const Members: React.FC = memo(() => {
         .endAt(end)
         .limit(QUERY_LIMIT);
 
-      return collectionData<Member>(query);
+      return collection(query);
     }
 
     const query = baseRef
       .orderBy('Full Name', 'asc')
-      .startAfter(lastDoc.current ? lastDoc.current['Full Name'] : null)
+      .startAfter(lastDoc.current ?? null)
       .limit(QUERY_LIMIT);
 
-    return collectionData<Member>(query);
+    return collection(query);
   };
 
   useEffect(() => {
@@ -104,8 +107,9 @@ const Members: React.FC = memo(() => {
         tap(() => setLoading(true)),
         switchMap(getMembers),
         tap(adjustCursors),
+        map((result) => result.map((r) => r.data() as Member)),
         tap(() => setLoading(false)),
-        tap(() => onSearch$.value.length && (lastDoc.current = undefined))
+        tap(resetCursors)
       )
       .subscribe(setData);
 
