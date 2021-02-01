@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
 import { collection } from 'rxfire/firestore';
@@ -25,6 +25,8 @@ const onSearch$ = new BehaviorSubject<number>(0);
 const baseRef = firestore().collection('events');
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
+  const router = useHistory();
+
   if (!loading && data.length === 0)
     return (
       <tr>
@@ -37,16 +39,13 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((evt) => (
-        <tr key={evt['Event Code']}>
+        <tr
+          key={evt['Event Code']}
+          style={{ cursor: 'pointer' }}
+          onClick={() => router.push(`/manage/events/${evt['Event Code']}`)}>
           <td>{evt['Event Year']}</td>
           <td>{evt['Event Code']}</td>
-          <td>
-            <Link
-              className='text-dark'
-              to={`/manage/events/${evt['Event Code']}`}>
-              {evt['Event Name']}
-            </Link>
-          </td>
+          <td className='text-dark text-truncate'>{evt['Event Name']}</td>
           <td>
             <a
               href={evt['Google Drive']}

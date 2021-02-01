@@ -1,5 +1,5 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
 import { collection } from 'rxfire/firestore';
@@ -27,6 +27,8 @@ const onSearch$ = new BehaviorSubject<number>(0);
 const baseRef = firestore().collection('participations');
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
+  const router = useHistory();
+
   if (!loading && data.length === 0)
     return (
       <tr>
@@ -39,14 +41,13 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((prt) => (
-        <tr key={prt['Membership ID'] + prt['Event Code']}>
-          <td>
-            <Link
-              className='text-dark text-truncate'
-              to={`/manage/members/${prt['Membership ID']}`}>
-              {prt['Full Name']}
-            </Link>
-          </td>
+        <tr
+          key={prt['Membership ID'] + prt['Event Code']}
+          style={{ cursor: 'pointer' }}
+          onClick={() =>
+            router.push(`/manage/members/${prt['Membership ID']}/view`)
+          }>
+          <td className='text-dark text-truncate'>{prt['Full Name']}</td>
           <td>{prt['Event Code']}</td>
           <td>{prt['Role']}</td>
           <td>{prt['VIA Hours']}</td>

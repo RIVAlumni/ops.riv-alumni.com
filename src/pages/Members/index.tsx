@@ -1,5 +1,5 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
 import { collection } from 'rxfire/firestore';
@@ -25,6 +25,8 @@ const onSearch$ = new BehaviorSubject<string>('');
 const baseRef = firestore().collection('members');
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
+  const router = useHistory();
+
   if (!loading && data.length === 0)
     return (
       <tr>
@@ -37,14 +39,13 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((mem) => (
-        <tr key={mem['Membership ID']}>
-          <td>
-            <Link
-              className='text-dark text-truncate'
-              to={`/manage/members/${mem['Membership ID']}/view`}>
-              {mem['Full Name']}
-            </Link>
-          </td>
+        <tr
+          key={mem['Membership ID']}
+          style={{ cursor: 'pointer' }}
+          onClick={() =>
+            router.push(`/manage/members/${mem['Membership ID']}/view`)
+          }>
+          <td className='text-dark text-truncate'>{mem['Full Name']}</td>
           <td>{mem['Gender']}</td>
           <td>{mem['Graduating Year']}</td>
           <td>{mem['Contact Number']}</td>

@@ -1,5 +1,5 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
 import { collection } from 'rxfire/firestore';
@@ -26,6 +26,8 @@ const baseRef = firestore().collection('users');
 const onSearch$ = new BehaviorSubject<string>('');
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
+  const router = useHistory();
+
   if (!loading && data.length === 0)
     return (
       <tr>
@@ -38,14 +40,11 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((user) => (
-        <tr key={user['User ID']}>
-          <td>
-            <Link
-              className='text-dark text-truncate'
-              to={`/manage/users/${user['User ID']}`}>
-              {user['Display Name']}
-            </Link>
-          </td>
+        <tr
+          key={user['User ID']}
+          style={{ cursor: 'pointer' }}
+          onClick={() => router.push(`/manage/users/${user['User ID']}/view`)}>
+          <td className='text-dark text-truncate'>{user['Display Name']}</td>
 
           <td>{user['Email']}</td>
           <td>{UserAccessLevels[user['Access Level']]}</td>
