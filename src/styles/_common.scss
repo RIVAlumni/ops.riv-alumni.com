@@ -16,6 +16,10 @@ pre {
   word-wrap: break-word;
 }
 
+td {
+  vertical-align: middle !important;
+}
+
 .loading {
   height: calc(100vh - 1.5rem);
 

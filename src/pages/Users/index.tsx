@@ -1,5 +1,5 @@
 import React, { memo, useRef, useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
 import { collection } from 'rxfire/firestore';
@@ -25,13 +25,15 @@ interface IRenderDataProps {
 const baseRef = firestore().collection('users');
 const onSearch$ = new BehaviorSubject<string>('');
 
+const COLSPAN = 4;
+
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   const router = useHistory();
 
   if (!loading && data.length === 0)
     return (
       <tr>
-        <td colSpan={4} className='text-center'>
+        <td colSpan={COLSPAN} className='text-center'>
           No users found.
         </td>
       </tr>
@@ -40,23 +42,25 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((user) => (
-        <tr
-          key={user['User ID']}
-          style={{ cursor: 'pointer' }}
-          onClick={() => router.push(`/manage/users/${user['User ID']}/view`)}>
+        <tr key={user['User ID']}>
           <td className='text-dark text-truncate'>{user['Display Name']}</td>
-
           <td>{user['Email']}</td>
           <td>{UserAccessLevels[user['Access Level']]}</td>
           <td>
-            <Link to={`/manage/members/${user['Membership ID']}`}>Open</Link>
+            <button
+              className='btn btn-primary'
+              onClick={() =>
+                router.push(`/manage/users/${user['Membership ID']}/view`)
+              }>
+              <i className='fas fa-eye' />
+            </button>
           </td>
         </tr>
       ))}
 
       {data.length === QUERY_LIMIT && (
         <tr>
-          <td colSpan={4} className='text-center'>
+          <td colSpan={COLSPAN} className='text-center'>
             <button onClick={() => onSearch$.next(onSearch$.value)}>
               Load More
             </button>
@@ -137,12 +141,12 @@ const Users: React.FC = memo(() => {
                 <th>Display Name</th>
                 <th>Email Address</th>
                 <th>Access Level</th>
-                <th>Member Profile</th>
+                <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
-              <RenderTableLoading colspan={4} loading={loading} />
+              <RenderTableLoading colspan={COLSPAN} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>

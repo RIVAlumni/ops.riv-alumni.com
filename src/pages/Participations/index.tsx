@@ -23,8 +23,11 @@ interface IRenderDataProps {
 }
 
 const firebase = FirebaseService.getInstance();
+
 const onSearch$ = new BehaviorSubject<number>(0);
 const baseRef = firestore().collection('participations');
+
+const COLSPAN = 5;
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   const router = useHistory();
@@ -32,7 +35,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
     return (
       <tr>
-        <td colSpan={4} className='text-center'>
+        <td colSpan={COLSPAN} className='text-center'>
           No participants found.
         </td>
       </tr>
@@ -41,22 +44,26 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((prt) => (
-        <tr
-          key={prt['Membership ID'] + prt['Event Code']}
-          style={{ cursor: 'pointer' }}
-          onClick={() =>
-            router.push(`/manage/members/${prt['Membership ID']}/view`)
-          }>
+        <tr key={prt['Membership ID'] + prt['Event Code']}>
           <td className='text-dark text-truncate'>{prt['Full Name']}</td>
           <td>{prt['Event Code']}</td>
           <td>{prt['Role']}</td>
           <td>{prt['VIA Hours']}</td>
+          <td>
+            <button
+              className='btn btn-primary'
+              onClick={() =>
+                router.push(`/manage/members/${prt['Membership ID']}/view`)
+              }>
+              <i className='fas fa-eye' />
+            </button>
+          </td>
         </tr>
       ))}
 
       {data.length === QUERY_LIMIT && (
         <tr>
-          <td colSpan={4} className='text-center'>
+          <td colSpan={COLSPAN} className='text-center'>
             <button onClick={() => onSearch$.next(onSearch$.value)}>
               Load More
             </button>
@@ -150,11 +157,12 @@ const Participants: React.FC = memo(() => {
                 <th>Event Code</th>
                 <th>Role</th>
                 <th>VIA Hours</th>
+                <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
-              <RenderTableLoading colspan={4} loading={loading} />
+              <RenderTableLoading colspan={COLSPAN} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>

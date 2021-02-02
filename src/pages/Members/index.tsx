@@ -21,8 +21,10 @@ interface IRenderDataProps {
   loading: boolean;
 }
 
-const onSearch$ = new BehaviorSubject<string>('');
 const baseRef = firestore().collection('members');
+const onSearch$ = new BehaviorSubject<string>('');
+
+const COLSPAN = 5;
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   const router = useHistory();
@@ -30,7 +32,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
     return (
       <tr>
-        <td colSpan={4} className='text-center'>
+        <td colSpan={COLSPAN} className='text-center'>
           No members found.
         </td>
       </tr>
@@ -39,22 +41,26 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((mem) => (
-        <tr
-          key={mem['Membership ID']}
-          style={{ cursor: 'pointer' }}
-          onClick={() =>
-            router.push(`/manage/members/${mem['Membership ID']}/view`)
-          }>
+        <tr key={mem['Membership ID']}>
           <td className='text-dark text-truncate'>{mem['Full Name']}</td>
           <td>{mem['Gender']}</td>
           <td>{mem['Graduating Year']}</td>
           <td>{mem['Contact Number']}</td>
+          <td>
+            <button
+              className='btn btn-primary'
+              onClick={() =>
+                router.push(`/manage/members/${mem['Membership ID']}/view`)
+              }>
+              <i className='fas fa-eye' />
+            </button>
+          </td>
         </tr>
       ))}
 
       {data.length === QUERY_LIMIT && (
         <tr>
-          <td colSpan={4} className='text-center'>
+          <td colSpan={COLSPAN} className='text-center'>
             <button onClick={() => onSearch$.next(onSearch$.value)}>
               Load More
             </button>
@@ -136,11 +142,12 @@ const Members: React.FC = memo(() => {
                 <th>Gender</th>
                 <th>Grad. Year</th>
                 <th>Contact Number</th>
+                <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
-              <RenderTableLoading colspan={4} loading={loading} />
+              <RenderTableLoading colspan={COLSPAN} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>

@@ -21,8 +21,10 @@ interface IRenderDataProps {
   loading: boolean;
 }
 
-const onSearch$ = new BehaviorSubject<number>(0);
 const baseRef = firestore().collection('events');
+const onSearch$ = new BehaviorSubject<number>(0);
+
+const COLSPAN = 5;
 
 const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   const router = useHistory();
@@ -30,7 +32,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   if (!loading && data.length === 0)
     return (
       <tr>
-        <td colSpan={4} className='text-center'>
+        <td colSpan={COLSPAN} className='text-center'>
           No events found.
         </td>
       </tr>
@@ -39,10 +41,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
   return (
     <React.Fragment>
       {data.map((evt) => (
-        <tr
-          key={evt['Event Code']}
-          style={{ cursor: 'pointer' }}
-          onClick={() => router.push(`/manage/events/${evt['Event Code']}`)}>
+        <tr key={evt['Event Code']}>
           <td>{evt['Event Year']}</td>
           <td>{evt['Event Code']}</td>
           <td className='text-dark text-truncate'>{evt['Event Name']}</td>
@@ -54,12 +53,21 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
               External Link
             </a>
           </td>
+          <td>
+            <button
+              className='btn btn-primary'
+              onClick={() =>
+                router.push(`/manage/events/${evt['Event Code']}/view`)
+              }>
+              <i className='fas fa-eye' />
+            </button>
+          </td>
         </tr>
       ))}
 
       {data.length === QUERY_LIMIT && (
         <tr>
-          <td colSpan={4} className='text-center'>
+          <td colSpan={COLSPAN} className='text-center'>
             <button onClick={() => onSearch$.next(onSearch$.value)}>
               Load More
             </button>
@@ -137,11 +145,12 @@ const Events: React.FC = memo(() => {
                 <th>Event Code</th>
                 <th>Event Name</th>
                 <th>Google Drive</th>
+                <th>Event Details</th>
               </tr>
             </thead>
 
             <tbody>
-              <RenderTableLoading colspan={4} loading={loading} />
+              <RenderTableLoading colspan={COLSPAN} loading={loading} />
               <RenderData data={data} loading={loading} />
             </tbody>
           </table>
