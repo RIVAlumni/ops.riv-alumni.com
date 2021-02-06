@@ -27,7 +27,7 @@ const ViewMember: React.FC = memo(() => {
   const params = useParams<IProfileRouteParams>();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [member, setMember] = useState<Member | undefined>(undefined);
+  const [member, setMember] = useState<Member | undefined>();
 
   useEffect(() => {
     const query = firestore().doc(`members/${params.id}`);

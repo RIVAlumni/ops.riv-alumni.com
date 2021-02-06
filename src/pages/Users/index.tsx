@@ -50,7 +50,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
             <button
               className='btn btn-primary'
               onClick={() =>
-                router.push(`/manage/users/${user['Membership ID']}/view`)
+                router.push(`/manage/users/${user['User ID']}/view`)
               }>
               <i className='fas fa-eye' />
             </button>

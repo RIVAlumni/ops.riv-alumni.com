@@ -4,7 +4,9 @@ export * from './Login';
 export * from './Dashboard/Dashboard';
 
 export { default as Profile } from './Profile';
+
 export { default as Users } from './Users';
+export { default as ViewUser } from './ViewUser';
 
 export { default as Members } from './Members';
 export { default as ViewMember } from './ViewMember';
