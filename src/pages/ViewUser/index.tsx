@@ -21,6 +21,23 @@ interface IUserRouteParams {
   id: string;
 }
 
+interface IMembershipInformationProps {
+  user: User;
+}
+
+const MembershipInformation: React.FC<IMembershipInformationProps> = memo(
+  ({ user }) => {
+    if (user['Membership ID'])
+      return (
+        <Link to={`/manage/members/${user['Membership ID']}/view`}>
+          Goto Membership Profile
+        </Link>
+      );
+
+    return <pre className='m-0'>No Membership Found.</pre>;
+  }
+);
+
 const ViewUser: React.FC = memo(() => {
   const params = useParams<IUserRouteParams>();
   const currentUser = useSelector(({ auth }: AppState) => auth.user);
@@ -117,9 +134,7 @@ const ViewUser: React.FC = memo(() => {
       <SectionHeader>Membership Information</SectionHeader>
 
       <DynamicCard>
-        <Link to={`/manage/members/${user['Membership ID']}/view`}>
-          Goto Membership Profile
-        </Link>
+        <MembershipInformation user={user} />
       </DynamicCard>
     </section>
   );
