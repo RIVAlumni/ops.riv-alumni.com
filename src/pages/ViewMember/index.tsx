@@ -44,17 +44,39 @@ const ViewMember: React.FC = memo(() => {
 
   if (loading) return <LoadingStatus />;
 
+  if (!member)
+    return (
+      <section>
+        <PageHeader>Membership Not Found.</PageHeader>
+
+        <DynamicCard>
+          <pre className='m-0'>
+            No membership found. Please check if <b>{params.id}</b> is the
+            correct identifer.
+          </pre>
+        </DynamicCard>
+      </section>
+    );
+
   return (
     <section>
       <PageHeader>Profile</PageHeader>
 
-      <SectionHeader>Membership Profile</SectionHeader>
+      <SectionHeader
+        linkText='Edit Profile'
+        linkTo={`/manage/members/${member['Membership ID']}/edit`}>
+        Membership Profile
+      </SectionHeader>
 
       <DynamicCard>
         <MembershipProfile member={member} />
       </DynamicCard>
 
-      <SectionHeader>Emergency Contact Details</SectionHeader>
+      <SectionHeader
+        linkText='Edit Profile'
+        linkTo={`/manage/members/${member['Membership ID']}/edit`}>
+        Emergency Contact Details
+      </SectionHeader>
 
       <DynamicCard>
         <EmergencyContact member={member} />

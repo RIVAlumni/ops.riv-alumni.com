@@ -3,12 +3,10 @@ import React from 'react';
 import { Member } from '../../models';
 
 interface IMembershipProfileProps {
-  member: Member | undefined;
+  member: Member;
 }
 
 const MembershipProfile: React.FC<IMembershipProfileProps> = ({ member }) => {
-  if (!member) return <pre>Unable to retrieve data.</pre>;
-
   const details = [
     { key: 'Full Name', value: member['Full Name'] },
     { key: 'Gender', value: member['Gender'] },

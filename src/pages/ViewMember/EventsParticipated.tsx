@@ -13,7 +13,7 @@ import { Event, Member, Participation } from '../../models';
 import { QUERY_LIMIT, MAX_EVENT_CODE } from '../../constants';
 
 interface IEventsParticipated {
-  member: Member | undefined;
+  member: Member;
 }
 
 interface IRenderDataProps {
@@ -98,8 +98,6 @@ const EventsParticipated: React.FC<IEventsParticipated> = memo(({ member }) => {
 
     return () => sub.unsubscribe();
   }, [member]);
-
-  if (!member) return <pre>Unable to retrieve data.</pre>;
 
   return (
     <div className='table-responsive'>

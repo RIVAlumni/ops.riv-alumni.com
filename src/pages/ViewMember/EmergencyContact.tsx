@@ -3,12 +3,10 @@ import React from 'react';
 import { Member } from '../../models';
 
 interface IEmergencyContactProps {
-  member: Member | undefined;
+  member: Member;
 }
 
 const EmergencyContact: React.FC<IEmergencyContactProps> = ({ member }) => {
-  if (!member) return <pre>Unable to retrieve data.</pre>;
-
   const details = [
     { key: 'Name Of Next-Of-Kin', value: member['Name Of Next-Of-Kin'] },
     {
