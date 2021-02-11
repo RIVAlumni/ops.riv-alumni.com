@@ -11,6 +11,7 @@ import {
   Members,
   ViewMember,
   Events,
+  ViewEvent,
   Participations,
   PageNotFound,
 } from '.';
@@ -47,12 +48,7 @@ const Router: React.FC = memo(() => {
             component={Profile}
             role={UserAccessLevels.Alumni}
           />
-          <AuthGuard
-            exact
-            path='/manage/members/:id/view'
-            component={ViewMember}
-            role={UserAccessLevels.Editor}
-          />
+
           <AuthGuard
             exact
             path='/manage/users'
@@ -73,8 +69,20 @@ const Router: React.FC = memo(() => {
           />
           <AuthGuard
             exact
+            path='/manage/members/:id/view'
+            component={ViewMember}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
             path='/manage/events'
             component={Events}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
+            path='/manage/events/:id/view'
+            component={ViewEvent}
             role={UserAccessLevels.Editor}
           />
           <AuthGuard
