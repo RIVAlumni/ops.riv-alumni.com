@@ -16,6 +16,10 @@ export interface Event {
    */
   'Event Name': string;
   /**
+   * Picture thumbnail of the event.
+   */
+  'Event Thumbnail': string;
+  /**
    * Unique membership identifier for the overall in-charge.
    */
   'Event Overall In-Charge': string;
@@ -31,6 +35,10 @@ export interface Event {
    * Roles available for the event.
    */
   'Roles': EventRoles[];
+  /**
+   * Determines if VIA Hours computed are valid.
+   */
+  'Official Event': boolean;
   /**
    * @readonly
    * Timestamp of the last document update.
