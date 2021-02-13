@@ -5,9 +5,11 @@ import { isEmpty } from 'lodash';
 import { DateTime } from 'luxon';
 import { firestore } from 'firebase/app';
 
+import { of, combineLatest } from 'rxjs';
 import { docData } from 'rxfire/firestore';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, switchMap } from 'rxjs/operators';
 
+import { FirebaseService } from '../../services';
 import { Member, Event } from '../../models';
 import { PageHeader, DynamicCard, LoadingStatus } from '../../components';
 
@@ -15,42 +17,40 @@ interface IViewEventProps {
   id: string;
 }
 
+interface DetailedEventView extends Event {
+  'Overall In-Charge': Member;
+  'Assistant In-Charge': Member;
+}
+
+const firebase = FirebaseService.getInstance();
+
 const ViewEvent: React.FC = memo(() => {
   const params = useParams<IViewEventProps>();
 
-  const [event, setEvent] = useState<Event | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
-
-  const [OICDetails, setOICDetails] = useState<Member>();
-  const [AICDetails, setAICDetails] = useState<Member>();
-
-  // const membersRef = firestore().collection('members');
-
-  useEffect(() => {
-    if (!event) return () => undefined;
-
-    const baseRef = firestore().collection('members');
-
-    const oicSub = docData<Member>(
-      baseRef.doc(event['Event Overall In-Charge'])
-    ).subscribe(setOICDetails);
-    const aicSub = docData<Member>(
-      baseRef.doc(event['Event Assistant In-Charge'])
-    ).subscribe(setAICDetails);
-
-    return () => {
-      oicSub.unsubscribe();
-      aicSub.unsubscribe();
-    };
-  }, [event]);
+  const [event, setEvent] = useState<DetailedEventView>();
 
   useEffect(() => {
     const query = firestore().collection('events').doc(params.id);
 
-    const sub = docData<Event | undefined>(query)
+    const sub = docData<DetailedEventView>(query)
       .pipe(
         tap(() => setLoading(true)),
         map((data) => (isEmpty(data) ? undefined : data)),
+        switchMap((_event) => {
+          if (!_event) return of(undefined);
+
+          return combineLatest(
+            firebase.getMemberDoc(_event['Event Overall In-Charge']),
+            firebase.getMemberDoc(_event['Event Assistant In-Charge'])
+          ).pipe(
+            map(([_oic, _aic]) => ({
+              ..._event,
+              'Overall In-Charge': _oic,
+              'Assistant In-Charge': _aic,
+            }))
+          );
+        }),
         tap(() => setLoading(false))
       )
       .subscribe(setEvent);
@@ -75,6 +75,7 @@ const ViewEvent: React.FC = memo(() => {
     );
 
   const isOfficial = event['Official Event'] ? 'Official' : 'Non-Official';
+
   const happenedOn = DateTime.fromFormat(
     event['Event Code'].toString(),
     'yyyyMMdd'
@@ -87,7 +88,7 @@ const ViewEvent: React.FC = memo(() => {
       <div
         className='text-white jumbotron'
         style={{
-          background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${event['Event Thumbnail']})`,
+          background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${event['Event Thumbnail']}), black`,
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -126,7 +127,7 @@ const ViewEvent: React.FC = memo(() => {
               <Link
                 className='text-white font-weight-bold'
                 to={`/manage/members/${event['Event Overall In-Charge']}/view`}>
-                {OICDetails ? OICDetails['Full Name'] : 'Member Not Found.'}
+                {event['Overall In-Charge']['Full Name']}
               </Link>
             </h5>
           </div>
@@ -137,7 +138,7 @@ const ViewEvent: React.FC = memo(() => {
               <Link
                 className='h5 text-white font-weight-bold'
                 to={`/manage/members/${event['Event Assistant In-Charge']}/view`}>
-                {AICDetails ? AICDetails['Full Name'] : 'Member Not Found.'}
+                {event['Assistant In-Charge']['Full Name']}
               </Link>
             </h5>
           </div>
