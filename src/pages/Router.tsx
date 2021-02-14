@@ -13,6 +13,7 @@ import {
   Events,
   ViewEvent,
   Participations,
+  ViewParticipation,
   PageNotFound,
 } from '.';
 
@@ -89,6 +90,12 @@ const Router: React.FC = memo(() => {
             exact
             path='/manage/participations'
             component={Participations}
+            role={UserAccessLevels.Editor}
+          />
+          <AuthGuard
+            exact
+            path='/manage/participations/:id/view'
+            component={ViewParticipation}
             role={UserAccessLevels.Editor}
           />
           <Route exact path='*' component={PageNotFound} />

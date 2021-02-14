@@ -75,7 +75,6 @@ const ViewEvent: React.FC = memo(() => {
     );
 
   const isOfficial = event['Official Event'] ? 'Official' : 'Non-Official';
-
   const happenedOn = DateTime.fromFormat(
     event['Event Code'].toString(),
     'yyyyMMdd'
