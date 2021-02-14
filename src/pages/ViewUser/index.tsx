@@ -99,10 +99,12 @@ const ViewUser: React.FC = memo(() => {
 
           <div className='col-md-4 col-lg-4 d-none d-md-block'>
             <div className='btn-group-vertical float-right'>
-              <button className='btn btn-dark'>
+              <Link
+                to={`/manage/users/${params.id}/edit`}
+                className='btn btn-dark'>
                 <i className='mr-2 fas fa-pencil-alt' />
                 Edit User
-              </button>
+              </Link>
 
               <button
                 className='btn btn-primary'

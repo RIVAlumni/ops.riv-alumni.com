@@ -7,6 +7,7 @@ export { default as Profile } from './Profile';
 
 export { default as Users } from './Users';
 export { default as ViewUser } from './ViewUser';
+export { default as EditUser } from './EditUser';
 
 export { default as Members } from './Members';
 export { default as ViewMember } from './ViewMember';
