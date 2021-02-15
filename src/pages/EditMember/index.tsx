@@ -76,7 +76,11 @@ const EditMember: React.FC = memo(() => {
           </div>
 
           <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='text' value={member['Full Name']} />
+            <Input
+              type='text'
+              value={member['Full Name']}
+              placeholder='No Full Name set'
+            />
           </div>
         </div>
 
@@ -89,7 +93,7 @@ const EditMember: React.FC = memo(() => {
             <Input
               type='text'
               value={member['Email'] || ''}
-              placeholder='No email address'
+              placeholder='No Email Address set'
             />
           </div>
         </div>
@@ -148,7 +152,7 @@ const EditMember: React.FC = memo(() => {
             <Input
               type='text'
               value={member['Current School'] || ''}
-              placeholder='No current school'
+              placeholder='No Current School set'
             />
           </div>
         </div>
@@ -159,7 +163,11 @@ const EditMember: React.FC = memo(() => {
           </div>
 
           <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='tel' value={member['Contact Number']} />
+            <Input
+              type='tel'
+              value={member['Contact Number']}
+              placeholder='No Contact Number set'
+            />
           </div>
         </div>
 
@@ -172,7 +180,7 @@ const EditMember: React.FC = memo(() => {
             <Input
               type='tel'
               value={member['Home Number'] || ''}
-              placeholder='No home number'
+              placeholder='No Home Number set'
             />
           </div>
         </div>

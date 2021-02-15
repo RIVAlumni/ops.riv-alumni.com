@@ -15,6 +15,7 @@ export { default as EditMember } from './EditMember';
 
 export { default as Events } from './Events';
 export { default as ViewEvent } from './ViewEvent';
+export { default as EditEvent } from './EditEvent';
 
 export { default as Participations } from './Participations';
 export { default as ViewParticipation } from './ViewParticipation';
