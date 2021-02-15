@@ -8,26 +8,16 @@ import { docData } from 'rxfire/firestore';
 import { tap, map } from 'rxjs/operators';
 
 import { User, UserAccessLevels } from '../../models';
-import { PageHeader, DynamicCard, LoadingStatus } from '../../components';
+import {
+  Input,
+  PageHeader,
+  DynamicCard,
+  LoadingStatus,
+} from '../../components';
 
 interface IEditUserParams {
   id: string;
 }
-
-const Input: React.FC<React.HTMLProps<HTMLInputElement>> = ({ ...props }) => {
-  return (
-    <input
-      type='text'
-      {...props}
-      className='p-2 px-3 w-100'
-      style={{
-        border: 'none',
-        borderRadius: '5px',
-        backgroundColor: '#a4b0be',
-      }}
-    />
-  );
-};
 
 const EditUser: React.FC = memo(() => {
   const history = useHistory();

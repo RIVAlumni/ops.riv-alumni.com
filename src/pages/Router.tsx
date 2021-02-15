@@ -2,17 +2,16 @@ import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { PageNotFound } from '.';
 import { AuthGuard } from '../guards';
 import { AppState } from '../services';
 import { AuthUserAsync } from '../states';
 import { UserAccessLevels } from '../models';
 import { Navbar, Container, LoadingStatus } from '../components';
 
-import { Dashboard, Profile } from '../pages';
+import { Dashboard, Profile, PageNotFound } from '../pages';
 import { Users, Members, Events, Participations } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
-import { EditUser } from '../pages';
+import { EditUser, EditMember } from '../pages';
 
 interface IRouterRoutes {
   path: string;
@@ -68,6 +67,11 @@ const Router: React.FC = memo(() => {
     {
       path: '/manage/members/:id/view',
       component: ViewMember,
+      role: UserAccessLevels.Editor,
+    },
+    {
+      path: '/manage/members/:id/edit',
+      component: EditMember,
       role: UserAccessLevels.Editor,
     },
     {
