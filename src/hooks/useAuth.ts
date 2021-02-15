@@ -12,6 +12,8 @@ const useAuth = () => {
 
   const signInWithGoogle = async () => {
     const provider = new auth.GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
 
     return auth()
       .setPersistence(auth.Auth.Persistence.LOCAL)
