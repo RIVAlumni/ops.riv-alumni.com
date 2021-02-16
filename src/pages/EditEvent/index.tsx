@@ -83,6 +83,36 @@ const EditEvent: React.FC = memo(() => {
             <Input type='text' value={event['Event Name']} />
           </div>
         </div>
+
+        <div className='row py-2'>
+          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
+            <span className='font-weight-bold'>Event Overall In-Charge</span>
+          </div>
+
+          <div className='col-sm-12 col-md-8 col-lg-8'>
+            <Input type='text' value={event['Event Overall In-Charge']} />
+          </div>
+        </div>
+
+        <div className='row py-2'>
+          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
+            <span className='font-weight-bold'>Event Assistant In-Charge</span>
+          </div>
+
+          <div className='col-sm-12 col-md-8 col-lg-8'>
+            <Input type='text' value={event['Event Assistant In-Charge']} />
+          </div>
+        </div>
+
+        <div className='row py-2'>
+          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
+            <span className='font-weight-bold'>Google Drive</span>
+          </div>
+
+          <div className='col-sm-12 col-md-8 col-lg-8'>
+            <Input type='text' value={event['Google Drive']} />
+          </div>
+        </div>
       </DynamicCard>
     </section>
   );

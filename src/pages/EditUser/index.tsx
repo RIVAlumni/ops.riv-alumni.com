@@ -10,6 +10,7 @@ import { tap, map } from 'rxjs/operators';
 import { User, UserAccessLevels } from '../../models';
 import {
   Input,
+  Select,
   PageHeader,
   DynamicCard,
   LoadingStatus,
@@ -128,18 +129,11 @@ const EditUser: React.FC = memo(() => {
           </div>
 
           <div className='col-sm-12 col-md-9 col-lg-9'>
-            <select
-              className='p-2 px-3 w-100'
+            <Select
               defaultValue={user['Access Level']}
               onChange={(e) =>
                 setFormAccessLevel(parseInt(e.currentTarget.value))
-              }
-              style={{
-                appearance: 'none',
-                border: 'none',
-                borderRadius: '5px',
-                backgroundColor: '#a4b0be',
-              }}>
+              }>
               {accessLevels.map((level, i) => (
                 <option
                   value={i}
@@ -148,7 +142,7 @@ const EditUser: React.FC = memo(() => {
                   {level}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
 
