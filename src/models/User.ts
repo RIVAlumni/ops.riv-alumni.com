@@ -1,7 +1,5 @@
 import { firestore } from 'firebase/app';
 
-import { UserAccessLevels } from './AccessLevels';
-
 export interface User {
   /**
    * @readonly
@@ -41,4 +39,11 @@ export interface User {
    * Timestamp of when the document was created.
    */
   'createdAt': firestore.FieldValue;
+}
+
+export enum UserAccessLevels {
+  Anonymous = 0,
+  Alumni = 1,
+  Editor = 2,
+  Administrator = 3,
 }

@@ -56,15 +56,21 @@ const EditUser: React.FC = memo(() => {
     );
 
   const accessLevels = Object.keys(UserAccessLevels).filter((_) => isNaN(+_));
-  const onSaveChanges = (values: User) => {
+  const onSaveChanges = async (values: User) => {
     const ref = firestore().doc(`users/${params.id}`);
 
-    return ref
-      .set({ 'Access Level': Number(values['Access Level']) } as User, {
-        merge: true,
-      })
-      .then(() => history.push(`/manage/users/${params.id}/view`))
-      .catch(() => alert('Something went wrong. Please try again.'));
+    try {
+      await ref.set(
+        { 'Access Level': Number(values['Access Level']) } as User,
+        {
+          merge: true,
+        }
+      );
+
+      return history.push(`/manage/users/${params.id}/view`);
+    } catch (e) {
+      return alert('Something went wrong. Please try again.');
+    }
   };
 
   return (

@@ -4,6 +4,5 @@ export * from './Event';
 export * from './Participation';
 
 export * from './Aggregations';
-export * from './AccessLevels';
 
 export * from './AppStatus';

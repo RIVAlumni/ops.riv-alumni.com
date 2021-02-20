@@ -31,33 +31,29 @@ export const FORM_SCHEMA_USER = Yup.object({
 });
 
 export const FORM_SCHEMA_MEMBER = Yup.object({
-  'Full Name': Yup.string().required('Required Field').trim(),
+  'Full Name': Yup.string().required().trim(),
   'Email': Yup.string().optional().email().trim().nullable(),
-  'Gender': Yup.string().required('Required Field').oneOf(['Male', 'Female']),
-  'Graduating Class': Yup.string()
-    .required('Required Field')
-    .oneOf(GRADUATING_CLASS),
-  'Graduating Year': Yup.number()
-    .required('Required Field')
-    .oneOf(GRADUATING_YEAR)
-    .integer()
-    .positive(),
+  'Gender': Yup.string().required().oneOf(['Male', 'Female']),
+  'Graduating Class': Yup.string().required().oneOf(GRADUATING_CLASS),
+  'Graduating Year': Yup.number().required().oneOf(GRADUATING_YEAR),
   'Current School': Yup.string().optional().trim().nullable(),
-  'Contact Number': Yup.number()
-    .required('Required Field')
-    .integer()
-    .positive(),
+  'Contact Number': Yup.number().required().integer().positive(),
   'Home Number': Yup.number().optional().nullable().integer().positive(),
-  'Name Of Next-Of-Kin': Yup.string()
-    .required('Required Field')
-    .trim()
-    .ensure(),
-  'Relationship With Next-Of-Kin': Yup.string()
-    .required('Required Field')
-    .trim()
-    .ensure(),
-  'Contact Number Of Next-Of-Kin': Yup.number()
-    .required('Required Field')
-    .integer()
-    .positive(),
+  'Name Of Next-Of-Kin': Yup.string().required().trim().ensure(),
+  'Relationship With Next-Of-Kin': Yup.string().required().trim().ensure(),
+  'Contact Number Of Next-Of-Kin': Yup.number().required().integer().positive(),
+});
+
+export const FORM_SCHEMA_EVENT = Yup.object({
+  'Event Name': Yup.string().required().uppercase().trim(),
+  'Event Overall In-Charge': Yup.string().required().trim(),
+  'Event Assistant In-Charge': Yup.string().required().trim(),
+  'Google Drive': Yup.string().required().trim(),
+  'Roles': Yup.array().of(
+    Yup.object({
+      ID: Yup.string().required().uppercase().trim(),
+      Definition: Yup.string().required().trim(),
+    })
+  ),
+  'Official Event': Yup.bool().required(),
 });
