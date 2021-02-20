@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-export interface Participation {
+export interface PartialParticipation {
   /**
    * @readonly
    * Unique participation identifier for the event.
@@ -24,12 +24,15 @@ export interface Participation {
    * VIA hours accumulated by the alumni.
    */
   'VIA Hours': number;
+}
+
+export interface Participation extends PartialParticipation {
   /**
    * @readonly
    */
-  'updatedAt': firestore.FieldValue;
+  updatedAt: firestore.FieldValue;
   /**
    * @readonly
    */
-  'createdAt': firestore.FieldValue;
+  createdAt: firestore.FieldValue;
 }

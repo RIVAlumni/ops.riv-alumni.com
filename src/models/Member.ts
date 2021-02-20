@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-export interface Member {
+export interface PartialMember {
   /**
    * @readonly
    * Unique membership identifier.
@@ -55,14 +55,17 @@ export interface Member {
    * Contactable number of the parent/guardian of the alumni.
    */
   'Contact Number Of Next-Of-Kin': number;
+}
+
+export interface Member extends PartialMember {
   /**
    * @readonly
    * Timestamp of the last document update.
    */
-  'updatedAt': firestore.FieldValue;
+  updatedAt: firestore.FieldValue;
   /**
    * @readonly
    * Timestamp of when the document was created.
    */
-  'createdAt': firestore.FieldValue;
+  createdAt: firestore.FieldValue;
 }

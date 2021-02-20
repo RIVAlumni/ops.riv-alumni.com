@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-export interface Event {
+export interface PartialEvent {
   /**
    * @readonly
    * Unique event identifier.
@@ -39,16 +39,19 @@ export interface Event {
    * Determines if VIA Hours computed are valid.
    */
   'Official Event': boolean;
+}
+
+export interface Event extends PartialEvent {
   /**
    * @readonly
    * Timestamp of the last document update.
    */
-  'updatedAt': firestore.FieldValue;
+  updatedAt: firestore.FieldValue;
   /**
    * @readonly
    * Timestamp of when the document was created.
    */
-  'createdAt': firestore.FieldValue;
+  createdAt: firestore.FieldValue;
 }
 
 export interface EventRoles {

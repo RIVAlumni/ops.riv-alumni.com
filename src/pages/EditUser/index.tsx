@@ -10,7 +10,7 @@ import { docData } from 'rxfire/firestore';
 import { FORM_SCHEMA_USER } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { User, UserAccessLevels } from '../../models';
+import { User, PartialUser, UserAccessLevels } from '../../models';
 import {
   InputField,
   SelectField,
@@ -57,17 +57,20 @@ const EditUser: React.FC = memo(() => {
 
   const accessLevels = Object.keys(UserAccessLevels).filter((_) => isNaN(+_));
   const onSaveChanges = async (values: User) => {
-    const ref = firestore().doc(`users/${params.id}`);
+    const ref = firestore().doc(`users/${user['User ID']}`);
+
+    const data: PartialUser = {
+      'User ID': values['User ID'],
+      'Email': values['Email'],
+      'Photo URL': values['Photo URL'],
+      'Display Name': values['Display Name'],
+      'Membership ID': values['Membership ID'],
+      'Access Level': Number(values['Access Level']),
+    };
 
     try {
-      await ref.set(
-        { 'Access Level': Number(values['Access Level']) } as User,
-        {
-          merge: true,
-        }
-      );
-
-      return history.push(`/manage/users/${params.id}/view`);
+      await ref.set(data, { merge: true });
+      return history.push(`/manage/users/${user['User ID']}/view`);
     } catch (e) {
       return alert('Something went wrong. Please try again.');
     }

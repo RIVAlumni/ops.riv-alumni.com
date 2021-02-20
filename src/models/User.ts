@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-export interface User {
+export interface PartialUser {
   /**
    * @readonly
    * User identifier of the registered user.
@@ -10,15 +10,17 @@ export interface User {
    * @readonly
    * Email address of the registered user.
    */
-  'Email': string | null;
+  'Email': string;
   /**
+   * @readonly
    * Profile picture of the registered user.
    */
-  'Photo URL': string | null;
+  'Photo URL': string;
   /**
+   * @readonly
    * Display Name of the registered user.
    */
-  'Display Name': string | null;
+  'Display Name': string;
   /**
    * @readonly
    * Membership document identifier of the registered user, with `null` being
@@ -29,16 +31,19 @@ export interface User {
    * Levels of access granted to the registered user.
    */
   'Access Level': UserAccessLevels;
+}
+
+export interface User extends PartialUser {
   /**
    * @readonly
    * Timestamp of the last document update.
    */
-  'updatedAt': firestore.FieldValue;
+  readonly updatedAt: firestore.FieldValue;
   /**
    * @readonly
    * Timestamp of when the document was created.
    */
-  'createdAt': firestore.FieldValue;
+  readonly createdAt: firestore.FieldValue;
 }
 
 export enum UserAccessLevels {
