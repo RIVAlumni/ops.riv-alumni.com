@@ -17,7 +17,7 @@ import { Member } from '../../models';
 import { mapEmpty } from '../../pipes';
 import {
   InputField,
-  Select,
+  SelectField,
   PageHeader,
   DynamicCard,
   SectionHeader,
@@ -60,23 +60,6 @@ const EditMember: React.FC = memo(() => {
       </section>
     );
 
-  // const onSubmit = useCallback(
-  //   async (values: Member, { setSubmitting }: FormikHelpers<Member>) => {
-  //     const ref = firestore().doc(`members/${params.id}`);
-
-  //     try {
-  //       setSubmitting(true);
-  //       await ref.set(values, { merge: true });
-  //       setSubmitting(false);
-
-  //       return history.push(`/manage/members/${params.id}/view`);
-  //     } catch (e) {
-  //       alert(`Error Occurred: ${e}`);
-  //     }
-  //   },
-  //   [history, params.id]
-  // );
-
   const onSubmit = (
     values: Member,
     { setSubmitting }: FormikHelpers<Member>
@@ -112,74 +95,32 @@ const EditMember: React.FC = memo(() => {
                 type='text'
                 name='Membership ID'
                 label='Membership ID'
-                value={member['Membership ID']}
               />
 
               <InputField type='text' name='Full Name' label='Full Name' />
 
               <InputField type='text' name='Email' label='Email Address' />
 
-              <div className='row py-2'>
-                <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-                  <label htmlFor='Gender' className='font-weight-bold'>
-                    Gender
-                  </label>
-                </div>
+              <SelectField name='Gender' label='Gender'>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
+              </SelectField>
 
-                <div className='col-sm-12 col-md-8 col-lg-8'>
-                  <Select
-                    id='Gender'
-                    name='Gender'
-                    defaultValue={member['Gender']}>
-                    <option value={'Male'}>Male</option>
-                    <option value={'Female'}>Female</option>
-                  </Select>
-                </div>
-              </div>
+              <SelectField name='Graduating Class' label='Graduating Class'>
+                {GRADUATING_CLASS.map((gClass) => (
+                  <option key={gClass} value={gClass}>
+                    {gClass}
+                  </option>
+                ))}
+              </SelectField>
 
-              <div className='row py-2'>
-                <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-                  <label
-                    htmlFor='Graduating Class'
-                    className='font-weight-bold'>
-                    Graduating Class
-                  </label>
-                </div>
-
-                <div className='col-sm-12 col-md-8 col-lg-8'>
-                  <Select
-                    id='Graduating Class'
-                    name='Graduating Class'
-                    defaultValue={member['Graduating Class']}>
-                    {GRADUATING_CLASS.map((gClass) => (
-                      <option key={gClass} value={gClass}>
-                        {gClass}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              </div>
-
-              <div className='row py-2'>
-                <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-                  <label htmlFor='Graduating Year' className='font-weight-bold'>
-                    Graduating Year
-                  </label>
-                </div>
-
-                <div className='col-sm-12 col-md-8 col-lg-8'>
-                  <Select
-                    id='Graduating Year'
-                    name='Graduating Year'
-                    defaultValue={member['Graduating Year']}>
-                    {GRADUATING_YEAR.map((year) => (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              </div>
+              <SelectField name='Graduating Year' label='Graduating Year'>
+                {GRADUATING_YEAR.map((gYear) => (
+                  <option key={gYear} value={gYear}>
+                    {gYear}
+                  </option>
+                ))}
+              </SelectField>
 
               <InputField
                 type='text'

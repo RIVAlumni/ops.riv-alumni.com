@@ -1,18 +1,19 @@
 import React, { memo, useState, useEffect } from 'react';
 
-import { isEmpty } from 'lodash';
 import { firestore } from 'firebase/app';
+import { Form, Formik } from 'formik';
 import { useParams, useHistory, Link } from 'react-router-dom';
 
+import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
-import { tap, map } from 'rxjs/operators';
 
-import { Form, Formik } from 'formik';
+import { FORM_SCHEMA_USER } from '../../constants';
 
+import { mapEmpty } from '../../pipes';
 import { User, UserAccessLevels } from '../../models';
 import {
   InputField,
-  Select,
+  SelectField,
   PageHeader,
   DynamicCard,
   LoadingStatus,
@@ -28,7 +29,6 @@ const EditUser: React.FC = memo(() => {
 
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [formAccessLevel, setFormAccessLevel] = useState<UserAccessLevels>();
 
   useEffect(() => {
     const query = firestore().doc(`users/${params.id}`);
@@ -36,7 +36,7 @@ const EditUser: React.FC = memo(() => {
     const sub = docData<User>(query)
       .pipe(
         tap(() => setLoading(true)),
-        map((_data) => (isEmpty(_data) ? undefined : _data)),
+        mapEmpty(undefined),
         tap(() => setLoading(false))
       )
       .subscribe(setUser);
@@ -56,14 +56,13 @@ const EditUser: React.FC = memo(() => {
     );
 
   const accessLevels = Object.keys(UserAccessLevels).filter((_) => isNaN(+_));
-  const onSaveChanges = () => {
+  const onSaveChanges = (values: User) => {
     const ref = firestore().doc(`users/${params.id}`);
 
     return ref
-      .set(
-        { 'Access Level': formAccessLevel ?? user['Access Level'] } as User,
-        { merge: true }
-      )
+      .set({ 'Access Level': Number(values['Access Level']) } as User, {
+        merge: true,
+      })
       .then(() => history.push(`/manage/users/${params.id}/view`))
       .catch(() => alert('Something went wrong. Please try again.'));
   };
@@ -74,69 +73,49 @@ const EditUser: React.FC = memo(() => {
 
       <Formik
         initialValues={user}
-        onSubmit={(values, actions) => console.log({ values, actions })}>
+        validationSchema={FORM_SCHEMA_USER}
+        onSubmit={onSaveChanges}>
         <Form>
           <DynamicCard>
-            <InputField
-              disabled
-              label='User UID'
-              type='text'
-              name='User ID'
-              value={user['User ID']}
-            />
+            <InputField disabled type='text' name='User ID' label='User ID' />
 
             <InputField
               disabled
-              label='Membership ID'
               type='text'
               name='Membership ID'
-              value={user['Membership ID'] || ''}
+              label='Membership ID'
             />
 
             <InputField
               disabled
-              label='Display Name'
               type='text'
               name='Display Name'
-              value={user['Display Name'] || ''}
+              label='Display Name'
             />
 
             <InputField
               disabled
-              label='Email Address'
               type='text'
-              name='Email Address'
-              value={user['Email'] || ''}
+              name='Email'
+              label='Email Address'
             />
 
-            <div className='row py-2'>
-              <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-                <span className='font-weight-bold'>Access Level</span>
-              </div>
-
-              <div className='col-sm-12 col-md-8 col-lg-8'>
-                <Select
-                  defaultValue={user['Access Level']}
-                  onChange={(e) =>
-                    setFormAccessLevel(parseInt(e.currentTarget.value))
-                  }>
-                  {accessLevels.map((level, i) => (
-                    <option
-                      value={i}
-                      key={level}
-                      disabled={user['Access Level'] < i}>
-                      {level}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-            </div>
+            <SelectField name='Access Level' label='Access Level'>
+              {accessLevels.map((level, i) => (
+                <option
+                  key={level}
+                  value={i}
+                  disabled={user['Access Level'] < i}>
+                  {level}
+                </option>
+              ))}
+            </SelectField>
 
             <div className='row py-2'>
               <div className='col-12'>
                 <div className='btn-group'>
                   <button
-                    onClick={onSaveChanges}
+                    type='submit'
                     className='btn btn-sm btn-success text-white'>
                     <i className='mr-2 far fa-save' />
                     Save Changes

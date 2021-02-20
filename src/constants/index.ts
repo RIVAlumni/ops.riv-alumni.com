@@ -26,6 +26,10 @@ export const GRADUATING_CLASS = [
 
 export const GRADUATING_YEAR = range(new Date().getFullYear(), 2000 - 1);
 
+export const FORM_SCHEMA_USER = Yup.object({
+  'Access Level': Yup.number().required().oneOf([0, 1, 2, 3]),
+});
+
 export const FORM_SCHEMA_MEMBER = Yup.object({
   'Full Name': Yup.string().required('Required Field').trim(),
   'Email': Yup.string().optional().email().trim().nullable(),
