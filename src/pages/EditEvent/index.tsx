@@ -1,14 +1,15 @@
 import React, { memo, useState, useEffect } from 'react';
 
 import { isEmpty } from 'lodash';
-import { docData } from 'rxfire/firestore';
 import { firestore } from 'firebase/app';
 import { useParams } from 'react-router-dom';
+
 import { tap, map } from 'rxjs/operators';
+import { docData } from 'rxfire/firestore';
 
 import { Event } from '../../models';
 import {
-  Input,
+  InputField,
   PageHeader,
   DynamicCard,
   LoadingStatus,
@@ -54,65 +55,49 @@ const EditEvent: React.FC = memo(() => {
       <PageHeader>Edit Event</PageHeader>
 
       <DynamicCard>
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Event Code</span>
-          </div>
+        <InputField
+          disabled
+          type='text'
+          name='Event Code'
+          label='Event Code'
+          defaultValue={event['Event Code']}
+        />
 
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input disabled type='text' value={event['Event Code']} />
-          </div>
-        </div>
+        <InputField
+          disabled
+          type='text'
+          name='Event Year'
+          label='Event Year'
+          defaultValue={event['Event Year']}
+        />
 
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Event Year</span>
-          </div>
+        <InputField
+          type='text'
+          name='Event Name'
+          label='Event Name'
+          defaultValue={event['Event Name']}
+        />
 
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input disabled type='text' value={event['Event Year']} />
-          </div>
-        </div>
+        <InputField
+          type='text'
+          name='Event Overall In-Charge'
+          label='Event Overall In-Charge'
+          defaultValue={event['Event Overall In-Charge']}
+        />
 
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Event Name</span>
-          </div>
+        <InputField
+          type='text'
+          name='Event Assistant In-Charge'
+          label='Event Assistant In-Charge'
+          defaultValue={event['Event Assistant In-Charge']}
+        />
 
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='text' value={event['Event Name']} />
-          </div>
-        </div>
-
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Event Overall In-Charge</span>
-          </div>
-
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='text' value={event['Event Overall In-Charge']} />
-          </div>
-        </div>
-
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Event Assistant In-Charge</span>
-          </div>
-
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='text' value={event['Event Assistant In-Charge']} />
-          </div>
-        </div>
-
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
-            <span className='font-weight-bold'>Google Drive</span>
-          </div>
-
-          <div className='col-sm-12 col-md-8 col-lg-8'>
-            <Input type='text' value={event['Google Drive']} />
-          </div>
-        </div>
+        <InputField
+          type='text'
+          name='Google Drive'
+          label='Google Drive'
+          defaultValue={event['Google Drive']}
+        />
       </DynamicCard>
     </section>
   );

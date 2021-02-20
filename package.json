@@ -37,7 +37,7 @@
     "redux-devtools-extension": "^2.13.8",
     "sass": "^1.28.0",
     "typesafe-actions": "^5.1.0",
-    "typescript": "~3.7.2",
+    "typescript": "~3.8.0",
     "why-did-you-update": "^1.0.8"
   },
   "scripts": {

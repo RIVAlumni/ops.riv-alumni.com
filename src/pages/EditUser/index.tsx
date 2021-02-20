@@ -7,9 +7,11 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { docData } from 'rxfire/firestore';
 import { tap, map } from 'rxjs/operators';
 
+import { Form, Formik } from 'formik';
+
 import { User, UserAccessLevels } from '../../models';
 import {
-  Input,
+  InputField,
   Select,
   PageHeader,
   DynamicCard,
@@ -70,102 +72,88 @@ const EditUser: React.FC = memo(() => {
     <section>
       <PageHeader>Edit User</PageHeader>
 
-      <DynamicCard>
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-3 col-lg-3 align-self-center'>
-            <span className='font-weight-bold'>User UID</span>
-          </div>
-
-          <div className='col-sm-12 col-md-9 col-lg-9'>
-            <Input disabled type='text' value={user['User ID']} />
-          </div>
-        </div>
-
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-3 col-lg-3 align-self-center'>
-            <span className='font-weight-bold'>Membership ID</span>
-          </div>
-
-          <div className='col-sm-12 col-md-9 col-lg-9'>
-            <Input
+      <Formik
+        initialValues={user}
+        onSubmit={(values, actions) => console.log({ values, actions })}>
+        <Form>
+          <DynamicCard>
+            <InputField
               disabled
+              label='User UID'
               type='text'
-              value={user['Membership ID'] || 'No membership found.'}
+              name='User ID'
+              value={user['User ID']}
             />
-          </div>
-        </div>
 
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-3 col-lg-3 align-self-center'>
-            <span className='font-weight-bold'>Display Name</span>
-          </div>
-
-          <div className='col-sm-12 col-md-9 col-lg-9'>
-            <Input
+            <InputField
               disabled
+              label='Membership ID'
               type='text'
-              value={user['Display Name'] || 'No display name set.'}
+              name='Membership ID'
+              value={user['Membership ID'] || ''}
             />
-          </div>
-        </div>
 
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-3 col-lg-3 align-self-center'>
-            <span className='font-weight-bold'>Email Address</span>
-          </div>
-
-          <div className='col-sm-12 col-md-9 col-lg-9'>
-            <Input
+            <InputField
               disabled
+              label='Display Name'
               type='text'
-              value={user['Email'] || 'No email address set.'}
+              name='Display Name'
+              value={user['Display Name'] || ''}
             />
-          </div>
-        </div>
 
-        <div className='row py-2'>
-          <div className='col-sm-12 col-md-3 col-lg-3 align-self-center'>
-            <span className='font-weight-bold'>Access Level</span>
-          </div>
+            <InputField
+              disabled
+              label='Email Address'
+              type='text'
+              name='Email Address'
+              value={user['Email'] || ''}
+            />
 
-          <div className='col-sm-12 col-md-9 col-lg-9'>
-            <Select
-              defaultValue={user['Access Level']}
-              onChange={(e) =>
-                setFormAccessLevel(parseInt(e.currentTarget.value))
-              }>
-              {accessLevels.map((level, i) => (
-                <option
-                  value={i}
-                  key={level}
-                  disabled={user['Access Level'] < i}>
-                  {level}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </div>
+            <div className='row py-2'>
+              <div className='col-sm-12 col-md-4 col-lg-4 align-self-center'>
+                <span className='font-weight-bold'>Access Level</span>
+              </div>
 
-        <div className='row py-2'>
-          <div className='col-12'>
-            <div className='btn-group'>
-              <button
-                onClick={onSaveChanges}
-                className='btn btn-sm btn-success text-white'>
-                <i className='mr-2 far fa-save' />
-                Save Changes
-              </button>
-
-              <Link
-                to={`/manage/users/${params.id}/view`}
-                className='btn btn-sm btn-danger text-white'>
-                <i className='mr-2 fas fa-ban' />
-                Cancel
-              </Link>
+              <div className='col-sm-12 col-md-8 col-lg-8'>
+                <Select
+                  defaultValue={user['Access Level']}
+                  onChange={(e) =>
+                    setFormAccessLevel(parseInt(e.currentTarget.value))
+                  }>
+                  {accessLevels.map((level, i) => (
+                    <option
+                      value={i}
+                      key={level}
+                      disabled={user['Access Level'] < i}>
+                      {level}
+                    </option>
+                  ))}
+                </Select>
+              </div>
             </div>
-          </div>
-        </div>
-      </DynamicCard>
+
+            <div className='row py-2'>
+              <div className='col-12'>
+                <div className='btn-group'>
+                  <button
+                    onClick={onSaveChanges}
+                    className='btn btn-sm btn-success text-white'>
+                    <i className='mr-2 far fa-save' />
+                    Save Changes
+                  </button>
+
+                  <Link
+                    to={`/manage/users/${params.id}/view`}
+                    className='btn btn-sm btn-danger text-white'>
+                    <i className='mr-2 fas fa-ban' />
+                    Cancel
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </DynamicCard>
+        </Form>
+      </Formik>
     </section>
   );
 });

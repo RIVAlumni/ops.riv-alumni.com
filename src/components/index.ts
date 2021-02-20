@@ -12,5 +12,5 @@ export * from './SearchField';
 export * from './LoadingStatus';
 export { default as RenderTableLoading } from './RenderTableLoading';
 
-export { default as Input } from './Input';
+export { default as InputField } from './InputField';
 export { default as Select } from './Select';
