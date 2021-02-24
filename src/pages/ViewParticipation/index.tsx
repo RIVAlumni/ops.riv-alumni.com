@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { of } from 'rxjs';
 import { isEmpty } from 'lodash';
@@ -78,67 +78,41 @@ const ViewParticipation: React.FC = memo(() => {
       : specificRole[0]['Definition'];
   };
 
+  const details = [
+    { key: 'Participation ID', value: participation['Participation ID'] },
+    { key: 'Full Name', value: participation['Full Name'] },
+    { key: 'Event Code', value: participation['Event Code'] },
+    { key: 'Role', value: getRole(participation['Role']) },
+    {
+      key: 'VIA Hours',
+      value: `${participation['VIA Hours'].toFixed(1)} Hours`,
+    },
+  ];
+
   return (
     <section>
       <PageHeader>Participation Information</PageHeader>
 
       <DynamicCard>
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
-            <p className='m-0'>Participation ID</p>
-          </div>
+        {details.map((detail) => (
+          <div key={detail['key']} className='row py-1'>
+            <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
+              <span>{detail['key']}</span>
+            </div>
 
-          <div className='col-sm-12 col-md-6 col-lg-6'>
-            <h5 className='font-weight-bold'>
-              {participation['Participation ID']}
-            </h5>
+            <div className='col-sm-12 col-md-6 col-lg-6'>
+              <span className='h5'>{detail['value'] || '-'}</span>
+            </div>
           </div>
-        </div>
-
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
-            <p className='m-0'>Full Name</p>
-          </div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6'>
-            <h5 className='font-weight-bold'>{participation['Full Name']}</h5>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
-            <p className='m-0'>Event Code</p>
-          </div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6'>
-            <h5 className='font-weight-bold'>{participation['Event Code']}</h5>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
-            <p className='m-0'>Role</p>
-          </div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6'>
-            <h5 className='font-weight-bold'>
-              {getRole(participation['Role'])}
-            </h5>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col-sm-12 col-md-6 col-lg-6 align-self-center'>
-            <p className='m-0'>VIA Hours</p>
-          </div>
-
-          <div className='col-sm-12 col-md-6 col-lg-6'>
-            <h5 className='font-weight-bold'>
-              {participation['VIA Hours'].toFixed(1)} Hours
-            </h5>
-          </div>
-        </div>
+        ))}
       </DynamicCard>
+
+      <Link
+        className='btn btn-dark'
+        to={`/manage/participations/${params.id}/edit`}>
+        <i className='mr-2 fas fa-pencil-alt' />
+        Edit Participation
+      </Link>
     </section>
   );
 });
