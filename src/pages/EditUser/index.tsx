@@ -119,27 +119,25 @@ const EditUser: React.FC = memo(() => {
                 </option>
               ))}
             </SelectField>
+          </DynamicCard>
 
-            <div className='row py-2'>
-              <div className='col-12'>
-                <div className='btn-group'>
-                  <button
-                    type='submit'
-                    className='btn btn-sm btn-success text-white'>
-                    <i className='mr-2 far fa-save' />
-                    Save Changes
-                  </button>
+          <div className='row py-2'>
+            <div className='col-12'>
+              <div className='btn-group'>
+                <button type='submit' className='btn btn-success text-white'>
+                  <i className='mr-2 far fa-save' />
+                  Save Changes
+                </button>
 
-                  <Link
-                    to={`/manage/users/${params.id}/view`}
-                    className='btn btn-sm btn-danger text-white'>
-                    <i className='mr-2 fas fa-ban' />
-                    Cancel
-                  </Link>
-                </div>
+                <Link
+                  to={`/manage/users/${params.id}/view`}
+                  className='btn btn-danger text-white'>
+                  <i className='mr-2 fas fa-ban' />
+                  Cancel
+                </Link>
               </div>
             </div>
-          </DynamicCard>
+          </div>
         </Form>
       </Formik>
     </section>
