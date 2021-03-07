@@ -19,6 +19,7 @@ export { default as EditEvent } from './EditEvent';
 
 export { default as Participations } from './Participations';
 export { default as ViewParticipation } from './ViewParticipation';
+export { default as EditParticipation } from './EditParticipation';
 
 export * from './Errors/PageNotFound';
 export * from './Errors/MembershipNotFound';
