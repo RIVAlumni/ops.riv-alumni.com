@@ -147,7 +147,7 @@ const EditEvent: React.FC = memo(() => {
             <DynamicCard>
               <FieldArray name='Roles'>
                 {({ push, remove }) => (
-                  <table className='table table-borderless'>
+                  <table className='table table-hover table-borderless'>
                     <thead>
                       <tr>
                         <th>ID</th>
