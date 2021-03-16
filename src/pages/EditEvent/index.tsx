@@ -59,7 +59,6 @@ const EditEvent: React.FC = memo(() => {
     const ref = firestore().doc(`events/${event['Event Code']}`);
 
     const data: PartialEvent = {
-      'Event Code': values['Event Code'],
       'Event Year': values['Event Year'],
       'Event Name': values['Event Name'],
       'Event Thumbnail': values['Event Thumbnail'],

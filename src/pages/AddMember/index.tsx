@@ -1,70 +1,33 @@
-import React, { memo, useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { firestore } from 'firebase/app';
-import { Form, Formik } from 'formik';
-import { useParams, useHistory, Link } from 'react-router-dom';
+// import { firestore } from 'firebase/app';
+import { Formik, Form } from 'formik';
 
-import { tap } from 'rxjs/operators';
-import { docData } from 'rxfire/firestore';
+import { PartialMember } from '../../models';
 
 import {
+  // FORM_SCHEMA_MEMBER,
   GENDER,
   GRADUATING_YEAR,
   GRADUATING_CLASS,
-  FORM_SCHEMA_MEMBER,
 } from '../../constants';
 
-import { mapEmpty } from '../../pipes';
-import { Member, PartialMember } from '../../models';
 import {
-  InputField,
-  SelectField,
   PageHeader,
+  InputField,
   DynamicCard,
+  SelectField,
   SectionHeader,
-  LoadingStatus,
 } from '../../components';
 
-interface IEditMemberParams {
-  id: string;
-}
+const AddMember: React.FC = () => {
+  // const history = useHistory();
 
-const EditMember: React.FC = memo(() => {
-  const history = useHistory();
-  const params = useParams<IEditMemberParams>();
+  const onAddMember = async (values: PartialMember) => {
+    // const ref = firestore().collection('members')
 
-  const [loading, setLoading] = useState(true);
-  const [member, setMember] = useState<Member>();
-
-  useEffect(() => {
-    const query = firestore().doc(`members/${params.id}`);
-
-    const unsub = docData<Member>(query)
-      .pipe(
-        tap(() => setLoading(true)),
-        mapEmpty(undefined),
-        tap(() => setLoading(false))
-      )
-      .subscribe(setMember);
-
-    return () => unsub.unsubscribe();
-  }, [params.id]);
-
-  if (loading) return <LoadingStatus />;
-
-  if (!member)
-    return (
-      <section>
-        <PageHeader>Member Not Found.</PageHeader>
-
-        <pre>Please try again.</pre>
-      </section>
-    );
-
-  const onSaveChanges = async (values: Member) => {
-    const ref = firestore().doc(`members/${member['Membership ID']}`);
-
-    const data: PartialMember = {
+    const dataStruct: PartialMember = {
       'Full Name': values['Full Name'],
       'Gender': values['Gender'],
       'Email': values['Email'],
@@ -80,36 +43,24 @@ const EditMember: React.FC = memo(() => {
       ),
     };
 
-    try {
-      await ref.set(data, { merge: true });
-      return history.push(`/manage/members/${member['Membership ID']}/view`);
-    } catch (e) {
-      return alert(`Error Occurred: ${e}`);
-    }
+    console.log(dataStruct);
   };
 
   return (
     <section>
-      <PageHeader>Edit Member</PageHeader>
+      <PageHeader>Add Member</PageHeader>
 
       <SectionHeader>Personal Details</SectionHeader>
 
       <Formik
-        initialValues={member}
-        validationSchema={FORM_SCHEMA_MEMBER}
-        onSubmit={onSaveChanges}>
+        initialValues={{} as PartialMember}
+        // validationSchema={FORM_SCHEMA_MEMBER}
+        onSubmit={onAddMember}>
         <Form>
           <DynamicCard>
-            <InputField
-              disabled
-              type='text'
-              name='Membership ID'
-              label='Membership ID'
-            />
-
             <InputField type='text' name='Full Name' label='Full Name' />
 
-            <InputField type='text' name='Email' label='Email Address' />
+            <InputField type='text' name='Email' label='Email' />
 
             <SelectField name='Gender' label='Gender' options={GENDER} />
 
@@ -165,12 +116,10 @@ const EditMember: React.FC = memo(() => {
           <div className='mb-4 btn-group'>
             <button type='submit' className='btn btn-success text-white'>
               <i className='mr-2 far fa-save' />
-              Save Changes
+              Add Member
             </button>
 
-            <Link
-              className='btn btn-danger text-white'
-              to={`/manage/members/${params.id}/view`}>
+            <Link className='btn btn-danger text-white' to={`/manage/members`}>
               <i className='mr-2 fas fa-ban' />
               Cancel
             </Link>
@@ -179,6 +128,6 @@ const EditMember: React.FC = memo(() => {
       </Formik>
     </section>
   );
-});
+};
 
-export default EditMember;
+export default AddMember;

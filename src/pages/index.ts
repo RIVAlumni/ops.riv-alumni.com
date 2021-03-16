@@ -10,6 +10,7 @@ export { default as ViewUser } from './ViewUser';
 export { default as EditUser } from './EditUser';
 
 export { default as Members } from './Members';
+export { default as AddMember } from './AddMember';
 export { default as ViewMember } from './ViewMember';
 export { default as EditMember } from './EditMember';
 

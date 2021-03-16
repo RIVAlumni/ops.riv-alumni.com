@@ -7,7 +7,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
-import { FORM_SCHEMA_USER } from '../../constants';
+import { FORM_SCHEMA_USER, SelectOptions } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
 import { User, PartialUser, UserAccessLevels } from '../../models';
@@ -60,7 +60,6 @@ const EditUser: React.FC = memo(() => {
     const ref = firestore().doc(`users/${user['User ID']}`);
 
     const data: PartialUser = {
-      'User ID': values['User ID'],
       'Email': values['Email'],
       'Photo URL': values['Photo URL'],
       'Display Name': values['Display Name'],
@@ -75,6 +74,14 @@ const EditUser: React.FC = memo(() => {
       return alert('Something went wrong. Please try again.');
     }
   };
+
+  const options: SelectOptions<string, number>[] = accessLevels.map(
+    (level, i) => ({
+      label: level,
+      value: i,
+      disabled: user['Access Level'] < i,
+    })
+  );
 
   return (
     <section>
@@ -109,16 +116,11 @@ const EditUser: React.FC = memo(() => {
               label='Email Address'
             />
 
-            <SelectField name='Access Level' label='Access Level'>
-              {accessLevels.map((level, i) => (
-                <option
-                  key={level}
-                  value={i}
-                  disabled={user['Access Level'] < i}>
-                  {level}
-                </option>
-              ))}
-            </SelectField>
+            <SelectField
+              name='Access Level'
+              label='Access Level'
+              options={options}
+            />
           </DynamicCard>
 
           <div className='row py-2'>
