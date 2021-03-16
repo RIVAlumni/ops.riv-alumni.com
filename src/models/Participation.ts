@@ -3,19 +3,14 @@ import { firestore } from 'firebase/app';
 export interface PartialParticipation {
   /**
    * @readonly
-   * Unique participation identifier for the event.
-   */
-  'Participation ID': string;
-  /**
-   * @readonly
    * Unique membership identifer of the alumni.
    */
-  'Membership ID': string;
+  readonly 'Membership ID': string;
   /**
    * @readonly
    * Unique event identifier.
    */
-  'Event Code': number;
+  readonly 'Event Code': number;
   /**
    * Unique identifer of the role.
    */
@@ -29,10 +24,17 @@ export interface PartialParticipation {
 export interface Participation extends PartialParticipation {
   /**
    * @readonly
+   * Unique participation identifier for the event.
    */
-  updatedAt: firestore.FieldValue;
+  readonly 'Participation ID': string;
   /**
    * @readonly
+   * Timestamp of the last document update.
    */
-  createdAt: firestore.FieldValue;
+  readonly 'updatedAt': firestore.FieldValue;
+  /**
+   * @readonly
+   * Timestamp of when the document was created.
+   */
+  readonly 'createdAt': firestore.FieldValue;
 }

@@ -3,14 +3,9 @@ import { firestore } from 'firebase/app';
 export interface PartialEvent {
   /**
    * @readonly
-   * Unique event identifier.
-   */
-  'Event Code': number;
-  /**
-   * @readonly
    * Year of occurrence of the event.
    */
-  'Event Year': number;
+  readonly 'Event Year': number;
   /**
    * Name of the event.
    */
@@ -44,14 +39,19 @@ export interface PartialEvent {
 export interface Event extends PartialEvent {
   /**
    * @readonly
+   * Unique event identifier.
+   */
+  readonly 'Event Code': number;
+  /**
+   * @readonly
    * Timestamp of the last document update.
    */
-  updatedAt: firestore.FieldValue;
+  readonly 'updatedAt': firestore.FieldValue;
   /**
    * @readonly
    * Timestamp of when the document was created.
    */
-  createdAt: firestore.FieldValue;
+  readonly 'createdAt': firestore.FieldValue;
 }
 
 export interface EventRoles {

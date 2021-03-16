@@ -2,11 +2,6 @@ import { firestore } from 'firebase/app';
 
 export interface PartialMember {
   /**
-   * @readonly
-   * Unique membership identifier.
-   */
-  'Membership ID': string;
-  /**
    * Legal full name of the alumni.
    */
   'Full Name': string;
@@ -60,12 +55,17 @@ export interface PartialMember {
 export interface Member extends PartialMember {
   /**
    * @readonly
+   * Unique membership identifier.
+   */
+  readonly 'Membership ID': string;
+  /**
+   * @readonly
    * Timestamp of the last document update.
    */
-  updatedAt: firestore.FieldValue;
+  readonly 'updatedAt': firestore.FieldValue;
   /**
    * @readonly
    * Timestamp of when the document was created.
    */
-  createdAt: firestore.FieldValue;
+  readonly 'createdAt': firestore.FieldValue;
 }
