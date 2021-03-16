@@ -9,6 +9,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
   const [field, meta] = useField<string>(props.name);
 
   const errorText = meta.error && meta.touched ? meta.error : '';
+  const errorClass = !!errorText ? 'is-invalid' : '';
 
   return (
     <div className='form-group'>
@@ -24,11 +25,10 @@ const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
             {...field}
             {...props}
             value={field.value || ''}
-            className={`p-2 px-3 w-100 form-control ${
-              !!errorText ? 'is-invalid' : ''
-            }`}
+            className={`p-2 px-3 w-100 form-control ${errorClass}`}
             placeholder={`No ${props.id || props.name} set`}
             style={{
+              outline: 'none',
               border: 'none',
               borderRadius: '5px',
               backgroundColor: '#a4b0be',

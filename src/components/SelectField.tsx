@@ -1,18 +1,22 @@
 import React, { HTMLProps } from 'react';
 import { useField, FieldAttributes } from 'formik';
 
-type SelectFieldProps = { label: string } & FieldAttributes<
-  HTMLProps<HTMLSelectElement>
->;
+import { SelectOptions } from '../constants';
+
+type SelectFieldProps = {
+  label: string;
+  options: SelectOptions<any>[];
+} & FieldAttributes<HTMLProps<HTMLSelectElement>>;
 
 const SelectField: React.FC<SelectFieldProps> = ({
   label,
-  children,
+  options,
   ...props
 }) => {
   const [field, meta] = useField(props.name);
 
   const errorText = meta.error && meta.touched ? meta.error : '';
+  const errorClass = !!errorText ? 'is-invalid' : '';
 
   return (
     <div className='form-group'>
@@ -25,16 +29,22 @@ const SelectField: React.FC<SelectFieldProps> = ({
           <select
             {...field}
             {...props}
-            className={`p-2 px-3 w-100 form-control ${
-              !!errorText ? 'is-invalid' : ''
-            }`}
+            className={`p-2 px-3 w-100 form-control ${errorClass}`}
+            // value={options && options[0]}
             style={{
               border: 'none',
               appearance: 'none',
               borderRadius: '5px',
               backgroundColor: '#a4b0be',
             }}>
-            {children}
+            {options.map((option) => (
+              <option
+                key={option['value']}
+                value={option['value']}
+                disabled={option['disabled']}>
+                {option['label']}
+              </option>
+            ))}
           </select>
         </div>
       </div>
