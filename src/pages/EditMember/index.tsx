@@ -1,10 +1,10 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo } from 'react';
 
 import { firestore } from 'firebase/app';
 import { Form, Formik } from 'formik';
 import { useParams, useHistory, Link } from 'react-router-dom';
 
-import { tap } from 'rxjs/operators';
+// import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
 import {
@@ -13,7 +13,8 @@ import {
   FORM_SCHEMA_MEMBER,
 } from '../../constants';
 
-import { mapEmpty } from '../../pipes';
+import { useQuery } from '../../hooks';
+// import { mapEmpty } from '../../pipes';
 import { Member, PartialMember } from '../../models';
 import {
   InputField,
@@ -32,22 +33,26 @@ const EditMember: React.FC = memo(() => {
   const history = useHistory();
   const params = useParams<IEditMemberParams>();
 
-  const [loading, setLoading] = useState(true);
-  const [member, setMember] = useState<Member>();
+  // const [loading, setLoading] = useState(true);
+  // const [member, setMember] = useState<Member>();
 
-  useEffect(() => {
-    const query = firestore().doc(`members/${params.id}`);
+  const query = firestore().doc(`members/${params.id}`);
 
-    const unsub = docData<Member>(query)
-      .pipe(
-        tap(() => setLoading(true)),
-        mapEmpty(undefined),
-        tap(() => setLoading(false))
-      )
-      .subscribe(setMember);
+  const [member, , loading] = useQuery(docData<Member>(query));
 
-    return () => unsub.unsubscribe();
-  }, [params.id]);
+  // useEffect(() => {
+  //   const query = firestore().doc(`members/${params.id}`);
+
+  //   const unsub = docData<Member>(query)
+  //     .pipe(
+  //       tap(() => setLoading(true)),
+  //       mapEmpty(undefined),
+  //       tap(() => setLoading(false))
+  //     )
+  //     .subscribe(setMember);
+
+  //   return () => unsub.unsubscribe();
+  // }, [params.id]);
 
   if (loading) return <LoadingStatus />;
 
