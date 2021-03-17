@@ -1,6 +1,8 @@
 import React, { HTMLProps } from 'react';
 import { useField, FieldAttributes } from 'formik';
 
+// import Select from 'react-select'
+
 import { SelectOptions } from '../constants';
 
 type SelectFieldProps = {
@@ -26,11 +28,11 @@ const SelectField: React.FC<SelectFieldProps> = ({
         </div>
 
         <div className='col-sm-12 col-md-8 col-lg-8'>
+          {/* <Select options={options} /> */}
           <select
             {...field}
             {...props}
             className={`p-2 px-3 w-100 form-control ${errorClass}`}
-            // value={options && options[0]}
             style={{
               border: 'none',
               appearance: 'none',

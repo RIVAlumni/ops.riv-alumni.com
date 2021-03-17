@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import { firestore } from 'firebase/app';
-import { Formik, Form } from 'formik';
+import { firestore } from 'firebase/app';
+import { Form, Formik, FormikHelpers } from 'formik';
 
 import { PartialMember } from '../../models';
-
 import {
-  // FORM_SCHEMA_MEMBER,
   GENDER,
   GRADUATING_YEAR,
   GRADUATING_CLASS,
+  FORM_SCHEMA_MEMBER,
 } from '../../constants';
 
 import {
@@ -22,15 +21,22 @@ import {
 } from '../../components';
 
 const AddMember: React.FC = () => {
-  // const history = useHistory();
+  const initialValues = {
+    'Gender': GENDER[0].value,
+    'Graduating Class': GRADUATING_CLASS[0].value,
+    'Graduating Year': GRADUATING_YEAR[0].value,
+  } as PartialMember;
 
-  const onAddMember = async (values: PartialMember) => {
-    // const ref = firestore().collection('members')
+  const onAddMember = async (
+    values: PartialMember,
+    { resetForm }: FormikHelpers<PartialMember>
+  ) => {
+    const ref = firestore().collection('members');
 
-    const dataStruct: PartialMember = {
+    const data: PartialMember = {
       'Full Name': values['Full Name'],
       'Gender': values['Gender'],
-      'Email': values['Email'],
+      'Email': values['Email'] || null,
       'Contact Number': Number(values['Contact Number']),
       'Home Number': Number(values['Home Number']) || null,
       'Current School': values['Current School'] || null,
@@ -43,7 +49,13 @@ const AddMember: React.FC = () => {
       ),
     };
 
-    console.log(dataStruct);
+    try {
+      await ref.add(data);
+      alert('Successfully added member');
+      return resetForm();
+    } catch (e) {
+      return alert(`Error Occurred: ${e}`);
+    }
   };
 
   return (
@@ -53,15 +65,13 @@ const AddMember: React.FC = () => {
       <SectionHeader>Personal Details</SectionHeader>
 
       <Formik
-        initialValues={{} as PartialMember}
-        // validationSchema={FORM_SCHEMA_MEMBER}
+        initialValues={initialValues}
+        validationSchema={FORM_SCHEMA_MEMBER}
         onSubmit={onAddMember}>
         <Form>
           <DynamicCard>
             <InputField type='text' name='Full Name' label='Full Name' />
-
             <InputField type='text' name='Email' label='Email' />
-
             <SelectField name='Gender' label='Gender' options={GENDER} />
 
             <SelectField
