@@ -59,13 +59,9 @@ const EditUser: React.FC = memo(() => {
   const onSaveChanges = async (values: User) => {
     const ref = firestore().doc(`users/${user['User ID']}`);
 
-    const data: PartialUser = {
-      'Email': values['Email'],
-      'Photo URL': values['Photo URL'],
-      'Display Name': values['Display Name'],
-      'Membership ID': values['Membership ID'],
+    const data = {
       'Access Level': Number(values['Access Level']),
-    };
+    } as PartialUser;
 
     try {
       await ref.set(data, { merge: true });
