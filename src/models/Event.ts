@@ -1,6 +1,11 @@
-import { firestore } from 'firebase/app';
+import { Metadata } from './Metadata';
 
-export interface PartialEvent {
+export interface Event extends Metadata {
+  /**
+   * @readonly
+   * Unique event identifier.
+   */
+  readonly 'Event Code': number;
   /**
    * @readonly
    * Year of occurrence of the event.
@@ -34,24 +39,6 @@ export interface PartialEvent {
    * Determines if VIA Hours computed are valid.
    */
   'Official Event': boolean;
-}
-
-export interface Event extends PartialEvent {
-  /**
-   * @readonly
-   * Unique event identifier.
-   */
-  readonly 'Event Code': number;
-  /**
-   * @readonly
-   * Timestamp of the last document update.
-   */
-  readonly 'updatedAt': firestore.FieldValue;
-  /**
-   * @readonly
-   * Timestamp of when the document was created.
-   */
-  readonly 'createdAt': firestore.FieldValue;
 }
 
 export interface EventRoles {

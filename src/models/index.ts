@@ -5,4 +5,5 @@ export * from './Participation';
 
 export * from './Aggregations';
 
+export * from './Metadata';
 export * from './AppStatus';

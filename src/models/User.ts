@@ -1,6 +1,11 @@
-import { firestore } from 'firebase/app';
+import { Metadata } from './Metadata';
 
-export interface PartialUser {
+export interface User extends Metadata {
+  /**
+   * @readonly
+   * User identifier of the registered user.
+   */
+  readonly 'User ID': string;
   /**
    * @readonly
    * Email address of the registered user.
@@ -26,24 +31,6 @@ export interface PartialUser {
    * Levels of access granted to the registered user.
    */
   'Access Level': UserAccessLevels;
-}
-
-export interface User extends PartialUser {
-  /**
-   * @readonly
-   * User identifier of the registered user.
-   */
-  readonly 'User ID': string;
-  /**
-   * @readonly
-   * Timestamp of the last document update.
-   */
-  readonly 'updatedAt': firestore.FieldValue;
-  /**
-   * @readonly
-   * Timestamp of when the document was created.
-   */
-  readonly 'createdAt': firestore.FieldValue;
 }
 
 export enum UserAccessLevels {

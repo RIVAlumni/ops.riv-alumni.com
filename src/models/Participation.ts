@@ -1,6 +1,11 @@
-import { firestore } from 'firebase/app';
+import { Metadata } from './Metadata';
 
-export interface PartialParticipation {
+export interface Participation extends Metadata {
+  /**
+   * @readonly
+   * Unique participation identifier for the event.
+   */
+  readonly 'Participation ID': string;
   /**
    * @readonly
    * Unique membership identifer of the alumni.
@@ -19,22 +24,4 @@ export interface PartialParticipation {
    * VIA hours accumulated by the alumni.
    */
   'VIA Hours': number;
-}
-
-export interface Participation extends PartialParticipation {
-  /**
-   * @readonly
-   * Unique participation identifier for the event.
-   */
-  readonly 'Participation ID': string;
-  /**
-   * @readonly
-   * Timestamp of the last document update.
-   */
-  readonly 'updatedAt': firestore.FieldValue;
-  /**
-   * @readonly
-   * Timestamp of when the document was created.
-   */
-  readonly 'createdAt': firestore.FieldValue;
 }

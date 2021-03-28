@@ -1,6 +1,11 @@
-import { firestore } from 'firebase/app';
+import { Metadata } from './Metadata';
 
-export interface PartialMember {
+export interface Member extends Metadata {
+  /**
+   * @readonly
+   * Unique membership identifier.
+   */
+  readonly 'Membership ID': string;
   /**
    * Legal full name of the alumni.
    */
@@ -50,22 +55,4 @@ export interface PartialMember {
    * Contactable number of the parent/guardian of the alumni.
    */
   'Contact Number Of Next-Of-Kin': number;
-}
-
-export interface Member extends PartialMember {
-  /**
-   * @readonly
-   * Unique membership identifier.
-   */
-  readonly 'Membership ID': string;
-  /**
-   * @readonly
-   * Timestamp of the last document update.
-   */
-  readonly 'updatedAt': firestore.FieldValue;
-  /**
-   * @readonly
-   * Timestamp of when the document was created.
-   */
-  readonly 'createdAt': firestore.FieldValue;
 }
