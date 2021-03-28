@@ -15,7 +15,7 @@ import {
 } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { Member, PartialMember } from '../../models';
+import { Member } from '../../models';
 import {
   InputField,
   SelectField,
@@ -64,7 +64,8 @@ const EditMember: React.FC = memo(() => {
   const onSaveChanges = async (values: Member) => {
     const ref = firestore().doc(`members/${member['Membership ID']}`);
 
-    const data: PartialMember = {
+    const data = {
+      'Membership ID': values['Membership ID'],
       'Full Name': values['Full Name'],
       'Gender': values['Gender'],
       'Email': values['Email'],
@@ -78,6 +79,8 @@ const EditMember: React.FC = memo(() => {
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),
+      'updatedAt': values['updatedAt'],
+      'createdAt': values['createdAt'],
     };
 
     try {

@@ -10,7 +10,7 @@ import { docData } from 'rxfire/firestore';
 import { FORM_SCHEMA_EVENT } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { Event, PartialEvent } from '../../models';
+import { Event } from '../../models';
 import {
   InputField,
   PageHeader,
@@ -58,7 +58,8 @@ const EditEvent: React.FC = memo(() => {
   const onSaveChanges = async (values: Event) => {
     const ref = firestore().doc(`events/${event['Event Code']}`);
 
-    const data: PartialEvent = {
+    const data: Event = {
+      'Event Code': Number(values['Event Code']),
       'Event Year': values['Event Year'],
       'Event Name': values['Event Name'],
       'Event Thumbnail': values['Event Thumbnail'],
@@ -67,6 +68,8 @@ const EditEvent: React.FC = memo(() => {
       'Google Drive': values['Google Drive'],
       'Roles': values['Roles'],
       'Official Event': values['Official Event'],
+      'updatedAt': values['updatedAt'],
+      'createdAt': values['createdAt'],
     };
 
     try {

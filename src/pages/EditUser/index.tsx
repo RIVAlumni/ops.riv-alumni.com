@@ -10,7 +10,7 @@ import { docData } from 'rxfire/firestore';
 import { FORM_SCHEMA_USER, SelectOptions } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { User, PartialUser, UserAccessLevels } from '../../models';
+import { User, UserAccessLevels } from '../../models';
 import {
   InputField,
   SelectField,
@@ -59,9 +59,16 @@ const EditUser: React.FC = memo(() => {
   const onSaveChanges = async (values: User) => {
     const ref = firestore().doc(`users/${user['User ID']}`);
 
-    const data = {
+    const data: User = {
+      'User ID': values['User ID'],
+      'Email': values['Email'],
+      'Photo URL': values['Photo URL'],
+      'Display Name': values['Display Name'],
+      'Membership ID': values['Membership ID'],
       'Access Level': Number(values['Access Level']),
-    } as PartialUser;
+      'updatedAt': values['updatedAt'],
+      'createdAt': values['createdAt'],
+    };
 
     try {
       await ref.set(data, { merge: true });

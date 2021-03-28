@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { firestore } from 'firebase/app';
 import { Form, Formik, FormikHelpers } from 'formik';
 
-import { PartialMember } from '../../models';
+import { Member } from '../../models';
 import {
   GENDER,
   GRADUATING_YEAR,
@@ -25,15 +25,16 @@ const AddMember: React.FC = () => {
     'Gender': GENDER[0].value,
     'Graduating Class': GRADUATING_CLASS[0].value,
     'Graduating Year': GRADUATING_YEAR[0].value,
-  } as PartialMember;
+  } as Member;
 
   const onAddMember = async (
-    values: PartialMember,
-    { resetForm }: FormikHelpers<PartialMember>
+    values: Member,
+    { resetForm }: FormikHelpers<Member>
   ) => {
-    const ref = firestore().collection('members');
+    const ref = firestore().collection('members').doc();
 
-    const data: PartialMember = {
+    const data: Member = {
+      'Membership ID': ref.id,
       'Full Name': values['Full Name'],
       'Gender': values['Gender'],
       'Email': values['Email'] || null,
@@ -47,10 +48,12 @@ const AddMember: React.FC = () => {
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),
+      'updatedAt': firestore.FieldValue.serverTimestamp(),
+      'createdAt': firestore.FieldValue.serverTimestamp(),
     };
 
     try {
-      await ref.add(data);
+      await ref.set(data, { merge: true });
       alert('Successfully added member');
       return resetForm();
     } catch (e) {

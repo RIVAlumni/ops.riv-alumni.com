@@ -11,7 +11,7 @@ import { tap, map, switchMap } from 'rxjs/operators';
 import { FORM_SCHEMA_PARTICIPATION } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { Member, PartialParticipation, Participation } from '../../models';
+import { Member, Participation } from '../../models';
 import {
   PageHeader,
   InputField,
@@ -67,11 +67,14 @@ const EditParticipation: React.FC = () => {
   const onSaveChanges = async (values: Participation) => {
     const ref = firestore().doc(`participations/${data['Participation ID']}`);
 
-    const updatedData: PartialParticipation = {
+    const updatedData: Participation = {
+      'Participation ID': values['Participation ID'],
       'Membership ID': values['Membership ID'],
       'Event Code': values['Event Code'],
       'Role': values['Role'],
       'VIA Hours': values['VIA Hours'],
+      'updatedAt': values['updatedAt'],
+      'createdAt': values['createdAt'],
     };
 
     try {
