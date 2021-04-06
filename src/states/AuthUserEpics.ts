@@ -13,6 +13,7 @@ import {
   ignoreElements,
 } from 'rxjs/operators';
 
+import { User, UserAccessLevels } from '../models';
 import { EpicType } from '../services';
 import {
   LOAD_AUTH_USER_REQUEST,
@@ -25,6 +26,27 @@ export const AuthUserRequestEpic: EpicType = (action$, _state$, { firebase }) =>
   action$.pipe(
     filter(isOfType(LOAD_AUTH_USER_REQUEST)),
     switchMap(() => authState(firebase.auth())),
+    tap(async (user) => {
+      if (!user) return;
+      if (user.metadata.lastSignInTime !== user.metadata.creationTime) return;
+
+      const ref = firebase.database().doc(`/users/${user.uid}`);
+
+      if ((await ref.get()).exists) return;
+
+      const data: User = {
+        'User ID': user.uid,
+        'Email': `${user.email}`,
+        'Photo URL': `${user.photoURL}`,
+        'Display Name': `${user.displayName}`,
+        'Membership ID': null,
+        'Access Level': UserAccessLevels.Anonymous,
+        'updatedAt': firebase.database.FieldValue.serverTimestamp(),
+        'createdAt': firebase.database.FieldValue.serverTimestamp(),
+      };
+
+      return ref.set(data, { merge: true }).catch(console.error);
+    }),
     switchMap((user) =>
       !user
         ? of(null).pipe(map(AuthUserAsync.cancel))
