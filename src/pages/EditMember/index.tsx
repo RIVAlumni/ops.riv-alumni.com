@@ -79,7 +79,7 @@ const EditMember: React.FC = memo(() => {
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),
-      'updatedAt': values['updatedAt'],
+      'updatedAt': firestore.FieldValue.serverTimestamp(),
       'createdAt': values['createdAt'],
     };
 
