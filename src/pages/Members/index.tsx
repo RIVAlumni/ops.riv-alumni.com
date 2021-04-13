@@ -111,6 +111,7 @@ const Members: React.FC = memo(() => {
     const sub = onSearch$
       .pipe(
         debounceTime(500),
+        map((search) => search.trim()),
         tap(() => setLoading(true)),
         switchMap(getMembers),
         tap(adjustCursors),
