@@ -65,17 +65,19 @@ const EditMember: React.FC = memo(() => {
     const ref = firestore().doc(`members/${member['Membership ID']}`);
 
     const data = {
-      'Membership ID': values['Membership ID'],
-      'Full Name': values['Full Name'],
-      'Gender': values['Gender'],
-      'Email': values['Email'],
+      'Membership ID': values['Membership ID'].trim(),
+      'Full Name': values['Full Name'].trim(),
+      'Gender': values['Gender'].trim(),
+      'Email': values['Email']?.trim() || null,
       'Contact Number': Number(values['Contact Number']),
       'Home Number': Number(values['Home Number']) || null,
-      'Current School': values['Current School'] || null,
-      'Graduating Class': values['Graduating Class'],
+      'Current School': values['Current School']?.trim() || null,
+      'Graduating Class': values['Graduating Class'].trim(),
       'Graduating Year': Number(values['Graduating Year']),
-      'Name Of Next-Of-Kin': values['Name Of Next-Of-Kin'],
-      'Relationship With Next-Of-Kin': values['Relationship With Next-Of-Kin'],
+      'Name Of Next-Of-Kin': values['Name Of Next-Of-Kin'].trim(),
+      'Relationship With Next-Of-Kin': values[
+        'Relationship With Next-Of-Kin'
+      ].trim(),
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),

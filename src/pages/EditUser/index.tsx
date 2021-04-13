@@ -60,11 +60,11 @@ const EditUser: React.FC = memo(() => {
     const ref = firestore().doc(`users/${user['User ID']}`);
 
     const data: User = {
-      'User ID': values['User ID'],
-      'Email': values['Email'],
-      'Photo URL': values['Photo URL'],
-      'Display Name': values['Display Name'],
-      'Membership ID': values['Membership ID'],
+      'User ID': values['User ID'].trim(),
+      'Email': values['Email'].trim(),
+      'Photo URL': values['Photo URL'].trim(),
+      'Display Name': values['Display Name'].trim(),
+      'Membership ID': values['Membership ID']?.trim() || null,
       'Access Level': Number(values['Access Level']),
       'updatedAt': values['updatedAt'],
       'createdAt': values['createdAt'],

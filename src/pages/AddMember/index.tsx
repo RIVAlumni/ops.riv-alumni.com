@@ -34,17 +34,19 @@ const AddMember: React.FC = () => {
     const ref = firestore().collection('members').doc();
 
     const data: Member = {
-      'Membership ID': ref.id,
-      'Full Name': values['Full Name'],
-      'Gender': values['Gender'],
-      'Email': values['Email'] || null,
+      'Membership ID': ref.id.trim(),
+      'Full Name': values['Full Name'].trim(),
+      'Gender': values['Gender'].trim(),
+      'Email': values['Email']?.trim() || null,
       'Contact Number': Number(values['Contact Number']),
       'Home Number': Number(values['Home Number']) || null,
-      'Current School': values['Current School'] || null,
-      'Graduating Class': values['Graduating Class'],
+      'Current School': values['Current School']?.trim() || null,
+      'Graduating Class': values['Graduating Class'].trim(),
       'Graduating Year': Number(values['Graduating Year']),
-      'Name Of Next-Of-Kin': values['Name Of Next-Of-Kin'],
-      'Relationship With Next-Of-Kin': values['Relationship With Next-Of-Kin'],
+      'Name Of Next-Of-Kin': values['Name Of Next-Of-Kin'].trim(),
+      'Relationship With Next-Of-Kin': values[
+        'Relationship With Next-Of-Kin'
+      ].trim(),
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),

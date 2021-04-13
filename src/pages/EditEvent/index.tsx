@@ -60,12 +60,12 @@ const EditEvent: React.FC = memo(() => {
 
     const data: Event = {
       'Event Code': Number(values['Event Code']),
-      'Event Year': values['Event Year'],
-      'Event Name': values['Event Name'],
-      'Event Thumbnail': values['Event Thumbnail'],
-      'Event Overall In-Charge': values['Event Overall In-Charge'],
-      'Event Assistant In-Charge': values['Event Assistant In-Charge'],
-      'Google Drive': values['Google Drive'],
+      'Event Year': Number(values['Event Year']),
+      'Event Name': values['Event Name'].trim(),
+      'Event Thumbnail': values['Event Thumbnail'].trim(),
+      'Event Overall In-Charge': values['Event Overall In-Charge'].trim(),
+      'Event Assistant In-Charge': values['Event Assistant In-Charge'].trim(),
+      'Google Drive': values['Google Drive'].trim(),
       'Roles': values['Roles'],
       'Official Event': values['Official Event'],
       'updatedAt': values['updatedAt'],

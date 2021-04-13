@@ -68,11 +68,11 @@ const EditParticipation: React.FC = () => {
     const ref = firestore().doc(`participations/${data['Participation ID']}`);
 
     const updatedData: Participation = {
-      'Participation ID': values['Participation ID'],
-      'Membership ID': values['Membership ID'],
-      'Event Code': values['Event Code'],
-      'Role': values['Role'],
-      'VIA Hours': values['VIA Hours'],
+      'Participation ID': values['Participation ID'].trim(),
+      'Membership ID': values['Membership ID'].trim(),
+      'Event Code': Number(values['Event Code']),
+      'Role': values['Role'].trim(),
+      'VIA Hours': Number(values['VIA Hours']),
       'updatedAt': values['updatedAt'],
       'createdAt': values['createdAt'],
     };
