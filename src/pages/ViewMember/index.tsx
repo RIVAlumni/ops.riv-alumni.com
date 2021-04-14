@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { isEmpty } from 'lodash';
 import { tap, map } from 'rxjs/operators';
@@ -24,10 +24,22 @@ interface IProfileRouteParams {
 }
 
 const ViewMember: React.FC = memo(() => {
+  const history = useHistory();
   const params = useParams<IProfileRouteParams>();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [member, setMember] = useState<Member | undefined>();
+
+  const onDelete = () => {
+    if (!member) return;
+    if (!window.confirm('Are you sure?')) return;
+
+    return firestore()
+      .doc(`members/${member['Membership ID']}`)
+      .delete()
+      .then(() => history.replace('/manage/members'))
+      .catch((err) => alert(`An error occurred: ${err}`));
+  };
 
   useEffect(() => {
     const query = firestore().doc(`members/${params.id}`);
@@ -87,6 +99,10 @@ const ViewMember: React.FC = memo(() => {
       <DynamicCard>
         <EventsParticipated member={member} />
       </DynamicCard>
+
+      <button onClick={onDelete} className='btn btn-danger'>
+        Delete Member
+      </button>
     </section>
   );
 });
