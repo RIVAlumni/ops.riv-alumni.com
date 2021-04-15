@@ -42,8 +42,28 @@ td {
   max-height: 70vh;
 }
 
+.grid-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+@for $i from 1 through 12 {
+  .grid-span-#{$i} {
+    grid-column: span #{$i};
+  }
+}
+
 @media only screen and (min-width: 600px) {
   .container {
     padding-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  @for $i from 1 through 12 {
+    .grid-span-#{$i} {
+      grid-column: span 12;
+    }
   }
 }

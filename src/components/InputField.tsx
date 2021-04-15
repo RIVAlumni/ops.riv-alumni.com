@@ -24,6 +24,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
           <input
             {...field}
             {...props}
+            checked={Boolean(field.value) || false}
             value={field.value || ''}
             className={`p-2 px-3 w-100 form-control ${errorClass}`}
             placeholder={`No ${props.id || props.name} set`}
