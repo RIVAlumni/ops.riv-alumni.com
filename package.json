@@ -35,9 +35,12 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/react-select": "^4.0.13",
     "@types/redux": "^3.6.0",
+    "@types/styled-components": "^5.1.9",
+    "browserslist-config-google": "^3.0.1",
     "react-scripts": "3.4.3",
     "redux-devtools-extension": "^2.13.8",
     "sass": "^1.28.0",
+    "styled-components": "^5.2.3",
     "typesafe-actions": "^5.1.0",
     "typescript": "~3.8.0",
     "why-did-you-update": "^1.0.8"
@@ -51,16 +54,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    "extends browserslist-config-google"
+  ]
 }
