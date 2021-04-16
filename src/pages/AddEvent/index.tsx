@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik';
 import { FORM_SCHEMA_EVENT } from '../../constants';
 import { PageHeader, SectionHeader } from '../../components';
 
+import { Input } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { ButtonLink } from '../../ui/ButtonLink';
 
@@ -22,20 +23,14 @@ const AddEvent: React.FC = () => {
         <Form>
           <div className='grid-container'>
             <div className='grid-span-8'>
-              <input
+              <Input
                 type='number'
-                className='w-100'
                 placeholder='Event Code'
                 min={0}
                 max={99999999}
                 minLength={8}
                 maxLength={8}
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}
+                onChange={() => {}}
               />
             </div>
 
