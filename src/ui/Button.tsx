@@ -9,11 +9,27 @@ type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
-  loading?: boolean | undefined;
-  color?: 'danger' | undefined;
+  loading?: boolean;
+  color?: keyof typeof colors;
 };
 
-const ButtonElement = styled.button<ButtonProps>`
+const ButtonElement: React.FC<ButtonProps> = ({
+  color = 'danger',
+  loading,
+  disabled,
+  className,
+  children,
+  ...props
+}) => (
+  <button
+    disabled={disabled || loading}
+    className={`d-flex align-items-center justify-content-center ${colors[color]} ${className}`}
+    {...props}>
+    {children}
+  </button>
+);
+
+export const Button = styled(ButtonElement)`
   border: none;
   border-radius: 0.5rem;
 
@@ -27,21 +43,3 @@ const ButtonElement = styled.button<ButtonProps>`
     outline: none !important;
   }
 `;
-
-export const Button: React.FC<ButtonProps> = ({
-  color = 'danger',
-  loading,
-  disabled,
-  className = '',
-  children,
-  ...props
-}) => {
-  return (
-    <ButtonElement
-      disabled={disabled || loading}
-      className={`d-flex align-items-center justify-content-center ${colors[color]} ${className}`}
-      {...(props as any)}>
-      {children}
-    </ButtonElement>
-  );
-};
