@@ -15,9 +15,9 @@ const ButtonLinkElement: React.FC<ButtonLinkProps> = ({
   ...props
 }) => (
   <Link
+    {...props}
     to={to}
-    className={`d-flex align-items-center justify-content-center text-dark ${className}`}
-    {...props}>
+    className={`d-flex align-items-center justify-content-center text-dark ${className}`}>
     {children}
   </Link>
 );

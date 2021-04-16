@@ -22,9 +22,9 @@ const ButtonElement: React.FC<ButtonProps> = ({
   ...props
 }) => (
   <button
+    {...props}
     disabled={disabled || loading}
-    className={`d-flex align-items-center justify-content-center ${colors[color]} ${className}`}
-    {...props}>
+    className={`d-flex align-items-center justify-content-center ${colors[color]} ${className}`}>
     {children}
   </button>
 );
