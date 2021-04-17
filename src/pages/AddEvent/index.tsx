@@ -18,6 +18,8 @@ const AddEvent: React.FC = () => {
 
       <Formik
         initialValues={{}}
+        validateOnBlur={false}
+        validateOnChange={false}
         validationSchema={FORM_SCHEMA_EVENT}
         onSubmit={() => {}}>
         <Form>
@@ -26,11 +28,19 @@ const AddEvent: React.FC = () => {
               <Input
                 type='number'
                 placeholder='Event Code'
+                name='Event Code'
                 min={0}
                 max={99999999}
                 minLength={8}
                 maxLength={8}
-                onChange={() => {}}
+                autoFocus
+                autoComplete='off'
+                onInput={(e) =>
+                  (e.currentTarget.value = e.currentTarget.value.slice(
+                    0,
+                    e.currentTarget.maxLength
+                  ))
+                }
               />
             </div>
 
@@ -51,64 +61,36 @@ const AddEvent: React.FC = () => {
             </div>
 
             <div className='grid-span-12'>
-              <input
-                type='text'
-                className='w-100'
-                placeholder='Event Name'
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}
-              />
+              <Input type='text' placeholder='Event Name' name='Event Name' />
             </div>
 
             <div className='grid-span-6'>
-              <input
+              <Input
                 type='text'
-                className='w-100'
                 placeholder='Overall In-Charge'
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}
+                name='Event Overall In-Charge'
               />
             </div>
 
             <div className='grid-span-6'>
-              <input
+              <Input
                 type='text'
-                className='w-100'
                 placeholder='Assistant In-Charge'
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}
+                name='Event Assistant In-Charge'
               />
             </div>
 
             <div className='grid-span-12'>
-              <input
+              <Input
                 type='text'
-                className='w-100'
                 placeholder='Google Drive URL'
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}
+                name='Google Drive'
               />
             </div>
           </div>
 
           <div className='btn-group mt-4'>
-            <Button color='danger' className='mr-3'>
+            <Button type='submit' color='danger' className='mr-3'>
               Add Event
             </Button>
             <ButtonLink to='/manage/events' className='ml-3'>
