@@ -1,31 +1,14 @@
 import styled from 'styled-components';
 
 import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-import { useField, FieldAttributes } from 'formik';
 
-type InputProps = FieldAttributes<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type InputProps = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
 > & {};
 
 const InputElement: React.FC<InputProps> = ({ className, ...props }) => {
-  const [field, meta] = useField<string>(props.name);
-
-  const errorText = meta.error && meta.touched ? meta.error : '';
-  const errorClass = !!errorText ? 'is-invalid' : '';
-
-  return (
-    <div>
-      <input
-        {...props}
-        {...field}
-        value={field.value || ''}
-        checked={Boolean(field.value) || false}
-        className={`${className} ${errorClass}`}
-      />
-
-      <span className='form-text invalid-feedback'>{errorText}</span>
-    </div>
-  );
+  return <input {...props} className={`${className}`} />;
 };
 
 export const Input = styled(InputElement)`
