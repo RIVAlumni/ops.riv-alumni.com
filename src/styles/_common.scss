@@ -60,7 +60,7 @@ td {
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 450px) {
   @for $i from 1 through 12 {
     .grid-span-#{$i} {
       grid-column: span 12;

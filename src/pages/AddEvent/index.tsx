@@ -8,6 +8,7 @@ import { PageHeader, SectionHeader } from '../../components';
 import { Input } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { ButtonLink } from '../../ui/ButtonLink';
+import { NativeSelect } from '../../ui/NativeSelect';
 
 const AddEvent: React.FC = () => {
   return (
@@ -45,19 +46,19 @@ const AddEvent: React.FC = () => {
             </div>
 
             <div className='grid-span-4'>
-              <select
-                className='w-100 h-100 custom-select custom-select-sm'
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  backgroundColor: '#a4b0be',
-                }}>
-                <option value='false' selected>
-                  Unofficial Event
-                </option>
-                <option value='true'>Official Event</option>
-              </select>
+              <NativeSelect
+                name='Official Event'
+                options={[
+                  {
+                    label: 'Unofficial Event',
+                    value: false,
+                  },
+                  {
+                    label: 'Official Event',
+                    value: true,
+                  },
+                ]}
+              />
             </div>
 
             <div className='grid-span-12'>
