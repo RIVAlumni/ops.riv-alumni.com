@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-import React, {
-  forwardRef,
-  DetailedHTMLProps,
-  SelectHTMLAttributes,
-} from 'react';
+import { forwardRef, DetailedHTMLProps, SelectHTMLAttributes } from 'react';
 
 import { SelectOptions } from '../constants';
 

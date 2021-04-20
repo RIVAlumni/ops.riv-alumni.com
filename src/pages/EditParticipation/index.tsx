@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Form, Formik } from 'formik';
 import { firestore } from 'firebase/app';

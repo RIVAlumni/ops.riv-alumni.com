@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { of } from 'rxjs';

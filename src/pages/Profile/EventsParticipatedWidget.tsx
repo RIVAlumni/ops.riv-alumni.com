@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import { from } from 'rxjs';
@@ -43,7 +43,7 @@ const EventsParticipatedData: React.FC = memo(() => {
     );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {result.map((r, idx) => (
         <tr key={r['Event Code']}>
           <td>{idx + 1}</td>
@@ -54,7 +54,7 @@ const EventsParticipatedData: React.FC = memo(() => {
           <td> | </td>
         </tr>
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 });
 

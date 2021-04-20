@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { FC, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 import { Input } from './Input';
 
@@ -8,7 +8,7 @@ type SearchProps = DetailedHTMLProps<
   HTMLInputElement
 > & {};
 
-const SearchElement: React.FC<SearchProps> = ({ ref, ...props }) => (
+const SearchElement: FC<SearchProps> = ({ ref, ...props }) => (
   <div className='w-full rounded-8 bg-secondary-700 d-flex align-items-center'>
     <i className='mx-4 fas fa-search text-white' />
     <Input {...props} className='w-100 pl-0' />

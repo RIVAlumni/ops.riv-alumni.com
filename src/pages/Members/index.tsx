@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect, useState } from 'react';
+import { memo, useRef, useEffect, useState, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
@@ -39,7 +39,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
     );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {data.map((mem) => (
         <tr key={mem['Membership ID']}>
           <td className='text-dark text-truncate'>{mem['Full Name']}</td>
@@ -67,7 +67,7 @@ const RenderData: React.FC<IRenderDataProps> = memo(({ data, loading }) => {
           </td>
         </tr>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 });
 

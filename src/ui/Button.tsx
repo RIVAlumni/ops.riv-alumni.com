@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { FC, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import styled from 'styled-components';
 
 const colors = {
@@ -13,7 +13,7 @@ type ButtonProps = DetailedHTMLProps<
   color?: keyof typeof colors;
 };
 
-const ButtonElement: React.FC<ButtonProps> = ({
+const ButtonElement: FC<ButtonProps> = ({
   color = 'danger',
   loading,
   disabled,

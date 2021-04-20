@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo, Fragment } from 'react';
 import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
@@ -23,7 +23,7 @@ const UpcomingEventsWidgetData: React.FC = memo(() => {
     );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {filteredEvents.map((event, idx) => (
         <tr key={event['Event Code']}>
           <td>{idx + 1}</td>
@@ -32,7 +32,7 @@ const UpcomingEventsWidgetData: React.FC = memo(() => {
           <td> | </td>
         </tr>
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 });
 

@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import { memo, FC, Fragment } from 'react';
 import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../../services';
 import { DynamicCard } from '../../components';
 
-const RecentEventsWidgetData: React.FC = memo(() => {
+const RecentEventsWidgetData: FC = memo(() => {
   const events = useSelector(({ remote }: AppState) => remote.events.data);
   const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
   const yearAgoDate = Number(
@@ -27,7 +27,7 @@ const RecentEventsWidgetData: React.FC = memo(() => {
     );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {filteredEvents.map((evt, idx) => (
         <tr key={evt['Event Code']}>
           <td>{idx + 1}</td>
@@ -36,7 +36,7 @@ const RecentEventsWidgetData: React.FC = memo(() => {
           <td> | </td>
         </tr>
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 });
 

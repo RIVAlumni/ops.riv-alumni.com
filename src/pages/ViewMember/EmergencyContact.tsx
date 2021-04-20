@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { Fragment } from 'react';
 import { Member } from '../../models';
 
 interface IEmergencyContactProps {
@@ -20,7 +19,7 @@ const EmergencyContact: React.FC<IEmergencyContactProps> = ({ member }) => {
   ];
 
   return (
-    <React.Fragment>
+    <Fragment>
       {details.map((data) => (
         <div key={data['key']} className='row'>
           <div className='col-sm-12 col-md-6 col-lg-6'>
@@ -32,7 +31,7 @@ const EmergencyContact: React.FC<IEmergencyContactProps> = ({ member }) => {
           </div>
         </div>
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

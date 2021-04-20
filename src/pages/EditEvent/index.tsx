@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, Fragment } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
@@ -160,7 +160,7 @@ const EditEvent: React.FC = memo(() => {
 
                     <tbody>
                       {values['Roles'].map((_, i) => (
-                        <React.Fragment key={i}>
+                        <Fragment key={i}>
                           <tr>
                             <td className='w-25'>
                               <Field
@@ -189,7 +189,7 @@ const EditEvent: React.FC = memo(() => {
                               </button>
                             </td>
                           </tr>
-                        </React.Fragment>
+                        </Fragment>
                       ))}
 
                       <tr>

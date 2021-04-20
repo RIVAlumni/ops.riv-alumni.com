@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 
 import { isEmpty } from 'lodash';
 import { useSelector } from 'react-redux';

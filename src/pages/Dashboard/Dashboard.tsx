@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAuth } from '../../hooks';
 import { UserAccessLevels } from '../../models';
 import { PageHeader, SectionHeader } from '../../components';

@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState, useEffect } from 'react';
+import { memo, useRef, useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { of, combineLatest } from 'rxjs';
@@ -35,7 +35,7 @@ const RenderData: React.FC<IRenderDataProps> = ({ data, loading }) => {
     );
 
   return (
-    <React.Fragment>
+    <Fragment>
       {data.map((prt) => (
         <tr key={prt['Event Code']}>
           <td>
@@ -50,7 +50,7 @@ const RenderData: React.FC<IRenderDataProps> = ({ data, loading }) => {
           <td>{prt['VIA Hours']}</td>
         </tr>
       ))}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

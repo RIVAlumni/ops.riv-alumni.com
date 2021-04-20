@@ -1,4 +1,4 @@
-import React, { RefAttributes } from 'react';
+import { FC, RefAttributes } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ type ButtonLinkProps = LinkProps &
     to: string;
   };
 
-const ButtonLinkElement: React.FC<ButtonLinkProps> = ({
+const ButtonLinkElement: FC<ButtonLinkProps> = ({
   to,
   children,
   className,

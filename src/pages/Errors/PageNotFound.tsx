@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { PageHeader } from '../../components';
 
 const PageNotFound: React.FC = () => {
