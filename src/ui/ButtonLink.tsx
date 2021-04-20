@@ -1,29 +1,30 @@
-import { FC, RefAttributes } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
-
 import styled from 'styled-components';
+import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
-type ButtonLinkProps = LinkProps &
-  RefAttributes<HTMLAnchorElement> & {
-    to: string;
-  };
+type ButtonLinkProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> & {};
 
-const ButtonLinkElement: FC<ButtonLinkProps> = ({
-  to,
-  children,
-  className,
-  ...props
-}) => (
-  <Link
-    {...props}
-    to={to}
-    className={`d-flex align-items-center justify-content-center text-dark ${className}`}>
-    {children}
-  </Link>
-);
+const ButtonLinkElement = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-export const ButtonLink = styled(ButtonLinkElement)`
-  font-size: 1rem;
-  line-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  color: rgba(47, 53, 66, 1);
+  background: transparent;
   text-decoration: underline;
 `;
+
+export const ButtonLink = forwardRef<HTMLButtonElement, ButtonLinkProps>(
+  ({ children, ...props }, ref) => (
+    <ButtonLinkElement {...props} ref={ref}>
+      {children}
+    </ButtonLinkElement>
+  )
+);

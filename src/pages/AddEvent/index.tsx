@@ -93,9 +93,7 @@ const AddEvent: React.FC = () => {
             <Button type='submit' color='danger' className='mr-3'>
               Add Event
             </Button>
-            <ButtonLink to='/manage/events' className='ml-3'>
-              Cancel
-            </ButtonLink>
+            <ButtonLink className='ml-3'>Cancel</ButtonLink>
           </div>
         </Form>
       </Formik>

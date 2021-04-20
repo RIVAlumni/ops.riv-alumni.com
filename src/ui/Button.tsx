@@ -1,4 +1,4 @@
-import { FC, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import styled from 'styled-components';
 
 const colors = {
@@ -13,23 +13,11 @@ type ButtonProps = DetailedHTMLProps<
   color?: keyof typeof colors;
 };
 
-const ButtonElement: FC<ButtonProps> = ({
-  color = 'danger',
-  loading,
-  disabled,
-  className,
-  children,
-  ...props
-}) => (
-  <button
-    {...props}
-    disabled={disabled || loading}
-    className={`d-flex align-items-center justify-content-center ${colors[color]} ${className}`}>
-    {children}
-  </button>
-);
+const ButtonElement = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-export const Button = styled(ButtonElement)`
   border: none;
   border-radius: 0.5rem;
 
@@ -43,3 +31,18 @@ export const Button = styled(ButtonElement)`
     outline: none !important;
   }
 `;
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { color = 'danger', loading, disabled, className, children, ...props },
+    ref
+  ) => (
+    <ButtonElement
+      {...props}
+      ref={ref}
+      disabled={disabled || loading}
+      className={`${colors[color]} ${className}`}>
+      {children}
+    </ButtonElement>
+  )
+);
