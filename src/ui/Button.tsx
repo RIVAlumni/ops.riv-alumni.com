@@ -1,5 +1,5 @@
-import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 import styled from 'styled-components';
+import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 const colors = {
   danger: 'text-white bg-danger',

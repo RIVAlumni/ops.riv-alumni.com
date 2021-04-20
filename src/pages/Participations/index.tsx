@@ -7,15 +7,11 @@ import { collection } from 'rxfire/firestore';
 import { of, combineLatest, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
+import { Search } from '../../ui/Search';
 import { FirebaseService } from '../../services';
 import { Member, Participation } from '../../models';
 import { QUERY_LIMIT, MAX_VIA_HOURS, MAX_EVENT_CODE } from '../../constants';
-import {
-  PageHeader,
-  DynamicCard,
-  SearchField,
-  RenderTableLoading,
-} from '../../components';
+import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
   data: (Member & Participation)[];
@@ -142,15 +138,15 @@ const Participants: React.FC = memo(() => {
     <section>
       <PageHeader>Manage Participations</PageHeader>
 
-      <DynamicCard>
-        <SearchField
-          type='number'
-          placeholder='Event Code'
-          min='00000000'
-          max='99999999'
-          onChangeFn={(e) => onSearch$.next(Number(e.target.value))}
-        />
+      <Search
+        type='number'
+        placeholder='Event Code'
+        min='00000000'
+        max='99999999'
+        onChange={(e) => onSearch$.next(Number(e.target.value))}
+      />
 
+      <DynamicCard>
         <div className='table-responsive'>
           <table className='table table-hover table-borderless mb-0'>
             <thead>

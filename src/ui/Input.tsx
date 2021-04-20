@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 type InputProps = DetailedHTMLProps<

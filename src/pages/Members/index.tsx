@@ -8,13 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
+import { Search } from '../../ui/Search';
 import { QUERY_LIMIT } from '../../constants';
-import {
-  PageHeader,
-  DynamicCard,
-  SearchField,
-  RenderTableLoading,
-} from '../../components';
+import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
   data: Member[];
@@ -128,13 +124,13 @@ const Members: React.FC = memo(() => {
     <section>
       <PageHeader>Manage Members</PageHeader>
 
-      <DynamicCard>
-        <SearchField
-          type='text'
-          placeholder='Full Name'
-          onChangeFn={(e) => onSearch$.next(e.target.value)}
-        />
+      <Search
+        type='text'
+        placeholder='Full Name'
+        onChange={(e) => onSearch$.next(e.target.value)}
+      />
 
+      <DynamicCard>
         <div className='table-responsive'>
           <table className='table table-hover table-borderless mb-0'>
             <thead>

@@ -8,14 +8,10 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { User } from '../../models';
+import { Search } from '../../ui/Search';
 import { QUERY_LIMIT } from '../../constants';
 import { UserAccessLevels } from '../../models';
-import {
-  PageHeader,
-  DynamicCard,
-  SearchField,
-  RenderTableLoading,
-} from '../../components';
+import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
   data: User[];
@@ -128,13 +124,13 @@ const Users: React.FC = memo(() => {
     <section>
       <PageHeader>Manage Users</PageHeader>
 
-      <DynamicCard>
-        <SearchField
-          type='text'
-          placeholder='Display Name'
-          onChangeFn={(e) => onSearch$.next(e.target.value)}
-        />
+      <Search
+        type='text'
+        placeholder='Display Name'
+        onChange={(e) => onSearch$.next(e.target.value)}
+      />
 
+      <DynamicCard>
         <div className='table-responsive'>
           <table className='table table-hover table-borderless mb-0'>
             <thead>
