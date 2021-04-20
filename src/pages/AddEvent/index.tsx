@@ -90,7 +90,7 @@ const AddEvent: React.FC = () => {
             </div>
           </div>
 
-          <div className='btn-group mt-4'>
+          <div className='w-100 btn-group mt-4'>
             <Button type='submit' color='danger' className='mr-3'>
               Add Event
             </Button>
