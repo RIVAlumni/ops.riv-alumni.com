@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
+import { Button } from '../../ui/Button';
 import { Search } from '../../ui/Search';
 import { QUERY_LIMIT } from '../../constants';
 import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
@@ -122,7 +123,14 @@ const Members: React.FC = memo(() => {
 
   return (
     <section>
-      <PageHeader>Manage Members</PageHeader>
+      <div className='row'>
+        <div className='col-8'>
+          <PageHeader>Manage Members</PageHeader>
+        </div>
+        <div className='col-4 d-flex align-items-center justify-content-end'>
+          <Button color='primary'>New Member</Button>
+        </div>
+      </div>
 
       <Search
         type='text'

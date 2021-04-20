@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 const colors = {
+  primary: 'text-white bg-dark',
   danger: 'text-white bg-danger',
 };
 
