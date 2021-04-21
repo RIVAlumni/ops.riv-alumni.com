@@ -129,6 +129,8 @@ const Events: React.FC = memo(() => {
         placeholder='Event Code'
         min='00000000'
         max='99999999'
+        minLength={8}
+        maxLength={8}
         onChange={(e) => onSearch$.next(Number(e.target.value))}
       />
 

@@ -35,12 +35,6 @@ const AddEvent: React.FC = () => {
                 maxLength={8}
                 autoFocus
                 autoComplete='off'
-                onInput={(e) =>
-                  (e.currentTarget.value = e.currentTarget.value.slice(
-                    0,
-                    e.currentTarget.maxLength
-                  ))
-                }
               />
             </div>
 

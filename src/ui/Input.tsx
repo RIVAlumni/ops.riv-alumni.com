@@ -1,10 +1,20 @@
 import styled from 'styled-components';
-import { forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import {
+  forwardRef,
+  FormEvent,
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+} from 'react';
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {};
+
+const onInput = ({ currentTarget }: FormEvent<HTMLInputElement>): void => {
+  if (currentTarget.maxLength > 0)
+    currentTarget.value = currentTarget.value.slice(0, currentTarget.maxLength);
+};
 
 const InputElement = styled.input`
   width: 100%;
@@ -34,5 +44,5 @@ const InputElement = styled.input`
 `;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
-  <InputElement {...props} ref={ref} />
+  <InputElement {...props} ref={ref} onInput={onInput} />
 ));
