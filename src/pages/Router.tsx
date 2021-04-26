@@ -14,6 +14,8 @@ import { AddMember, AddEvent } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
 
+import { ListMembersController } from './Members/ListMembersController';
+
 interface IRouterRoutes {
   path: string;
   component: React.FC;
@@ -103,6 +105,11 @@ const Router: React.FC = memo(() => {
     {
       path: '/manage/participations/:id/edit',
       component: EditParticipation,
+      role: UserAccessLevels.Editor,
+    },
+    {
+      path: '/test',
+      component: ListMembersController,
       role: UserAccessLevels.Editor,
     },
   ];

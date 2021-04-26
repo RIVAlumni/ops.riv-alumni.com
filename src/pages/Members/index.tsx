@@ -8,10 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
-import { Button } from '../../ui/Button';
-import { Search } from '../../ui/Search';
+import { Button, Search } from '../../ui';
 import { QUERY_LIMIT } from '../../constants';
-import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
+import { PageHeader, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
   data: Member[];
@@ -138,26 +137,24 @@ const Members: React.FC = memo(() => {
         onChange={(e) => onSearch$.next(e.target.value)}
       />
 
-      <DynamicCard>
-        <div className='table-responsive'>
-          <table className='table table-hover table-borderless mb-0'>
-            <thead>
-              <tr>
-                <th>Full Name</th>
-                <th>Gender</th>
-                <th>Grad. Year</th>
-                <th>Contact Number</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+      <div className='table-responsive'>
+        <table className='table table-hover table-borderless mb-0'>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Gender</th>
+              <th>Grad. Year</th>
+              <th>Contact Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-            <tbody>
-              <RenderTableLoading colspan={COLSPAN} loading={loading} />
-              <RenderData data={data} loading={loading} />
-            </tbody>
-          </table>
-        </div>
-      </DynamicCard>
+          <tbody>
+            <RenderTableLoading colspan={COLSPAN} loading={loading} />
+            <RenderData data={data} loading={loading} />
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 });
