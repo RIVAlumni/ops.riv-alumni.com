@@ -1,9 +1,10 @@
 import { useHistory } from 'react-router-dom';
 
+import { Button, Search } from '../../ui';
+import { QUERY_LIMIT } from '../../constants';
+
 import { Member } from '../../models';
 import { PageHeader } from '../../components';
-import { QUERY_LIMIT } from '../../constants';
-import { Button, Search } from '../../ui';
 
 type ListMembersViewProps = {
   data: Member[];

@@ -65,8 +65,6 @@ const ListMembersController: React.FC = () => {
     return () => sub.unsubscribe();
   }, []);
 
-  useEffect(() => console.log(data), [data]);
-
   if (data === undefined) return <LoadingStatus />;
   return (
     <ListMembersView
