@@ -9,12 +9,10 @@ import { UserAccessLevels } from '../models';
 import { Navbar, Container, LoadingStatus } from '../components';
 
 import { Dashboard, Profile, PageNotFound } from '../pages';
-import { Users, Members, Events, Participations } from '../pages';
+import { Users, ListMembersController, Events, Participations } from '../pages';
 import { AddMember, AddEvent } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
-
-import { ListMembersController } from './Members/ListMembersController';
 
 interface IRouterRoutes {
   path: string;
@@ -44,7 +42,7 @@ const Router: React.FC = memo(() => {
     },
     {
       path: '/manage/members',
-      component: Members,
+      component: ListMembersController,
       role: UserAccessLevels.Editor,
     },
     {
@@ -105,11 +103,6 @@ const Router: React.FC = memo(() => {
     {
       path: '/manage/participations/:id/edit',
       component: EditParticipation,
-      role: UserAccessLevels.Editor,
-    },
-    {
-      path: '/test',
-      component: ListMembersController,
       role: UserAccessLevels.Editor,
     },
   ];
