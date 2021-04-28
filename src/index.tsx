@@ -1,4 +1,5 @@
-import React from 'react';
+import { StrictMode } from 'react';
+import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
@@ -15,12 +16,14 @@ import './styles/base.scss';
 //   whyDidYouUpdate(React);
 // }
 
+Modal.setAppElement('#root');
+
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider store={rootStore}>
       <Router />
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
 

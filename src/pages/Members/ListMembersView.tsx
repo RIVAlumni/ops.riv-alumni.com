@@ -1,3 +1,6 @@
+import Modal from 'react-modal';
+
+import { useState, CSSProperties } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, Search } from '../../ui';
@@ -12,12 +15,18 @@ type ListMembersViewProps = {
   loadMoreData: () => void;
 };
 
+const modalStyles: CSSProperties = {};
+
 const ListMembersView: React.FC<ListMembersViewProps> = ({
   data,
   setSearch,
   loadMoreData,
 }) => {
   const history = useHistory();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <section>
@@ -27,7 +36,9 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
         </div>
 
         <div className='col-4 d-flex align-items-center justify-content-end'>
-          <Button color='primary'>New Member</Button>
+          <Button color='primary' onClick={openModal}>
+            New Member
+          </Button>
         </div>
       </div>
 
@@ -84,9 +95,25 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
       <Button
         color='primary'
         disabled={!(data.length === QUERY_LIMIT)}
+        style={modalStyles}
         onClick={loadMoreData}>
         Load More
       </Button>
+
+      <Modal
+        shouldCloseOnEsc
+        style={{
+          content: {
+            marginLeft: '100px',
+          },
+        }}
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel='Example Modal'>
+        <h2>lmfao</h2>
+
+        <p>is this even updating wtf</p>
+      </Modal>
     </section>
   );
 };
