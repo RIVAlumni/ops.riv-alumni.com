@@ -1,10 +1,8 @@
-import Modal from 'react-modal';
-
 import { useState, CSSProperties } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Search } from '../../ui';
 import { QUERY_LIMIT } from '../../constants';
+import { Modal, Button, Search } from '../../ui';
 
 import { Member } from '../../models';
 import { PageHeader } from '../../components';
@@ -100,19 +98,8 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
         Load More
       </Button>
 
-      <Modal
-        shouldCloseOnEsc
-        style={{
-          content: {
-            marginLeft: '100px',
-          },
-        }}
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel='Example Modal'>
-        <h2>lmfao</h2>
-
-        <p>is this even updating wtf</p>
+      <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
+        <h3>Just checkin...</h3>
       </Modal>
     </section>
   );

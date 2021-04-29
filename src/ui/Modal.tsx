@@ -4,10 +4,11 @@ type ModalProps = Props;
 
 const modalStyle: Styles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    zIndex: 1000,
+    zIndex: 99999,
+    background: 'transparent',
   },
   content: {
+    color: 'white',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -16,7 +17,7 @@ const modalStyle: Styles = {
     borderRadius: 8,
     padding: '40px 40px 40px 40px',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: 'var(--color-primary-800)',
+    backgroundColor: '#151a21',
     border: 'none',
     maxHeight: '80vh',
     width: '90%',
@@ -31,6 +32,17 @@ const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
       shouldCloseOnEsc
       shouldFocusAfterRender
       {...props}>
+      <div className='w-100 d-flex flex-column'>
+        <div
+          className='d-flex justify-content-end position-absolute'
+          style={{
+            top: '20px',
+            right: '20px',
+          }}
+          onClick={(e) => props.onRequestClose?.(e)}>
+          <i className='fas fa-times' />
+        </div>
+      </div>
       {children}
     </ReactModal>
   );
