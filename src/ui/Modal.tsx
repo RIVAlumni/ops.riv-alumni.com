@@ -1,7 +1,5 @@
 import ReactModal, { Props, Styles } from 'react-modal';
 
-type ModalProps = Props;
-
 const modalStyle: Styles = {
   overlay: {
     zIndex: 99999,
@@ -28,7 +26,7 @@ const modalStyle: Styles = {
   },
 };
 
-const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
+const Modal: React.FC<Props> = ({ children, ...props }) => {
   return (
     <ReactModal
       style={modalStyle}
