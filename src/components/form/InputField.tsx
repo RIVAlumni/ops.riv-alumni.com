@@ -15,9 +15,11 @@ const InputField: React.FC<InputFieldProps> = ({ ref: _, label, ...props }) => {
 
   return (
     <div className='w-100 h-100'>
-      <label className='mb-1'>{label || props.placeholder}</label>
+      <label htmlFor={field.name} className='mb-1 w-100'>
+        {label || props.placeholder}
+      </label>
 
-      <Input {...field} {...props} value={field.value || ''} />
+      <Input {...field} {...props} id={field.name} value={field.value || ''} />
 
       <div className='mt-1 text-danger'>{errorText}</div>
     </div>
