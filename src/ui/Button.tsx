@@ -25,7 +25,7 @@ const ButtonElement = styled.button`
   font-size: 0.875rem;
   font-weight: bold;
 
-  padding: 0.8rem 2.8rem;
+  padding: 0.8rem 2.4rem;
   line-height: 1.25rem;
 
   &:focus {
