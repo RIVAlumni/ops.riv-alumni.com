@@ -1,11 +1,13 @@
-import { useState, CSSProperties } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useState, CSSProperties } from 'react';
 
 import { QUERY_LIMIT } from '../../constants';
-import { Modal, Button, Search } from '../../ui';
+
+import { Button, Search } from '../../ui';
 
 import { Member } from '../../models';
 import { PageHeader } from '../../components';
+import { AddMemberModal } from './AddMemberModal';
 
 type ListMembersViewProps = {
   data: Member[];
@@ -23,9 +25,6 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <section>
       <div className='row'>
@@ -34,7 +33,7 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
         </div>
 
         <div className='col-4 d-flex align-items-center justify-content-end'>
-          <Button color='primary' onClick={openModal}>
+          <Button color='primary' onClick={() => setIsModalOpen(true)}>
             New Member
           </Button>
         </div>
@@ -98,9 +97,10 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
         Load More
       </Button>
 
-      <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
-        <h3>Just checkin...</h3>
-      </Modal>
+      <AddMemberModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 };
