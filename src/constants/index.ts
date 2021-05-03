@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { range } from 'lodash';
 
+export * from './form';
+
 export type SelectOptions<L, V = L> = {
   label: L;
   value: V;
@@ -42,9 +44,10 @@ export const GRADUATING_CLASS: SelectOptions<string>[] = [
 
 export const ONE_OF_GENDER = GENDER.map((object) => object.value);
 
-export const ONE_OF_GRADUATING_YEAR = GRADUATING_YEAR.map((object) =>
-  Number(object.value)
+export const ONE_OF_GRADUATING_YEAR = GRADUATING_YEAR.map(
+  (object) => object.value
 );
+
 export const ONE_OF_GRADUATING_CLASS = GRADUATING_CLASS.map(
   (object) => object.value
 );
@@ -53,19 +56,19 @@ export const FORM_SCHEMA_USER = Yup.object({
   'Access Level': Yup.number().required().oneOf([0, 1, 2, 3]),
 });
 
-export const FORM_SCHEMA_MEMBER = Yup.object({
-  'Full Name': Yup.string().required().trim(),
-  'Email': Yup.string().optional().email().trim().nullable(),
-  'Gender': Yup.string().required().oneOf(['Male', 'Female']),
-  'Graduating Class': Yup.string().required().oneOf(ONE_OF_GRADUATING_CLASS),
-  'Graduating Year': Yup.number().required().oneOf(ONE_OF_GRADUATING_YEAR),
-  'Current School': Yup.string().optional().trim().nullable(),
-  'Contact Number': Yup.number().required().integer().positive(),
-  'Home Number': Yup.number().optional().nullable().integer().positive(),
-  'Name Of Next-Of-Kin': Yup.string().required().trim().ensure(),
-  'Relationship With Next-Of-Kin': Yup.string().required().trim().ensure(),
-  'Contact Number Of Next-Of-Kin': Yup.number().required().integer().positive(),
-});
+// export const FORM_SCHEMA_MEMBER = Yup.object({
+//   'Full Name': Yup.string().required().trim(),
+//   'Email': Yup.string().optional().email().trim().nullable(),
+//   'Gender': Yup.string().required().oneOf(['Male', 'Female']),
+//   'Graduating Class': Yup.string().required().oneOf(ONE_OF_GRADUATING_CLASS),
+//   'Graduating Year': Yup.number().required().oneOf(ONE_OF_GRADUATING_YEAR),
+//   'Current School': Yup.string().optional().trim().nullable(),
+//   'Contact Number': Yup.number().required().integer().positive(),
+//   'Home Number': Yup.number().optional().nullable().integer().positive(),
+//   'Name Of Next-Of-Kin': Yup.string().required().trim().ensure(),
+//   'Relationship With Next-Of-Kin': Yup.string().required().trim().ensure(),
+//   'Contact Number Of Next-Of-Kin': Yup.number().required().integer().positive(),
+// });
 
 export const FORM_SCHEMA_EVENT = Yup.object({
   'Event Name': Yup.string().required().uppercase().trim(),
