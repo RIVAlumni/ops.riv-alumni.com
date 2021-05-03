@@ -1,11 +1,10 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useState, CSSProperties } from 'react';
 
+import { Member } from '../../models';
 import { QUERY_LIMIT } from '../../constants';
 
 import { Button, Search } from '../../ui';
-
-import { Member } from '../../models';
 import { PageHeader } from '../../components';
 import { AddMemberModal } from './AddMemberModal';
 
@@ -14,8 +13,6 @@ type ListMembersViewProps = {
   setSearch: (search: string) => void;
   loadMoreData: () => void;
 };
-
-const modalStyles: CSSProperties = {};
 
 const ListMembersView: React.FC<ListMembersViewProps> = ({
   data,
@@ -92,7 +89,6 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
       <Button
         color='primary'
         disabled={!(data.length === QUERY_LIMIT)}
-        style={modalStyles}
         onClick={loadMoreData}>
         Load More
       </Button>

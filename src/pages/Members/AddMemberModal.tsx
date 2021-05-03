@@ -1,9 +1,7 @@
-import * as yup from 'yup';
-
-import { useHistory } from 'react-router-dom';
 import { Props } from 'react-modal';
 import { Form, Formik } from 'formik';
 import { firestore } from 'firebase/app';
+import { useHistory } from 'react-router-dom';
 
 import { Member } from '../../models';
 import { InputField, SelectField } from '../../components/form';
@@ -12,94 +10,13 @@ import {
   GENDER,
   GRADUATING_YEAR,
   GRADUATING_CLASS,
-  ONE_OF_GENDER,
-  ONE_OF_GRADUATING_YEAR,
-  ONE_OF_GRADUATING_CLASS,
+  FORM_SCHEMA_MEMBER,
 } from '../../constants';
 
 const AddMemberModal: React.FC<Props> = ({ ...props }) => {
-  const ref = firestore().collection('members').doc();
   const history = useHistory();
-
-  const validationSchema = yup
-    .object({
-      'Membership ID': yup.string().required().trim().default(ref.id),
-      'Full Name': yup
-        .string()
-        .trim()
-        .required('Please enter a name.')
-        .default(null),
-      'Email': yup
-        .string()
-        .nullable()
-        .optional()
-        .trim()
-        .email('Please enter a valid email address.')
-        .default(null),
-      'Gender': yup
-        .string()
-        .required()
-        .oneOf(ONE_OF_GENDER, 'Please select a valid gender.')
-        .default(ONE_OF_GENDER[0]),
-      'Graduating Class': yup
-        .string()
-        .required()
-        .oneOf(ONE_OF_GRADUATING_CLASS, 'Please select a valid class.')
-        .default(ONE_OF_GRADUATING_CLASS[0]),
-      'Graduating Year': yup
-        .number()
-        .transform((value) => (isNaN(value) ? undefined : value))
-        .required()
-        .truncate()
-        .oneOf(ONE_OF_GRADUATING_YEAR, 'Please select a valid year.')
-        .typeError('Please enter a valid year. 1')
-        .default(ONE_OF_GRADUATING_YEAR[0]),
-      'Current School': yup.string().nullable().optional().trim().default(null),
-      'Contact Number': yup
-        .number()
-        .truncate()
-        .required('Please enter a number.')
-        .integer('Please enter a valid number.')
-        .positive('Please enter a valid number.')
-        .typeError('Please enter a valid number.')
-        .default(null),
-      'Home Number': yup
-        .number()
-        .truncate()
-        .optional()
-        .nullable()
-        .integer('Please enter a valid number.')
-        .positive('Please enter a valid number.')
-        .typeError('Please enter a valid number.')
-        .default(null),
-      'Name Of Next-Of-Kin': yup
-        .string()
-        .trim()
-        .required('Please enter a name.')
-        .default(null),
-      'Relationship With Next-Of-Kin': yup
-        .string()
-        .trim()
-        .required('Please enter a status.')
-        .default(null),
-      'Contact Number Of Next-Of-Kin': yup
-        .number()
-        .truncate()
-        .required('Please enter a number.')
-        .integer('Please enter a valid number.')
-        .positive('Please enter a valid number.')
-        .typeError('Please enter a valid number.')
-        .default(null),
-      'updatedAt': yup
-        .object()
-        .required()
-        .default(firestore.FieldValue.serverTimestamp()),
-      'createdAt': yup
-        .object()
-        .required()
-        .default(firestore.FieldValue.serverTimestamp()),
-    })
-    .strict(true);
+  const ref = firestore().collection('members').doc();
+  const validationSchema = FORM_SCHEMA_MEMBER(ref.id);
 
   const initialValues: Member = {
     'Membership ID': ref.id,
@@ -119,9 +36,6 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
   };
 
   const onSubmit = async (data: Member) => {
-    console.log(data);
-    console.log(validationSchema.cast(data));
-
     try {
       await ref.set(validationSchema.cast(data), { merge: true });
       return history.replace(`/manage/members/${ref.id}/view`);
