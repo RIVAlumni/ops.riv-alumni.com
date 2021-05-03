@@ -44,8 +44,10 @@ td {
 
 .grid-container {
   display: grid;
-  gap: 20px;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+
+  gap: 20px;
+  font-size: 14px;
 }
 
 @for $i from 1 through 12 {
