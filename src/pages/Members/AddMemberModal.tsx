@@ -52,128 +52,121 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
         validateOnChange={false}
         validationSchema={validationSchema}
         onSubmit={onSubmit}>
-        {({ errors }) => (
-          <Form className='grid-container'>
-            <div className='grid-span-12'>
-              <h5 className='font-weight-bold'>Add Member</h5>
+        <Form className='grid-container'>
+          <div className='grid-span-12'>
+            <h5 className='font-weight-bold'>Add Member</h5>
 
-              <span
-                style={{ color: 'rgba(164, 176, 190, 1)', fontSize: '14px' }}>
-                Fill in the following fields to add a new member.
-              </span>
-            </div>
+            <span style={{ color: 'rgba(164, 176, 190, 1)', fontSize: '14px' }}>
+              Fill in the following fields to add a new member.
+            </span>
+          </div>
 
-            <div className='mt-2 grid-span-12'>
-              <h5 className='m-0'>Personal Details</h5>
-            </div>
+          <div className='mt-2 grid-span-12'>
+            <h5 className='m-0'>Personal Details</h5>
+          </div>
 
-            <div className='grid-span-12'>
-              <code>{JSON.stringify(errors, null, 2)}</code>
-            </div>
+          <div className='grid-span-6'>
+            <InputField
+              type='text'
+              name='Full Name'
+              placeholder='Full Name'
+              autoFocus
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-6'>
-              <InputField
-                type='text'
-                name='Full Name'
-                placeholder='Full Name'
-                autoFocus
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <SelectField name='Gender' options={GENDER} />
+          </div>
 
-            <div className='grid-span-6'>
-              <SelectField name='Gender' options={GENDER} />
-            </div>
+          <div className='grid-span-12'>
+            <InputField
+              type='text'
+              name='Email'
+              placeholder='Email'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-12'>
-              <InputField
-                type='text'
-                name='Email'
-                placeholder='Email'
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <SelectField name='Graduating Class' options={GRADUATING_CLASS} />
+          </div>
 
-            <div className='grid-span-6'>
-              <SelectField name='Graduating Class' options={GRADUATING_CLASS} />
-            </div>
+          <div className='grid-span-6'>
+            <SelectField name='Graduating Year' options={GRADUATING_YEAR} />
+          </div>
 
-            <div className='grid-span-6'>
-              <SelectField name='Graduating Year' options={GRADUATING_YEAR} />
-            </div>
+          <div className='grid-span-12'>
+            <InputField
+              type='text'
+              name='Current School'
+              placeholder='Current School'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-12'>
-              <InputField
-                type='text'
-                name='Current School'
-                placeholder='Current School'
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <InputField
+              type='number'
+              name='Contact Number'
+              placeholder='Contact Number'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-6'>
-              <InputField
-                type='number'
-                name='Contact Number'
-                placeholder='Contact Number'
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <InputField
+              type='number'
+              name='Home Number'
+              placeholder='Home Number'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-6'>
-              <InputField
-                type='number'
-                name='Home Number'
-                placeholder='Home Number'
-                autoComplete='off'
-              />
-            </div>
+          <div className='mt-2 grid-span-12'>
+            <h5 className='m-0'>Emergency Contact Details</h5>
+          </div>
 
-            <div className='mt-2 grid-span-12'>
-              <h5 className='m-0'>Emergency Contact Details</h5>
-            </div>
+          <div className='grid-span-12'>
+            <InputField
+              type='text'
+              name='Name Of Next-Of-Kin'
+              placeholder='Name Of Next-Of-Kin'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-12'>
-              <InputField
-                type='text'
-                name='Name Of Next-Of-Kin'
-                placeholder='Name Of Next-Of-Kin'
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <InputField
+              type='text'
+              name='Relationship With Next-Of-Kin'
+              placeholder='Relationship With Next-Of-Kin'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-6'>
-              <InputField
-                type='text'
-                name='Relationship With Next-Of-Kin'
-                placeholder='Relationship With Next-Of-Kin'
-                autoComplete='off'
-              />
-            </div>
+          <div className='grid-span-6'>
+            <InputField
+              type='number'
+              name='Contact Number Of Next-Of-Kin'
+              placeholder='Contact Number Of Next-Of-Kin'
+              autoComplete='off'
+            />
+          </div>
 
-            <div className='grid-span-6'>
-              <InputField
-                type='number'
-                name='Contact Number Of Next-Of-Kin'
-                placeholder='Contact Number Of Next-Of-Kin'
-                autoComplete='off'
-              />
-            </div>
+          <div className='btn-group grid-span-12'>
+            <Button type='submit' color='danger' className='mr-3'>
+              Add Member
+            </Button>
 
-            <div className='btn-group grid-span-12'>
-              <Button type='submit' color='danger' className='mr-3'>
-                Add Member
-              </Button>
-
-              <ButtonLink
-                type='button'
-                className='ml-3 text-white'
-                onClick={(e) => props.onRequestClose?.(e)}>
-                Cancel
-              </ButtonLink>
-            </div>
-          </Form>
-        )}
+            <ButtonLink
+              type='button'
+              className='ml-3 text-white'
+              onClick={(e) => props.onRequestClose?.(e)}>
+              Cancel
+            </ButtonLink>
+          </div>
+        </Form>
       </Formik>
     </Modal>
   );
