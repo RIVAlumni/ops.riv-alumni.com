@@ -5,23 +5,26 @@ type ModalProps = Props;
 const modalStyle: Styles = {
   overlay: {
     zIndex: 99999,
-    background: 'transparent',
+    background: 'rgba(0, 0, 0, 0.5)',
   },
   content: {
-    color: 'white',
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-50%',
-    borderRadius: 8,
-    padding: '40px 40px 40px 40px',
+    position: 'fixed',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: '#151a21',
-    border: 'none',
-    maxHeight: '80vh',
+
     width: '90%',
-    maxWidth: 530,
+    maxWidth: '1024px',
+    maxHeight: '80vh',
+
+    padding: '40px',
+    border: 'none',
+    borderRadius: '8px',
+
+    color: 'rgba(241, 242, 246, 1)',
+    background: 'rgba(47, 53, 66, 1)',
   },
 };
 
@@ -34,15 +37,24 @@ const Modal: React.FC<ModalProps> = ({ children, ...props }) => {
       {...props}>
       <div className='w-100 d-flex flex-column'>
         <div
-          className='d-flex justify-content-end position-absolute'
+          className='d-flex align-items-center justify-content-center position-absolute'
           style={{
-            top: '20px',
-            right: '20px',
+            width: '1rem',
+            height: '1rem',
+
+            top: '0',
+            left: 'auto',
+            right: '0',
+            bottom: 'auto',
+
+            cursor: 'pointer',
+            padding: '20px',
           }}
           onClick={(e) => props.onRequestClose?.(e)}>
           <i className='fas fa-times' />
         </div>
       </div>
+
       {children}
     </ReactModal>
   );
