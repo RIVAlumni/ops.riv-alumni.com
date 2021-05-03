@@ -40,6 +40,8 @@ export const GRADUATING_CLASS: SelectOptions<string>[] = [
   { label: '6 Harmony', value: '6 Harmony' },
 ];
 
+export const ONE_OF_GENDER = GENDER.map((object) => object.value);
+
 export const ONE_OF_GRADUATING_YEAR = GRADUATING_YEAR.map((object) =>
   Number(object.value)
 );
