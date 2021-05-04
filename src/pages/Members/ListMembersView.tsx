@@ -7,19 +7,15 @@ import { QUERY_LIMIT } from '../../constants';
 import { Button, Search } from '../../ui';
 import { PageHeader } from '../../components';
 import { AddMemberModal } from './AddMemberModal';
+import { useController } from './ListMembersController';
 
 type ListMembersViewProps = {
   data: Member[];
-  setSearch: (search: string) => void;
-  loadMoreData: () => void;
 };
 
-const ListMembersView: React.FC<ListMembersViewProps> = ({
-  data,
-  setSearch,
-  loadMoreData,
-}) => {
+const ListMembersView: React.FC<ListMembersViewProps> = ({ data }) => {
   const history = useHistory();
+  const controller = useController();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -39,7 +35,7 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
       <Search
         type='text'
         placeholder='Full Name'
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => controller.setSearch(e.target.value)}
       />
 
       <div className='my-4 table-responsive'>
@@ -89,7 +85,7 @@ const ListMembersView: React.FC<ListMembersViewProps> = ({
       <Button
         color='primary'
         disabled={!(data.length === QUERY_LIMIT)}
-        onClick={loadMoreData}>
+        onClick={controller.loadNextPage}>
         Load More
       </Button>
 

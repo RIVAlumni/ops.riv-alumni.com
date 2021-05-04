@@ -12,6 +12,13 @@ import { ListMembersView } from './ListMembersView';
 
 const onSearch$ = new BehaviorSubject('');
 
+const useController = () => {
+  const setSearch = (search: string) => onSearch$.next(search);
+  const loadNextPage = () => onSearch$.next(onSearch$.value);
+
+  return { setSearch, loadNextPage };
+};
+
 const ListMembersController: React.FC = () => {
   const [data, setData] = useState<Member[] | undefined>();
   const lastDoc = useRef<firestore.QueryDocumentSnapshot>();
@@ -23,9 +30,6 @@ const ListMembersController: React.FC = () => {
     docs.length <= 0
       ? (lastDoc.current = undefined)
       : (lastDoc.current = docs[docs.length - 1]);
-
-  const loadMoreData = () => onSearch$.next(onSearch$.value);
-  const setSearch = (search: string) => onSearch$.next(search);
 
   const getMembers = (fullName: string) => {
     if (!fullName) {
@@ -66,13 +70,7 @@ const ListMembersController: React.FC = () => {
   }, []);
 
   if (data === undefined) return <LoadingStatus />;
-  return (
-    <ListMembersView
-      data={data}
-      setSearch={setSearch}
-      loadMoreData={loadMoreData}
-    />
-  );
+  return <ListMembersView data={data} />;
 };
 
-export { ListMembersController };
+export { useController, ListMembersController };
