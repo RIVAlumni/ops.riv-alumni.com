@@ -1,10 +1,7 @@
-import styled from 'styled-components';
-import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+/** @jsxImportSource @emotion/react */
 
-const colors = {
-  primary: 'text-white bg-dark',
-  danger: 'text-white bg-danger',
-};
+import { css } from '@emotion/react';
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -14,7 +11,12 @@ type ButtonProps = DetailedHTMLProps<
   color?: keyof typeof colors;
 };
 
-const ButtonElement = styled.button`
+const colors = {
+  primary: 'text-white bg-dark',
+  danger: 'text-white bg-danger',
+};
+
+const style = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,17 +35,19 @@ const ButtonElement = styled.button`
   }
 `;
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { color = 'danger', loading, disabled, className, children, ...props },
-    ref
-  ) => (
-    <ButtonElement
-      {...props}
-      ref={ref}
-      disabled={disabled || loading}
-      className={`${colors[color]} ${className}`}>
-      {children}
-    </ButtonElement>
-  )
+export const Button: React.FC<ButtonProps> = ({
+  color = 'danger',
+  loading,
+  disabled,
+  className,
+  children,
+  ...props
+}) => (
+  <button
+    {...props}
+    css={style}
+    disabled={disabled || loading}
+    className={`${colors[color]} ${className}`}>
+    {children}
+  </button>
 );

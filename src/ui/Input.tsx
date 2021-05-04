@@ -1,22 +1,14 @@
-import styled from 'styled-components';
-import {
-  forwardRef,
-  FormEvent,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-} from 'react';
+/** @jsxImportSource @emotion/react */
+
+import { css } from '@emotion/react';
+import { FormEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {};
 
-const onInput = ({ currentTarget }: FormEvent<HTMLInputElement>): void => {
-  if (currentTarget.maxLength > 0)
-    currentTarget.value = currentTarget.value.slice(0, currentTarget.maxLength);
-};
-
-const InputElement = styled.input`
+const style = css`
   width: 100%;
   border: none;
   outline: none;
@@ -43,6 +35,11 @@ const InputElement = styled.input`
   }
 `;
 
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => (
-  <InputElement {...props} ref={ref} onInput={onInput} />
-));
+const onInput = ({ currentTarget }: FormEvent<HTMLInputElement>): void => {
+  if (currentTarget.maxLength > 0)
+    currentTarget.value = currentTarget.value.slice(0, currentTarget.maxLength);
+};
+
+export const Input: React.FC<InputProps> = (props) => (
+  <input {...props} css={style} onInput={onInput} autoComplete='off' />
+);

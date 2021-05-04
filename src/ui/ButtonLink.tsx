@@ -1,12 +1,14 @@
-import styled from 'styled-components';
-import { forwardRef, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+/** @jsxImportSource @emotion/react */
+
+import { css } from '@emotion/react';
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 type ButtonLinkProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {};
 
-const ButtonLinkElement = styled.button`
+const style = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,10 +23,11 @@ const ButtonLinkElement = styled.button`
   text-decoration: underline;
 `;
 
-export const ButtonLink = forwardRef<HTMLButtonElement, ButtonLinkProps>(
-  ({ children, ...props }, ref) => (
-    <ButtonLinkElement {...props} ref={ref}>
-      {children}
-    </ButtonLinkElement>
-  )
+export const ButtonLink: React.FC<ButtonLinkProps> = ({
+  children,
+  ...props
+}) => (
+  <button {...props} css={style}>
+    {children}
+  </button>
 );

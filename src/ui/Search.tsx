@@ -1,5 +1,7 @@
-import styled from 'styled-components';
-import { forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+/** @jsxImportSource @emotion/react */
+
+import { css } from '@emotion/react';
+import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 import { Input } from './Input';
 
@@ -8,7 +10,7 @@ type SearchProps = DetailedHTMLProps<
   HTMLInputElement
 > & {};
 
-const SearchElement = styled.div`
+const style = css`
   width: 100%;
   border-radius: 8px;
   background-color: rgba(87, 96, 111, 1);
@@ -17,11 +19,9 @@ const SearchElement = styled.div`
   align-items: center;
 `;
 
-export const Search = forwardRef<HTMLInputElement, SearchProps>(
-  (props, ref) => (
-    <SearchElement>
-      <i className='mx-4 fas fa-search text-white' />
-      <Input {...props} ref={ref} className='w-100 pl-0' />
-    </SearchElement>
-  )
+export const Search: React.FC<SearchProps> = (props) => (
+  <div css={style}>
+    <i className='mx-4 fas fa-search text-white' />
+    <Input {...props} className='w-100 pl-0' />
+  </div>
 );

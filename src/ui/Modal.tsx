@@ -1,4 +1,25 @@
+/** @jsxImportSource @emotion/react */
+
+import { css } from '@emotion/react';
 import ReactModal, { Props, Styles } from 'react-modal';
+
+const closeModalStyle = css`
+  width: 1rem;
+  height: 1rem;
+
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0;
+  left: auto;
+  right: 0;
+  bottom: auto;
+
+  cursor: pointer;
+  padding: 20px;
+`;
 
 const modalStyle: Styles = {
   overlay: {
@@ -34,26 +55,12 @@ const Modal: React.FC<Props> = ({ children, ...props }) => {
       shouldFocusAfterRender
       {...props}>
       <div className='w-100 d-flex flex-column'>
-        <div
-          className='d-flex align-items-center justify-content-center position-absolute'
-          style={{
-            width: '1rem',
-            height: '1rem',
-
-            top: '0',
-            left: 'auto',
-            right: '0',
-            bottom: 'auto',
-
-            cursor: 'pointer',
-            padding: '20px',
-          }}
-          onClick={(e) => props.onRequestClose?.(e)}>
+        <div css={closeModalStyle} onClick={(e) => props.onRequestClose?.(e)}>
           <i className='fas fa-times' />
         </div>
       </div>
 
-      {children}
+      <div>{children}</div>
     </ReactModal>
   );
 };
