@@ -1,6 +1,6 @@
 {
   "name": "ops.riv-alumni.com",
-  "version": "2.31.6",
+  "version": "2.31.7",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.6.0",
