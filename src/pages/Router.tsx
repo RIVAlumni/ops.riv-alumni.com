@@ -10,7 +10,7 @@ import { Navbar, Container, LoadingStatus } from '../components';
 
 import { Dashboard, Profile, PageNotFound } from '../pages';
 import { Users, ListMembersController, Events, Participations } from '../pages';
-import { AddMember, AddEvent } from '../pages';
+import { AddEvent } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
 
@@ -63,11 +63,6 @@ const Router: React.FC = memo(() => {
     {
       path: '/manage/users/:id/edit',
       component: EditUser,
-      role: UserAccessLevels.Editor,
-    },
-    {
-      path: '/manage/members/add',
-      component: AddMember,
       role: UserAccessLevels.Editor,
     },
     {

@@ -10,7 +10,6 @@ export { default as ViewUser } from './ViewUser';
 export { default as EditUser } from './EditUser';
 
 export { ListMembersController } from './Members/ListMembersController';
-export { default as AddMember } from './AddMember';
 export { default as ViewMember } from './ViewMember';
 export { default as EditMember } from './EditMember';
 
