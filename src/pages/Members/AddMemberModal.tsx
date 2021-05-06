@@ -1,11 +1,12 @@
 import { Props } from 'react-modal';
 import { Form, Formik } from 'formik';
+
 import { firestore } from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 
+import { Modal } from '../../ui';
 import { Member } from '../../models';
-import { InputField, SelectField } from '../../components/form';
-import { Modal, Button, ButtonLink } from '../../ui';
+import { InputField, SelectField, ActionButtons } from '../../components/form';
 import {
   GENDER,
   GRADUATING_YEAR,
@@ -74,7 +75,7 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <InputField type='tel' name='Email' />
+            <InputField type='number' name='Email' />
           </div>
 
           <div className='grid-span-6'>
@@ -90,11 +91,11 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='tel' name='Contact Number' />
+            <InputField type='number' name='Contact Number' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='tel' name='Home Number' />
+            <InputField type='number' name='Home Number' />
           </div>
 
           <div className='mt-2 grid-span-12'>
@@ -110,20 +111,11 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='tel' name='Contact Number Of Next-Of-Kin' />
+            <InputField type='number' name='Contact Number Of Next-Of-Kin' />
           </div>
 
           <div className='btn-group grid-span-12'>
-            <Button type='submit' color='danger' className='mr-3'>
-              Add Member
-            </Button>
-
-            <ButtonLink
-              type='button'
-              className='ml-3 text-white'
-              onClick={(e) => props.onRequestClose?.(e)}>
-              Cancel
-            </ButtonLink>
+            <ActionButtons {...props} />
           </div>
         </Form>
       </Formik>
