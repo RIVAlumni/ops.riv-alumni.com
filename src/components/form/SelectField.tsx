@@ -9,7 +9,6 @@ type SelectFieldProps = FieldAttributes<
 > & { label?: string; options: SelectOptions<any>[] };
 
 const SelectField: React.FC<SelectFieldProps> = ({
-  ref: _,
   label,
   options,
   ...props
@@ -20,12 +19,13 @@ const SelectField: React.FC<SelectFieldProps> = ({
   return (
     <div className='w-100 h-100'>
       <label htmlFor={field.name} className='mb-1 w-100'>
-        {label || props.name}
+        {label || props.placeholder || props.name}
       </label>
 
       <NativeSelect
         {...field}
         {...props}
+        id={field.name}
         options={options}
         onChange={(e) => {
           const number: number = Number(e.currentTarget.value);

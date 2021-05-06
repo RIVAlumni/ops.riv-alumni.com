@@ -41,5 +41,5 @@ const onInput = ({ currentTarget }: FormEvent<HTMLInputElement>): void => {
 };
 
 export const Input: React.FC<InputProps> = (props) => (
-  <input {...props} css={style} onInput={onInput} autoComplete='off' />
+  <input {...props} css={style} onInput={onInput} />
 );

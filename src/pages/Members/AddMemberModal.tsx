@@ -66,13 +66,7 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-6'>
-            <InputField
-              type='text'
-              name='Full Name'
-              placeholder='Full Name'
-              autoFocus
-              autoComplete='off'
-            />
+            <InputField type='text' name='Full Name' autoFocus />
           </div>
 
           <div className='grid-span-6'>
@@ -80,12 +74,7 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <InputField
-              type='text'
-              name='Email'
-              placeholder='Email'
-              autoComplete='off'
-            />
+            <InputField type='tel' name='Email' />
           </div>
 
           <div className='grid-span-6'>
@@ -97,30 +86,15 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <InputField
-              type='text'
-              name='Current School'
-              placeholder='Current School'
-              autoComplete='off'
-            />
+            <InputField type='text' name='Current School' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField
-              type='number'
-              name='Contact Number'
-              placeholder='Contact Number'
-              autoComplete='off'
-            />
+            <InputField type='tel' name='Contact Number' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField
-              type='number'
-              name='Home Number'
-              placeholder='Home Number'
-              autoComplete='off'
-            />
+            <InputField type='tel' name='Home Number' />
           </div>
 
           <div className='mt-2 grid-span-12'>
@@ -128,30 +102,15 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <InputField
-              type='text'
-              name='Name Of Next-Of-Kin'
-              placeholder='Name Of Next-Of-Kin'
-              autoComplete='off'
-            />
+            <InputField type='text' name='Name Of Next-Of-Kin' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField
-              type='text'
-              name='Relationship With Next-Of-Kin'
-              placeholder='Relationship With Next-Of-Kin'
-              autoComplete='off'
-            />
+            <InputField type='text' name='Relationship With Next-Of-Kin' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField
-              type='number'
-              name='Contact Number Of Next-Of-Kin'
-              placeholder='Contact Number Of Next-Of-Kin'
-              autoComplete='off'
-            />
+            <InputField type='tel' name='Contact Number Of Next-Of-Kin' />
           </div>
 
           <div className='btn-group grid-span-12'>
