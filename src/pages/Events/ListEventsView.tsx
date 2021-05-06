@@ -64,7 +64,14 @@ const ListEventsView: React.FC<ListEventsViewProps> = ({ data }) => {
                   <td>{event['Event Year']}</td>
                   <td>{event['Event Code']}</td>
                   <td>{event['Event Name']}</td>
-                  <td>{event['Google Drive']}</td>
+                  <td>
+                    <a
+                      href={event['Google Drive']}
+                      target='_blank'
+                      rel='noopener noreferrer'>
+                      Open
+                    </a>
+                  </td>
                   <td>
                     <button
                       className='btn btn-primary'
