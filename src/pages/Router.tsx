@@ -9,7 +9,12 @@ import { UserAccessLevels } from '../models';
 import { Navbar, Container, LoadingStatus } from '../components';
 
 import { Dashboard, Profile, PageNotFound } from '../pages';
-import { Users, ListMembersController, Events, Participations } from '../pages';
+import {
+  Users,
+  ListMembersController,
+  ListEventsController,
+  Participations,
+} from '../pages';
 import { AddEvent } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
@@ -47,7 +52,7 @@ const Router: React.FC = memo(() => {
     },
     {
       path: '/manage/events',
-      component: Events,
+      component: ListEventsController,
       role: UserAccessLevels.Editor,
     },
     {
