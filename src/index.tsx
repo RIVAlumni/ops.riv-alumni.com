@@ -1,7 +1,12 @@
+/**
+ * Why Did You Render needs to be called before any other component.
+ */
+import './wdyr';
+
 import { StrictMode } from 'react';
-import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
 
+import Modal from 'react-modal';
 import { Provider } from 'react-redux';
 
 import { Router } from './pages';
@@ -10,11 +15,6 @@ import { rootStore } from './services';
 import * as serviceWorker from './serviceWorker';
 
 import './styles/base.scss';
-
-// if (process.env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update');
-//   whyDidYouUpdate(React);
-// }
 
 Modal.setAppElement('#root');
 
