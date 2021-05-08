@@ -1,10 +1,5 @@
-/**
- * Why Did You Render needs to be called before any other component.
- */
-import './wdyr';
-
-import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
 
 import Modal from 'react-modal';
 import { Provider } from 'react-redux';
