@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 import { Input } from './Input';
 
@@ -19,9 +19,11 @@ const style = css`
   align-items: center;
 `;
 
-export const Search: React.FC<SearchProps> = (props) => (
+const Search = forwardRef<HTMLInputElement, SearchProps>((props, ref) => (
   <div css={style}>
     <i className='mx-4 fas fa-search text-white' />
-    <Input {...props} className='w-100 pl-0' />
+    <Input {...props} ref={ref} className='w-100 pl-0' />
   </div>
-);
+));
+
+export { Search };
