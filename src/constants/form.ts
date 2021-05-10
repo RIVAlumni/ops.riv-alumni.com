@@ -87,3 +87,78 @@ export const FORM_SCHEMA_MEMBER = (docId: string) =>
         .required()
         .default(firestore.FieldValue.serverTimestamp()),
     });
+
+export const FORM_SCHEMA_EVENT = () =>
+  yup
+    .object()
+    .strict(true)
+    .shape({
+      'Event Code': yup
+        .number()
+        .truncate()
+        .required('Please enter the event code.')
+        .integer('Please enter a valid number.')
+        .positive('Please enter a valid number.')
+        .typeError('Please enter a valid number.')
+        .test('len', 'Must be exactly 8 characters', (val) =>
+          !val ? false : val.toString().length === 8
+        )
+        .default(null),
+      'Event Year': yup
+        .number()
+        .truncate()
+        .required('Event Year is missing.')
+        .integer('Please enter a valid number.')
+        .positive('Please enter a valid number.')
+        .typeError('Please enter a valid number.')
+        .test('console', (test) => {
+          console.log(test);
+          return false;
+        })
+        .default(() => +yup.ref('Event Code').toString().substr(0, 3)),
+      'Event Name': yup
+        .string()
+        .trim()
+        .required('Please enter the event name.')
+        .default(null),
+      'Event Thumbnail': yup
+        .string()
+        .trim()
+        .required('Please select an event thumbnail.')
+        .default(null),
+      'Event Overall In-Charge': yup
+        .string()
+        .trim()
+        .required('Please select an overall in-charge.')
+        .default(null),
+      'Event Assistant In-Charge': yup
+        .string()
+        .trim()
+        .required('Please select an assistant in-charge.')
+        .default(null),
+      'Google Drive': yup
+        .string()
+        .trim()
+        .url('Please enter a valid URL.')
+        .required('Please enter the Google Drive URL.')
+        .default(null),
+      'Roles': yup.array(
+        yup.object({
+          ID: yup.string().trim().required('Please enter an ID.').default(null),
+          Definition: yup
+            .string()
+            .trim()
+            .required('Please enter a definition.')
+            .default(null),
+        })
+      ),
+      'Official Event': yup.boolean().required().default(false),
+      'updatedAt': yup
+        .object()
+        .required()
+        .default(firestore.FieldValue.serverTimestamp()),
+      'createdAt': yup
+        .object()
+        .required()
+        .default(firestore.FieldValue.serverTimestamp()),
+    });

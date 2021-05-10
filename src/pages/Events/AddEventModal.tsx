@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { Fragment } from 'react';
 import { Props } from 'react-modal';
 import { Form, Field, Formik, FieldArray } from 'formik';
 
@@ -6,15 +6,13 @@ import { firestore } from 'firebase/app';
 // import { useHistory } from 'react-router-dom';
 
 import { Event } from '../../models';
+import { FORM_SCHEMA_EVENT } from '../../constants';
 import { InputField, SelectField } from '../../components/form';
 import { Modal, Input, Button, ButtonLink } from '../../ui';
 
 const AddEventModal: React.FC<Props> = (props) => {
   // const history = useHistory();
   // const ref = firestore().collection('events');
-
-  const rolesIdRef = useRef<HTMLInputElement>(null);
-  const rolesDescriptionRef = useRef<HTMLInputElement>(null);
 
   const initialValues: Event = {
     'Event Code': undefined as any,
@@ -24,7 +22,10 @@ const AddEventModal: React.FC<Props> = (props) => {
     'Event Overall In-Charge': undefined as any,
     'Event Assistant In-Charge': undefined as any,
     'Google Drive': undefined as any,
-    'Roles': [],
+    'Roles': [
+      { ID: 'OIC', Definition: 'Overall In-Charge' },
+      { ID: 'AIC', Definition: 'Assistant In-Charge' },
+    ],
     'Official Event': false,
     'updatedAt': firestore.FieldValue.serverTimestamp(),
     'createdAt': firestore.FieldValue.serverTimestamp(),
@@ -38,6 +39,7 @@ const AddEventModal: React.FC<Props> = (props) => {
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
+        validationSchema={FORM_SCHEMA_EVENT}
         onSubmit={onSubmit}>
         <Form className='grid-container'>
           <div className='grid-span-12'>
@@ -89,6 +91,10 @@ const AddEventModal: React.FC<Props> = (props) => {
           </div>
 
           <div className='grid-span-12'>
+            <InputField type='file' name='Event Thumbnail' />
+          </div>
+
+          <div className='grid-span-6'>
             <InputField
               type='text'
               name='Event Overall In-Charge'
@@ -96,7 +102,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             />
           </div>
 
-          <div className='grid-span-12'>
+          <div className='grid-span-6'>
             <InputField
               type='text'
               name='Event Assistant In-Charge'
@@ -106,94 +112,60 @@ const AddEventModal: React.FC<Props> = (props) => {
 
           <div className='grid-span-12'>
             <InputField
-              type='text'
+              type='url'
               name='Google Drive URL'
               placeholder='Google Drive URL'
             />
           </div>
 
-          <div className='grid-span-12'>
-            <label className='mb-1 w-100'>Event Roles</label>
-          </div>
+          <FieldArray name='Roles'>
+            {({ form, remove }) => {
+              const values: Event = form.values;
 
-          <div className='grid-container grid-span-12'>
-            <FieldArray name='Roles'>
-              {({ form, push, remove }) => {
-                const values: Event = form.values;
+              return (
+                <Fragment>
+                  <div className='grid-span-12'>
+                    <pre className='text-white'>
+                      {JSON.stringify(form.errors, null, 2)}
+                    </pre>
+                  </div>
 
-                return (
-                  <table className='table text-white grid-span-12'>
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Definition</th>
-                        <th></th>
-                      </tr>
-                    </thead>
+                  <div className='grid-span-12'>
+                    <label className='m-0 w-100'>Event Roles</label>
+                  </div>
 
-                    <tbody>
-                      {values['Roles'].map((_, index) => (
-                        <tr key={index}>
-                          <td className='grid-span-6'>
-                            <Field
-                              as={Input}
-                              name={`Roles[${index}]['ID']`}
-                              placeholder='ID'
-                            />
-                          </td>
+                  {values['Roles'].map((_, index) => (
+                    <Fragment key={index}>
+                      <div className='grid-span-2'>
+                        <Field
+                          as={Input}
+                          placeholder='ID'
+                          name={`Roles[${index}]['ID']`}
+                        />
+                      </div>
 
-                          <td className='grid-span-6'>
-                            <Field
-                              as={Input}
-                              name={`Roles[${index}]['Definition']`}
-                              placeholder='Definition'
-                            />
-                          </td>
+                      <div className='grid-span-8'>
+                        <Field
+                          as={Input}
+                          placeholder='Definition'
+                          name={`Roles[${index}]['Definition']`}
+                        />
+                      </div>
 
-                          <td>
-                            <Button type='button' onClick={() => remove(index)}>
-                              <i className='fas fa-times' />
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-
-                      <tr>
-                        <td>
-                          <Input
-                            ref={rolesIdRef}
-                            type='text'
-                            placeholder='ID'
-                          />
-                        </td>
-
-                        <td>
-                          <Input
-                            ref={rolesDescriptionRef}
-                            type='text'
-                            placeholder='Definition'
-                          />
-                        </td>
-
-                        <td>
-                          <Button
-                            type='button'
-                            onClick={() =>
-                              push({
-                                ID: rolesIdRef.current?.value,
-                                Definition: rolesDescriptionRef.current?.value,
-                              })
-                            }>
-                            <i className='fas fa-plus' />
-                          </Button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                );
-              }}
-            </FieldArray>
-          </div>
+                      <div className='grid-span-2'>
+                        <Button
+                          type='button'
+                          className='w-100'
+                          onClick={() => remove(index)}>
+                          Remove
+                        </Button>
+                      </div>
+                    </Fragment>
+                  ))}
+                </Fragment>
+              );
+            }}
+          </FieldArray>
 
           <div className='btn-group grid-span-12'>
             <Button type='submit' color='danger' className='mr-3'>

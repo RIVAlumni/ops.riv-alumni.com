@@ -70,19 +70,19 @@ export const FORM_SCHEMA_USER = Yup.object({
 //   'Contact Number Of Next-Of-Kin': Yup.number().required().integer().positive(),
 // });
 
-export const FORM_SCHEMA_EVENT = Yup.object({
-  'Event Name': Yup.string().required().uppercase().trim(),
-  'Event Overall In-Charge': Yup.string().required().trim(),
-  'Event Assistant In-Charge': Yup.string().required().trim(),
-  'Google Drive': Yup.string().required().trim(),
-  'Roles': Yup.array().of(
-    Yup.object({
-      ID: Yup.string().required().uppercase().trim(),
-      Definition: Yup.string().required().trim(),
-    })
-  ),
-  'Official Event': Yup.bool().required(),
-});
+// export const FORM_SCHEMA_EVENT = Yup.object({
+//   'Event Name': Yup.string().required().uppercase().trim(),
+//   'Event Overall In-Charge': Yup.string().required().trim(),
+//   'Event Assistant In-Charge': Yup.string().required().trim(),
+//   'Google Drive': Yup.string().required().trim(),
+//   'Roles': Yup.array().of(
+//     Yup.object({
+//       ID: Yup.string().required().uppercase().trim(),
+//       Definition: Yup.string().required().trim(),
+//     })
+//   ),
+//   'Official Event': Yup.bool().required(),
+// });
 
 export const FORM_SCHEMA_PARTICIPATION = Yup.object({
   'Role': Yup.string().required().uppercase().trim(),
