@@ -94,15 +94,9 @@ export const FORM_SCHEMA_EVENT = () =>
     .strict(true)
     .shape({
       'Event Code': yup
-        .number()
-        .truncate()
-        .required('Please enter the event code.')
-        .integer('Please enter a valid number.')
-        .positive('Please enter a valid number.')
-        .typeError('Please enter a valid number.')
-        .test('len', 'Must be exactly 8 characters', (val) =>
-          !val ? false : val.toString().length === 8
-        )
+        .string()
+        .trim()
+        .required('Please select the event date.')
         .default(null),
       'Event Year': yup
         .number()
@@ -111,10 +105,6 @@ export const FORM_SCHEMA_EVENT = () =>
         .integer('Please enter a valid number.')
         .positive('Please enter a valid number.')
         .typeError('Please enter a valid number.')
-        .test('console', (test) => {
-          console.log(test);
-          return false;
-        })
         .default(() => +yup.ref('Event Code').toString().substr(0, 3)),
       'Event Name': yup
         .string()
