@@ -1,3 +1,3 @@
-export * from './InputField';
-export * from './SelectField';
-export * from './ActionButtons';
+export * from './FormInput';
+export * from './FormSelect';
+export * from './FormActions';

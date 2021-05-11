@@ -3,13 +3,13 @@ import { forwardRef, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 import { Input } from '../../ui';
 
-type InputFieldProps = FieldAttributes<
+type FormInputProps = FieldAttributes<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 > & {
   label?: string;
 };
 
-const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, ...props }, ref) => {
     const [field, meta] = useField(props.name);
     const errorText = meta.error && meta.touched ? meta.error : '';
@@ -36,4 +36,4 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   }
 );
 
-export { InputField };
+export { FormInput };

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Modal } from '../../ui';
 import { Member } from '../../models';
-import { InputField, SelectField, ActionButtons } from '../../components/form';
+import { FormInput, FormSelect, FormActions } from '../../components/form';
 import {
   GENDER,
   GRADUATING_YEAR,
@@ -67,35 +67,35 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='text' name='Full Name' autoFocus />
+            <FormInput type='text' name='Full Name' autoFocus />
           </div>
 
           <div className='grid-span-6'>
-            <SelectField name='Gender' options={GENDER} />
+            <FormSelect name='Gender' options={GENDER} />
           </div>
 
           <div className='grid-span-12'>
-            <InputField type='number' name='Email' />
+            <FormInput type='number' name='Email' />
           </div>
 
           <div className='grid-span-6'>
-            <SelectField name='Graduating Class' options={GRADUATING_CLASS} />
+            <FormSelect name='Graduating Class' options={GRADUATING_CLASS} />
           </div>
 
           <div className='grid-span-6'>
-            <SelectField name='Graduating Year' options={GRADUATING_YEAR} />
+            <FormSelect name='Graduating Year' options={GRADUATING_YEAR} />
           </div>
 
           <div className='grid-span-12'>
-            <InputField type='text' name='Current School' />
+            <FormInput type='text' name='Current School' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='number' name='Contact Number' />
+            <FormInput type='number' name='Contact Number' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='number' name='Home Number' />
+            <FormInput type='number' name='Home Number' />
           </div>
 
           <div className='mt-2 grid-span-12'>
@@ -103,19 +103,19 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <InputField type='text' name='Name Of Next-Of-Kin' />
+            <FormInput type='text' name='Name Of Next-Of-Kin' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='text' name='Relationship With Next-Of-Kin' />
+            <FormInput type='text' name='Relationship With Next-Of-Kin' />
           </div>
 
           <div className='grid-span-6'>
-            <InputField type='number' name='Contact Number Of Next-Of-Kin' />
+            <FormInput type='number' name='Contact Number Of Next-Of-Kin' />
           </div>
 
           <div className='btn-group grid-span-12'>
-            <ActionButtons {...props} />
+            <FormActions {...props} />
           </div>
         </Form>
       </Formik>

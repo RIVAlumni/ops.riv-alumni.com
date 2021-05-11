@@ -4,11 +4,11 @@ import { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
 import { NativeSelect } from '../../ui';
 import { SelectOptions } from '../../constants';
 
-type SelectFieldProps = FieldAttributes<
+type FormSelectProps = FieldAttributes<
   DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 > & { label?: string; options: SelectOptions<any>[] };
 
-const SelectField: React.FC<SelectFieldProps> = ({
+const FormSelect: React.FC<FormSelectProps> = ({
   label,
   options,
   ...props
@@ -38,4 +38,4 @@ const SelectField: React.FC<SelectFieldProps> = ({
   );
 };
 
-export { SelectField };
+export { FormSelect };

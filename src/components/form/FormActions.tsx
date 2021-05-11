@@ -2,12 +2,12 @@ import { Props } from 'react-modal';
 
 import { Button, ButtonLink } from '../../ui';
 
-type ActionButtonsProps = Props & {
+type FormActionProps = Props & {
   submitLabel?: string;
   cancelLabel?: string;
 };
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({
+const FormActions: React.FC<FormActionProps> = ({
   submitLabel = 'Submit',
   cancelLabel = 'Cancel',
   onRequestClose,
@@ -28,4 +28,4 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   );
 };
 
-export { ActionButtons };
+export { FormActions };

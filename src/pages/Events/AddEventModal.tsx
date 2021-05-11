@@ -7,7 +7,7 @@ import { firestore } from 'firebase/app';
 
 import { Event } from '../../models';
 import { FORM_SCHEMA_EVENT } from '../../constants';
-import { InputField, SelectField } from '../../components/form';
+import { FormInput, FormSelect } from '../../components/form';
 import { Modal, Input, Button, ButtonLink } from '../../ui';
 
 const AddEventModal: React.FC<Props> = (props) => {
@@ -62,7 +62,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-6'>
-              <InputField
+              <FormInput
                 type='date'
                 name='Event Code'
                 autoFocus
@@ -74,7 +74,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-6'>
-              <SelectField
+              <FormSelect
                 name='Official Event'
                 options={[
                   {
@@ -90,7 +90,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-12'>
-              <InputField
+              <FormInput
                 type='text'
                 name='Event Name'
                 placeholder='Event Name'
@@ -98,7 +98,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-12'>
-              <InputField
+              <FormInput
                 type='file'
                 name='Event Thumbnail'
                 accept='image/png, image/jpeg'
@@ -106,7 +106,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-6'>
-              <InputField
+              <FormInput
                 type='text'
                 name='Event Overall In-Charge'
                 placeholder='Event Overall In-Charge'
@@ -114,7 +114,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-6'>
-              <InputField
+              <FormInput
                 type='text'
                 name='Event Assistant In-Charge'
                 placeholder='Event Assistant In-Charge'
@@ -122,7 +122,7 @@ const AddEventModal: React.FC<Props> = (props) => {
             </div>
 
             <div className='grid-span-12'>
-              <InputField
+              <FormInput
                 type='url'
                 name='Google Drive'
                 placeholder='Google Drive URL'
