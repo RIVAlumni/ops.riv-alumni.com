@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 import { firestore } from 'firebase/app';
 
+// import { DateTime } from 'luxon';
+
 import {
   ONE_OF_GENDER,
   ONE_OF_GRADUATING_YEAR,
@@ -105,11 +107,12 @@ export const FORM_SCHEMA_EVENT = () =>
         .integer('Please enter a valid number.')
         .positive('Please enter a valid number.')
         .typeError('Please enter a valid number.')
-        .default(() => +yup.ref('Event Code').toString().substr(0, 3)),
+        .default(null),
       'Event Name': yup
         .string()
         .trim()
         .required('Please enter the event name.')
+        .transform((value: string) => value.toUpperCase())
         .default(null),
       'Event Thumbnail': yup
         .string()

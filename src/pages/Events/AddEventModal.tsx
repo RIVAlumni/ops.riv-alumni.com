@@ -32,7 +32,9 @@ const AddEventModal: React.FC<Props> = (props) => {
     'createdAt': firestore.FieldValue.serverTimestamp(),
   };
 
-  const onSubmit = async (data: Event) => console.log(data);
+  const onSubmit = async (data: Event) => {
+    console.log(FORM_SCHEMA_EVENT().cast(data));
+  };
 
   return (
     <Modal {...props}>
