@@ -6,7 +6,7 @@ import { firestore } from 'firebase/app';
 // import { useHistory } from 'react-router-dom';
 
 import { Event } from '../../models';
-import { FORM_SCHEMA_EVENT } from '../../constants';
+import { FORM_SCHEMA_EVENT } from '../../schema';
 import { FormInput, FormSelect } from '../../components/form';
 import { Modal, Input, Button, ButtonLink } from '../../ui';
 

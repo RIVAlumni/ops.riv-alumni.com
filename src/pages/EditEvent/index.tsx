@@ -7,7 +7,7 @@ import { Form, Formik, Field, FieldArray } from 'formik';
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
-import { FORM_SCHEMA_EVENT } from '../../constants';
+import { FORM_SCHEMA_EVENT } from '../../schema';
 
 import { mapEmpty } from '../../pipes';
 import { Event } from '../../models';

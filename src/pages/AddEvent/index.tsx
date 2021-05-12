@@ -1,7 +1,7 @@
 // import { Link } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
-import { FORM_SCHEMA_EVENT } from '../../constants';
+import { FORM_SCHEMA_EVENT } from '../../schema';
 import { PageHeader, SectionHeader } from '../../components';
 
 import { Input } from '../../ui/Input';

@@ -7,12 +7,8 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
-import {
-  GENDER,
-  GRADUATING_YEAR,
-  GRADUATING_CLASS,
-  FORM_SCHEMA_MEMBER,
-} from '../../constants';
+import { FORM_SCHEMA_MEMBER } from '../../schema';
+import { GENDER, GRADUATING_YEAR, GRADUATING_CLASS } from '../../constants';
 
 import { mapEmpty } from '../../pipes';
 import { Member } from '../../models';
@@ -75,9 +71,8 @@ const EditMember: React.FC = memo(() => {
       'Graduating Class': values['Graduating Class'].trim(),
       'Graduating Year': Number(values['Graduating Year']),
       'Name Of Next-Of-Kin': values['Name Of Next-Of-Kin'].trim(),
-      'Relationship With Next-Of-Kin': values[
-        'Relationship With Next-Of-Kin'
-      ].trim(),
+      'Relationship With Next-Of-Kin':
+        values['Relationship With Next-Of-Kin'].trim(),
       'Contact Number Of Next-Of-Kin': Number(
         values['Contact Number Of Next-Of-Kin']
       ),

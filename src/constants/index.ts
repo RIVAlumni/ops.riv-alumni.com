@@ -1,8 +1,6 @@
 import * as Yup from 'yup';
 import { range } from 'lodash';
 
-export * from './form';
-
 export type SelectOptions<L, V = L> = {
   label: L;
   value: V;

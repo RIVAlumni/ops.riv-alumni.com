@@ -6,13 +6,9 @@ import { useHistory } from 'react-router-dom';
 
 import { Modal } from '../../ui';
 import { Member } from '../../models';
+import { FORM_SCHEMA_MEMBER } from '../../schema';
 import { FormInput, FormSelect, FormActions } from '../../components/form';
-import {
-  GENDER,
-  GRADUATING_YEAR,
-  GRADUATING_CLASS,
-  FORM_SCHEMA_MEMBER,
-} from '../../constants';
+import { GENDER, GRADUATING_YEAR, GRADUATING_CLASS } from '../../constants';
 
 const AddMemberModal: React.FC<Props> = ({ ...props }) => {
   const history = useHistory();
