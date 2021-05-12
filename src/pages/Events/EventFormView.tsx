@@ -1,78 +1,55 @@
+/** @jsxImportSource @emotion/react */
+
 import { Fragment } from 'react';
+import { css } from '@emotion/react';
+
 import { Props } from 'react-modal';
 import { Form, Field, Formik, FieldArray } from 'formik';
 
-import { firestore } from 'firebase/app';
-// import { useHistory } from 'react-router-dom';
-
 import { Event } from '../../models';
-import { FORM_SCHEMA_EVENT } from '../../schema';
-import { FormInput, FormSelect } from '../../components/form';
+import { useEventFormController } from './EventFormController';
+
 import { Modal, Input, Button, ButtonLink } from '../../ui';
+import { FormInput, FormSelect } from '../../components/form';
 
-const AddEventModal: React.FC<Props> = (props) => {
-  // const history = useHistory();
-  // const ref = firestore().collection('events');
+const subtitleStyle = css`
+  font-size: 14px;
+  color: rgba(164, 176, 190, 1);
+`;
 
-  const initialValues: Event = {
-    'Event Code': undefined as any,
-    'Event Year': undefined as any,
-    'Event Name': undefined as any,
-    'Event Thumbnail': undefined as any,
-    'Event Overall In-Charge': undefined as any,
-    'Event Assistant In-Charge': undefined as any,
-    'Google Drive': undefined as any,
-    'Roles': [
-      { ID: 'OIC', Definition: 'Overall In-Charge' },
-      { ID: 'AIC', Definition: 'Assistant In-Charge' },
-      { ID: 'PTR', Definition: 'Participant' },
-    ],
-    'Official Event': false,
-    'updatedAt': firestore.FieldValue.serverTimestamp(),
-    'createdAt': firestore.FieldValue.serverTimestamp(),
-  };
-
-  const onSubmit = async (formData: Event) => {
-    console.log(FORM_SCHEMA_EVENT().cast(formData));
-  };
+const EventFormView: React.FC<Props> = (props) => {
+  const controller = useEventFormController();
 
   return (
     <Modal {...props}>
       <Formik<Event>
-        initialValues={initialValues}
+        initialValues={controller.initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        // validationSchema={FORM_SCHEMA_EVENT}
-        onSubmit={onSubmit}>
+        onSubmit={controller.onFormSubmit}>
         {({ setFieldValue }) => (
           <Form className='grid-container'>
             <div className='grid-span-12'>
               <h5 className='font-weight-bold'>Add Event</h5>
 
-              <span
-                style={{ color: 'rgba(164, 176, 190, 1)', fontSize: '14px' }}>
+              <span css={subtitleStyle}>
                 Fill in the following fields to add a new event.
               </span>
             </div>
 
-            <div className='grid-span-12'>
-              <div className='mt-2 grid-span-12'>
-                <h5 className='m-0'>Event Details</h5>
-              </div>
+            <div className='mt-2 grid-span-12'>
+              <h5 className='m-0'>Event Details</h5>
             </div>
 
             <div className='grid-span-6'>
               <FormInput
                 type='date'
                 name='_Event Code'
+                label='Event Code'
                 autoFocus
-                onChange={({ target }) => {
-                  const date = target.value.split('-').join('');
-
-                  setFieldValue('Event Code', Number(date));
-                  setFieldValue('Event Year', Number(date.substr(0, 4)));
-                  return setFieldValue('_Event Code', target.value);
-                }}
+                onChange={({ target }) =>
+                  controller.onEventCodeChange(target, setFieldValue)
+                }
               />
             </div>
 
@@ -80,24 +57,14 @@ const AddEventModal: React.FC<Props> = (props) => {
               <FormSelect
                 name='Official Event'
                 options={[
-                  {
-                    label: 'Unofficial Event',
-                    value: false,
-                  },
-                  {
-                    label: 'Official Event',
-                    value: true,
-                  },
+                  { label: 'Unofficial Event', value: false },
+                  { label: 'Official Event', value: true },
                 ]}
               />
             </div>
 
             <div className='grid-span-12'>
-              <FormInput
-                type='text'
-                name='Event Name'
-                placeholder='Event Name'
-              />
+              <FormInput type='text' name='Event Name' />
             </div>
 
             <div className='grid-span-12'>
@@ -105,24 +72,18 @@ const AddEventModal: React.FC<Props> = (props) => {
                 type='file'
                 name='Event Thumbnail'
                 accept='image/png, image/jpeg'
-                onChange={(e) => console.log(e.target.files?.[0])}
+                onChange={({ target }) =>
+                  controller.onEventThumbnailChange(target, setFieldValue)
+                }
               />
             </div>
 
             <div className='grid-span-6'>
-              <FormInput
-                type='text'
-                name='Event Overall In-Charge'
-                placeholder='Event Overall In-Charge'
-              />
+              <FormInput type='text' name='Event Overall In-Charge' />
             </div>
 
             <div className='grid-span-6'>
-              <FormInput
-                type='text'
-                name='Event Assistant In-Charge'
-                placeholder='Event Assistant In-Charge'
-              />
+              <FormInput type='text' name='Event Assistant In-Charge' />
             </div>
 
             <div className='grid-span-12'>
@@ -195,4 +156,4 @@ const AddEventModal: React.FC<Props> = (props) => {
   );
 };
 
-export { AddEventModal };
+export { EventFormView };

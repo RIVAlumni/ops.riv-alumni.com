@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { firestore } from 'firebase/app';
 
-export const FORM_SCHEMA_EVENT = () =>
+const FORM_SCHEMA_EVENT = () =>
   yup
     .object()
     .strict(true)
@@ -81,3 +81,5 @@ export const FORM_SCHEMA_EVENT = () =>
         .required()
         .default(firestore.FieldValue.serverTimestamp()),
     });
+
+export { FORM_SCHEMA_EVENT };

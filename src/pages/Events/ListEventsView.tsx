@@ -6,7 +6,8 @@ import { QUERY_LIMIT } from '../../constants';
 
 import { Button, Search } from '../../ui';
 import { PageHeader } from '../../components';
-import { AddEventModal } from './AddEventModal';
+
+import { EventFormView } from './EventFormView';
 import { useController } from './ListEventsController';
 
 type ListEventsViewProps = {
@@ -96,7 +97,7 @@ const ListEventsView: React.FC<ListEventsViewProps> = ({ data }) => {
         Load More
       </Button>
 
-      <AddEventModal
+      <EventFormView
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
       />
