@@ -1,8 +1,6 @@
 import * as yup from 'yup';
 import { firestore } from 'firebase/app';
 
-// import { DateTime } from 'luxon';
-
 import {
   ONE_OF_GENDER,
   ONE_OF_GRADUATING_YEAR,
@@ -96,9 +94,12 @@ export const FORM_SCHEMA_EVENT = () =>
     .strict(true)
     .shape({
       'Event Code': yup
-        .string()
-        .trim()
+        .number()
+        .truncate()
         .required('Please select the event date.')
+        .integer('Please select a valid event date.')
+        .positive('Please select a valid event date.')
+        .typeError('Please select a valid event date.')
         .default(null),
       'Event Year': yup
         .number()
@@ -135,16 +136,23 @@ export const FORM_SCHEMA_EVENT = () =>
         .url('Please enter a valid URL.')
         .required('Please enter the Google Drive URL.')
         .default(null),
-      'Roles': yup.array(
-        yup.object({
-          ID: yup.string().trim().required('Please enter an ID.').default(null),
-          Definition: yup
-            .string()
-            .trim()
-            .required('Please enter a definition.')
-            .default(null),
-        })
-      ),
+      'Roles': yup
+        .array(
+          yup.object({
+            ID: yup
+              .string()
+              .trim()
+              .required('Please enter an ID.')
+              .default(null),
+            Definition: yup
+              .string()
+              .trim()
+              .required('Please enter a definition.')
+              .default(null),
+          })
+        )
+        .required('Please create at least 1 event role.')
+        .default(null),
       'Official Event': yup.boolean().required().default(false),
       'updatedAt': yup
         .object()

@@ -32,8 +32,8 @@ const AddEventModal: React.FC<Props> = (props) => {
     'createdAt': firestore.FieldValue.serverTimestamp(),
   };
 
-  const onSubmit = async (data: Event) => {
-    console.log(FORM_SCHEMA_EVENT().cast(data));
+  const onSubmit = async (formData: Event) => {
+    console.log(FORM_SCHEMA_EVENT().cast(formData));
   };
 
   return (
@@ -42,7 +42,7 @@ const AddEventModal: React.FC<Props> = (props) => {
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        validationSchema={FORM_SCHEMA_EVENT}
+        // validationSchema={FORM_SCHEMA_EVENT}
         onSubmit={onSubmit}>
         {({ setFieldValue }) => (
           <Form className='grid-container'>
@@ -64,11 +64,14 @@ const AddEventModal: React.FC<Props> = (props) => {
             <div className='grid-span-6'>
               <FormInput
                 type='date'
-                name='Event Code'
+                name='_Event Code'
                 autoFocus
                 onChange={({ target }) => {
-                  setFieldValue('Event Year', +target.value.substr(0, 4));
-                  return setFieldValue('Event Code', target.value);
+                  const date = target.value.split('-').join('');
+
+                  setFieldValue('Event Code', Number(date));
+                  setFieldValue('Event Year', Number(date.substr(0, 4)));
+                  return setFieldValue('_Event Code', target.value);
                 }}
               />
             </div>
@@ -102,6 +105,7 @@ const AddEventModal: React.FC<Props> = (props) => {
                 type='file'
                 name='Event Thumbnail'
                 accept='image/png, image/jpeg'
+                onChange={(e) => console.log(e.target.files?.[0])}
               />
             </div>
 
