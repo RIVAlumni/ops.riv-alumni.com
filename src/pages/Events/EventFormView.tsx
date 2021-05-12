@@ -20,6 +20,9 @@ const subtitleStyle = css`
 const EventFormView: React.FC<Props> = (props) => {
   const controller = useEventFormController();
 
+  const disableRoleChange = (id: string) =>
+    controller.initialValues['Roles'].map((role) => role['ID']).includes(id);
+
   return (
     <Modal {...props}>
       <Formik<Event>
@@ -95,7 +98,7 @@ const EventFormView: React.FC<Props> = (props) => {
             </div>
 
             <FieldArray name='Roles'>
-              {({ form, remove }) => {
+              {({ form, push, remove }) => {
                 const values: Event = form.values;
 
                 return (
@@ -104,13 +107,14 @@ const EventFormView: React.FC<Props> = (props) => {
                       <label className='m-0 w-100'>Event Roles</label>
                     </div>
 
-                    {values['Roles'].map((_, index) => (
+                    {values['Roles'].map((role, index) => (
                       <Fragment key={index}>
                         <div className='grid-span-2'>
                           <Field
                             as={Input}
                             placeholder='ID'
                             name={`Roles[${index}]['ID']`}
+                            disabled={disableRoleChange(role['ID'])}
                           />
                         </div>
 
@@ -119,6 +123,7 @@ const EventFormView: React.FC<Props> = (props) => {
                             as={Input}
                             placeholder='Definition'
                             name={`Roles[${index}]['Definition']`}
+                            disabled={disableRoleChange(role['ID'])}
                           />
                         </div>
 
@@ -126,12 +131,24 @@ const EventFormView: React.FC<Props> = (props) => {
                           <Button
                             type='button'
                             className='w-100'
-                            onClick={() => remove(index)}>
+                            onClick={() => remove(index)}
+                            disabled={disableRoleChange(role['ID'])}>
                             Remove
                           </Button>
                         </div>
                       </Fragment>
                     ))}
+
+                    <div className='grid-span-12'>
+                      <Button
+                        type='button'
+                        color='danger'
+                        onClick={() =>
+                          push({ ID: undefined, Definition: undefined })
+                        }>
+                        Add Role
+                      </Button>
+                    </div>
                   </Fragment>
                 );
               }}

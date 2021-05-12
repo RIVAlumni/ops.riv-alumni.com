@@ -33,6 +33,13 @@ const style = css`
   &:focus {
     outline: none !important;
   }
+
+  &:disabled,
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 `;
 
 export const Button: React.FC<ButtonProps> = ({

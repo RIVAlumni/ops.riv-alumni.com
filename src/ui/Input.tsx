@@ -28,6 +28,13 @@ const style = css`
     opacity: 50%;
   }
 
+  &:disabled,
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   &[type='number'] {
     -moz-appearance: textfield;
   }
