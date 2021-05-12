@@ -6,6 +6,11 @@ export const FORM_SCHEMA_EVENT = () =>
     .object()
     .strict(true)
     .shape({
+      /**
+       * Staging field for converting calendar dates from input[type=date]
+       * to actual event codes to be used. Field will be stripped upon cast().
+       */
+      '_Event Code': yup.string().strip(),
       'Event Code': yup
         .number()
         .truncate()

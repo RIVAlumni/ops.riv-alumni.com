@@ -51,6 +51,11 @@ const ListEventsController: React.FC = () => {
   };
 
   useEffect(() => {
+    /**
+     * Invalidates the previous search that is stored as cache.
+     */
+    onSearch$.next(0);
+
     const sub = onSearch$
       .pipe(
         debounceTime(300),

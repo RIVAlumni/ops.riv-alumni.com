@@ -56,6 +56,11 @@ const ListMembersController: React.FC = () => {
   };
 
   useEffect(() => {
+    /**
+     * Invalidates the previous search that is stored as cache.
+     */
+    onSearch$.next('');
+
     const sub = onSearch$
       .pipe(
         debounceTime(300),
