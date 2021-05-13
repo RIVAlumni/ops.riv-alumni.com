@@ -7,10 +7,14 @@ const FORM_SCHEMA_EVENT = () =>
     .strict(true)
     .shape({
       /**
-       * Staging field for converting calendar dates from input[type=date]
-       * to actual event codes to be used. Field will be stripped upon cast().
+       * Staging fields to be removed from final output.
        */
       '_Event Code': yup.string().strip(),
+      '_Event Thumbnail': yup.string().strip(),
+
+      /**
+       * Actual fields to be in the final output.
+       */
       'Event Code': yup
         .number()
         .truncate()
@@ -34,9 +38,13 @@ const FORM_SCHEMA_EVENT = () =>
         .transform((value: string) => value.toUpperCase())
         .default(null),
       'Event Thumbnail': yup
-        .string()
-        .trim()
+        .mixed()
         .required('Please select an event thumbnail.')
+        .test(
+          'file_size',
+          'Event Thumbnail is too large!',
+          (value) => value && value[0].size <= 1000000
+        )
         .default(null),
       'Event Overall In-Charge': yup
         .string()

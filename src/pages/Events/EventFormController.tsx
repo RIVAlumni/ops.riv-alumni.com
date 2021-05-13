@@ -38,10 +38,8 @@ const useEventFormController = () => {
     target: ChangeEvent<HTMLInputElement>['target'],
     setFieldValue: FormikProps<Event>['setFieldValue']
   ) => {
-    console.log(target.value);
-    target.files && target.files.length && console.log(target.files[0]);
-
-    return setFieldValue('Event Thumbnail', target.value);
+    setFieldValue('Event Thumbnail', target.files);
+    return setFieldValue('_Event Thumbnail', target.value);
   };
 
   const onFormSubmit = async (data: Event) => {

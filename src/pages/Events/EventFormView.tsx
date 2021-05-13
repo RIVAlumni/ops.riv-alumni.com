@@ -7,6 +7,7 @@ import { Props } from 'react-modal';
 import { Form, Field, Formik, FieldArray } from 'formik';
 
 import { Event } from '../../models';
+import { FORM_SCHEMA_EVENT } from '../../schema';
 import { useEventFormController } from './EventFormController';
 
 import { Modal, Input, Button, ButtonLink } from '../../ui';
@@ -29,6 +30,7 @@ const EventFormView: React.FC<Props> = (props) => {
         initialValues={controller.initialValues}
         validateOnBlur={false}
         validateOnChange={false}
+        validationSchema={FORM_SCHEMA_EVENT}
         onSubmit={controller.onFormSubmit}>
         {({ setFieldValue }) => (
           <Form className='grid-container'>
@@ -73,8 +75,9 @@ const EventFormView: React.FC<Props> = (props) => {
             <div className='grid-span-12'>
               <FormInput
                 type='file'
-                name='Event Thumbnail'
-                accept='image/png, image/jpeg'
+                name='_Event Thumbnail'
+                label='Event Thumbnail'
+                accept='.png, .jpg, .jpeg'
                 onChange={({ target }) =>
                   controller.onEventThumbnailChange(target, setFieldValue)
                 }
