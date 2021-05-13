@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { DetailedHTMLProps, SelectHTMLAttributes } from 'react';
+import { forwardRef, DetailedHTMLProps, SelectHTMLAttributes } from 'react';
 
 import { SelectOptions } from '../constants';
 
@@ -27,18 +27,19 @@ const style = css`
     no-repeat right 1.25rem center;
 `;
 
-export const NativeSelect: React.FC<NativeSelectProps> = ({
-  options,
-  ...props
-}) => (
-  <select {...props} css={style}>
-    {options.map((option) => (
-      <option
-        key={option.value}
-        value={option.value}
-        disabled={option.disabled}>
-        {option.label}
-      </option>
-    ))}
-  </select>
+const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
+  ({ options, ...props }, ref) => (
+    <select {...props} ref={ref} css={style}>
+      {options.map((option) => (
+        <option
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  )
 );
+
+export { NativeSelect };
