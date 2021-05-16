@@ -11,7 +11,7 @@ type FormInputProps = FieldAttributes<
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, ...props }, ref) => {
-    const [field, meta] = useField(props.name);
+    const [field, meta, { setValue }] = useField(props.name);
     const errorText = meta.error && meta.touched ? meta.error : '';
 
     return (
@@ -28,6 +28,23 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           value={field.value || ''}
           placeholder={props.placeholder || field.name}
           autoComplete='off'
+          /**
+           * Checks for input [type=file] elements.
+           *
+           * @remarks
+           * Property [value] must remain as `undefined` as
+           * [type=file] elements must be uncontrolled.
+           *
+           * @see
+           * https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag
+           */
+          {...(props.type === 'file' && {
+            value: undefined,
+            onChange: (event) => {
+              if (!event.currentTarget.files) return;
+              return setValue(event.currentTarget.files[0]);
+            },
+          })}
         />
 
         <div className='mt-1 text-danger'>{errorText}</div>
