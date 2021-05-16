@@ -78,7 +78,15 @@ const EventFormView: React.FC<Props> = (props) => {
           </div>
 
           <div className='grid-span-6'>
-            <FormInput type='text' name='Event Overall In-Charge' />
+            {/* TODO: Complete DataList linkup with Firestore */}
+            <FormInput type='text' list='data' name='Event Overall In-Charge' />
+
+            <datalist id='data'>
+              <option value='test1'>Test1</option>
+              <option value='test2'>Test2</option>
+              <option value='test3'>Test3</option>
+              <option value='test4'>Test4</option>
+            </datalist>
           </div>
 
           <div className='grid-span-6'>

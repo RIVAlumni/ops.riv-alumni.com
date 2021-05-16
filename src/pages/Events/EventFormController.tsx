@@ -32,7 +32,19 @@ const initialValues: FormEventData = {
 
 const useEventFormController = () => {
   const onFormSubmit = async (data: FormEventData) => {
-    console.log(FORM_SCHEMA_EVENT().cast(data));
+    const casted = FORM_SCHEMA_EVENT().cast(data);
+    const eventCodeParsed = casted['Event Code'].split('-').join('');
+
+    const parsed: FormEventParsed = {
+      ...casted,
+      'Event Code': Number(eventCodeParsed),
+      'Event Year': Number(eventCodeParsed.substr(0, 4)),
+
+      // TODO: Must change!
+      'Event Thumbnail': casted['Event Thumbnail'].name,
+    };
+
+    console.log(parsed);
   };
 
   return {
