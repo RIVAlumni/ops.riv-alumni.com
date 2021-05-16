@@ -6,9 +6,6 @@ const FORM_SCHEMA_EVENT = () =>
     .object()
     .strict(true)
     .shape({
-      /**
-       * Actual fields to be in the final output.
-       */
       'Event Code': yup
         .string()
         .trim()
@@ -21,12 +18,12 @@ const FORM_SCHEMA_EVENT = () =>
         .transform((value: string) => value.toUpperCase())
         .default(null),
       'Event Thumbnail': yup
-        .mixed()
+        .mixed<File>()
         .required('Please select an event thumbnail.')
         .test(
-          'fileSize',
+          'isValidFileSize',
           'Event Thumbnail is too large!',
-          (value: File) => value && value.size <= 1000000
+          (value) => value! && value.size <= 1000000
         )
         .default(null),
       'Event Overall In-Charge': yup
@@ -44,6 +41,10 @@ const FORM_SCHEMA_EVENT = () =>
         .trim()
         .url('Please enter a valid URL.')
         .required('Please enter the Google Drive URL.')
+        .test('isValidGoogleDriveUrl', 'Invalid Google Drive URL!', (value) => {
+          const regex = /https:\/\/drive\.google\.com\/drive\/folders\/(.*?)+/g;
+          return regex.test(value!);
+        })
         .default(null),
       'Roles': yup
         .array(
@@ -67,11 +68,11 @@ const FORM_SCHEMA_EVENT = () =>
         .required('Please select the event officiality.')
         .default(false),
       'updatedAt': yup
-        .object()
+        .mixed<firestore.FieldValue>()
         .required()
         .default(firestore.FieldValue.serverTimestamp()),
       'createdAt': yup
-        .object()
+        .mixed<firestore.FieldValue>()
         .required()
         .default(firestore.FieldValue.serverTimestamp()),
     });

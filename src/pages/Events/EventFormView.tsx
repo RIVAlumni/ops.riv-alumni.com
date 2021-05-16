@@ -65,7 +65,7 @@ const EventFormView: React.FC<Props> = (props) => {
           </div>
 
           <div className='grid-span-12'>
-            <FormInput type='text' name='Event Name' autoCapitalize='on' />
+            <FormInput type='text' name='Event Name' />
           </div>
 
           <div className='grid-span-12'>
