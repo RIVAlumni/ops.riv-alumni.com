@@ -7,29 +7,12 @@ const FORM_SCHEMA_EVENT = () =>
     .strict(true)
     .shape({
       /**
-       * Staging fields to be removed from final output.
-       */
-      '_Event Code': yup.string().strip(),
-      '_Event Thumbnail': yup.string().strip(),
-
-      /**
        * Actual fields to be in the final output.
        */
       'Event Code': yup
-        .number()
-        .truncate()
+        .string()
+        .trim()
         .required('Please select the event date.')
-        .integer('Please select a valid event date.')
-        .positive('Please select a valid event date.')
-        .typeError('Please select a valid event date.')
-        .default(null),
-      'Event Year': yup
-        .number()
-        .truncate()
-        .required('Event Year is missing.')
-        .integer('Please enter a valid number.')
-        .positive('Please enter a valid number.')
-        .typeError('Please enter a valid number.')
         .default(null),
       'Event Name': yup
         .string()
@@ -41,9 +24,9 @@ const FORM_SCHEMA_EVENT = () =>
         .mixed()
         .required('Please select an event thumbnail.')
         .test(
-          'file_size',
+          'fileSize',
           'Event Thumbnail is too large!',
-          (value) => value && value[0].size <= 1000000
+          (value: File) => value && value.size <= 1000000
         )
         .default(null),
       'Event Overall In-Charge': yup
@@ -79,7 +62,10 @@ const FORM_SCHEMA_EVENT = () =>
         )
         .required('Please create at least 1 event role.')
         .default(null),
-      'Official Event': yup.boolean().required().default(false),
+      'Official Event': yup
+        .boolean()
+        .required('Please select the event officiality.')
+        .default(false),
       'updatedAt': yup
         .object()
         .required()
