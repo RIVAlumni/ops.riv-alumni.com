@@ -26,8 +26,12 @@ const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
           id={field.name}
           options={options}
           onChange={(e) => {
-            const number: number = Number(e.currentTarget.value);
-            return setValue(isNaN(number) ? e.currentTarget.value : number);
+            const value = e.currentTarget.value;
+
+            if (!isNaN(Number(value))) return setValue(Number(value));
+            if (value === 'true') return setValue(true);
+            if (value === 'false') return setValue(false);
+            return value;
           }}
         />
 
