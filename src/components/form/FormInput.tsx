@@ -28,6 +28,14 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           value={field.value || ''}
           placeholder={props.placeholder || field.name}
           autoComplete='off'
+          onChange={(e) => {
+            /**
+             * Performs custom onChange function first before running
+             * Formik's custom onChange to update the form state.
+             */
+            props.onChange?.(e);
+            field.onChange(e);
+          }}
           /**
            * Checks for input [type=file] elements.
            *
