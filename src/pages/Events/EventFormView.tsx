@@ -78,19 +78,41 @@ const EventFormView: React.FC<Props> = (props) => {
           </div>
 
           <div className='grid-span-6'>
-            {/* TODO: Complete DataList linkup with Firestore */}
-            <FormInput type='text' list='data' name='Event Overall In-Charge' />
+            <FormInput
+              type='text'
+              list='oicSearchResult'
+              name='Event Overall In-Charge'
+              onChange={(e) => controller.onSearchQuery(e.target.value)}
+            />
 
-            <datalist id='data'>
-              <option value='test1'>Test1</option>
-              <option value='test2'>Test2</option>
-              <option value='test3'>Test3</option>
-              <option value='test4'>Test4</option>
+            <datalist id='oicSearchResult'>
+              {controller.searchQueryResults.map((member) => (
+                <option
+                  key={member['Membership ID']}
+                  value={member['Membership ID']}>
+                  {member['Full Name']}
+                </option>
+              ))}
             </datalist>
           </div>
 
           <div className='grid-span-6'>
-            <FormInput type='text' name='Event Assistant In-Charge' />
+            <FormInput
+              type='text'
+              list='aicSearchResult'
+              name='Event Assistant In-Charge'
+              onChange={(e) => controller.onSearchQuery(e.target.value)}
+            />
+
+            <datalist id='aicSearchResult'>
+              {controller.searchQueryResults.map((member) => (
+                <option
+                  key={member['Membership ID']}
+                  value={member['Membership ID']}>
+                  {member['Full Name']}
+                </option>
+              ))}
+            </datalist>
           </div>
 
           <div className='grid-span-12'>

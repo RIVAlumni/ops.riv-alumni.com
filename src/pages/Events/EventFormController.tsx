@@ -1,6 +1,11 @@
+import { useState, useEffect } from 'react';
 import { firestore } from 'firebase/app';
 
-import { Event } from '../../models';
+import { collection } from 'rxfire/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { map, switchMap, debounceTime } from 'rxjs/operators';
+
+import { Event, Member } from '../../models';
 import { FORM_SCHEMA_EVENT } from '../../schema';
 
 type FormEventData = Omit<
@@ -12,6 +17,9 @@ type FormEventData = Omit<
 };
 
 type FormEventParsed = Event;
+
+const ref = firestore().collection('members');
+const searchQuery = new BehaviorSubject('');
 
 const initialValues: FormEventData = {
   'Event Code': undefined as any,
@@ -31,24 +39,57 @@ const initialValues: FormEventData = {
 };
 
 const useEventFormController = () => {
+  const [searchQueryResults, setSearchQueryResults] = useState<Member[]>([]);
+
+  useEffect(() => {
+    searchQuery.next('');
+
+    const sub = searchQuery
+      .pipe(
+        debounceTime(300),
+        switchMap((search) => {
+          const start = search;
+          const end = start + '~';
+
+          const query = ref
+            .orderBy('Full Name')
+            .startAt(start)
+            .endAt(end)
+            .limit(5);
+
+          return collection(query);
+        }),
+        map((snapshot) => snapshot.map((snap) => snap.data() as Member))
+      )
+      .subscribe(setSearchQueryResults);
+
+    return () => sub.unsubscribe();
+  }, []);
+
+  const onSearchQuery = (fullName: string) => {
+    searchQuery.next(fullName);
+  };
+
   const onFormSubmit = async (data: FormEventData) => {
     const casted = FORM_SCHEMA_EVENT().cast(data);
-    const eventCodeParsed = casted['Event Code'].split('-').join('');
+    const parsedEventCode = casted['Event Code'].split('-').join('');
 
-    const parsed: FormEventParsed = {
+    const parsedFormData: FormEventParsed = {
       ...casted,
-      'Event Code': Number(eventCodeParsed),
-      'Event Year': Number(eventCodeParsed.substr(0, 4)),
+      'Event Code': Number(parsedEventCode),
+      'Event Year': Number(parsedEventCode.substr(0, 4)),
 
       // TODO: Must change!
       'Event Thumbnail': casted['Event Thumbnail'].name,
     };
 
-    console.log(parsed);
+    console.log(parsedFormData);
   };
 
   return {
     initialValues,
+    searchQueryResults,
+    onSearchQuery,
     onFormSubmit,
   };
 };
