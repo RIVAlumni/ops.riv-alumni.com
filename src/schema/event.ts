@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 import { firestore } from 'firebase/app';
 
+const membersRef = firestore().collection('members');
+const eventsRef = firestore().collection('events');
+
 const FORM_SCHEMA_EVENT = () =>
   yup
     .object()
@@ -10,6 +13,16 @@ const FORM_SCHEMA_EVENT = () =>
         .string()
         .trim()
         .required('Please select the event date.')
+        .test(
+          'isValidEventCode',
+          'Event already exists!',
+          async (eventCode) => {
+            if (!eventCode) return false;
+
+            const parsedEventCode = eventCode.split('-').join('');
+            return !(await eventsRef.doc(parsedEventCode).get()).exists;
+          }
+        )
         .default(null),
       'Event Name': yup
         .string()
@@ -30,11 +43,27 @@ const FORM_SCHEMA_EVENT = () =>
         .string()
         .trim()
         .required('Please select an overall in-charge.')
+        .test(
+          'isValidMember',
+          'Membership ID is invalid!',
+          async (memberId) => {
+            if (!memberId) return false;
+            return (await membersRef.doc(memberId).get()).exists;
+          }
+        )
         .default(null),
       'Event Assistant In-Charge': yup
         .string()
         .trim()
         .required('Please select an assistant in-charge.')
+        .test(
+          'isValidMember',
+          'Membership ID is invalid!',
+          async (memberId) => {
+            if (!memberId) return false;
+            return (await membersRef.doc(memberId).get()).exists;
+          }
+        )
         .default(null),
       'Google Drive': yup
         .string()
