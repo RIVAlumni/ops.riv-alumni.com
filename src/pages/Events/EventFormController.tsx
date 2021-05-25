@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { firestore } from 'firebase/app';
+import { useHistory } from 'react-router-dom';
 
 import { collection } from 'rxfire/firestore';
+import { app, storage, firestore } from 'firebase/app';
+
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 
@@ -18,8 +20,13 @@ type FormEventData = Omit<
 
 type FormEventParsed = Event;
 
-const ref = firestore().collection('members');
+const eventsRef = firestore().collection('events');
+const membersRef = firestore().collection('members');
+
 const searchQuery = new BehaviorSubject('');
+
+const storageApp = app('storage');
+const storageRef = storage(storageApp).ref('thumbnails');
 
 const initialValues: FormEventData = {
   'Event Code': undefined as any,
@@ -39,6 +46,7 @@ const initialValues: FormEventData = {
 };
 
 const useEventFormController = () => {
+  const history = useHistory();
   const [searchQueryResults, setSearchQueryResults] = useState<Member[]>([]);
 
   useEffect(() => {
@@ -51,7 +59,7 @@ const useEventFormController = () => {
           const start = search;
           const end = start + '~';
 
-          const query = ref
+          const query = membersRef
             .orderBy('Full Name')
             .startAt(start)
             .endAt(end)
@@ -74,16 +82,23 @@ const useEventFormController = () => {
     const casted = FORM_SCHEMA_EVENT().cast(data);
     const parsedEventCode = casted['Event Code'].split('-').join('');
 
+    const thumbnailUrl = await (
+      await storageRef.child(parsedEventCode).put(casted['Event Thumbnail'])
+    ).ref.getDownloadURL();
+
     const parsedFormData: FormEventParsed = {
       ...casted,
       'Event Code': Number(parsedEventCode),
       'Event Year': Number(parsedEventCode.substr(0, 4)),
-
-      // TODO: Must change!
-      'Event Thumbnail': casted['Event Thumbnail'].name,
+      'Event Thumbnail': thumbnailUrl,
     };
 
-    console.log(parsedFormData);
+    try {
+      await eventsRef.doc(parsedEventCode).set(parsedFormData, { merge: true });
+      return history.replace(`/manage/events/${parsedEventCode}/view`);
+    } catch (e) {
+      return alert(`An Error Occurred: ${e}`);
+    }
   };
 
   return {
