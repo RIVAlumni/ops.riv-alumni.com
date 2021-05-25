@@ -5,6 +5,7 @@ import { collectionData, docData } from 'rxfire/firestore';
 
 import { auth, analytics, firestore, initializeApp } from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 import 'firebase/analytics';
 import 'firebase/firestore';
 import 'firebase/remote-config';
@@ -22,6 +23,7 @@ import {
 } from '../models';
 
 import fbConfig from '../configs/firebase.json';
+import storageConfig from '../configs/storage.json';
 
 class FirebaseService {
   private static instance: FirebaseService;
@@ -130,6 +132,7 @@ class FirebaseService {
 
   private constructor() {
     initializeApp(fbConfig);
+    initializeApp(storageConfig, 'storage');
     analytics();
   }
 
