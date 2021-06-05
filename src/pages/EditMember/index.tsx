@@ -132,7 +132,7 @@ const EditMember: React.FC = memo(() => {
             />
 
             <InputField
-              type='tel'
+              type='number'
               name='Contact Number'
               label='Contact Number'
             />
@@ -156,7 +156,7 @@ const EditMember: React.FC = memo(() => {
             />
 
             <InputField
-              type='tel'
+              type='number'
               name='Contact Number Of Next-Of-Kin'
               label='Contact Number Of Next-Of-Kin'
             />
