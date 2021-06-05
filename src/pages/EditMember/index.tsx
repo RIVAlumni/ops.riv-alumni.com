@@ -137,7 +137,7 @@ const EditMember: React.FC = memo(() => {
               label='Contact Number'
             />
 
-            <InputField type='tel' name='Home Number' label='Home Number' />
+            <InputField type='number' name='Home Number' label='Home Number' />
           </DynamicCard>
 
           <SectionHeader>Emergency Contact Details</SectionHeader>
