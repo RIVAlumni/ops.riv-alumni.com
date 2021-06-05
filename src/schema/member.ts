@@ -50,6 +50,8 @@ const FORM_SCHEMA_MEMBER = (docId: string) =>
         .integer('Please enter a valid number.')
         .positive('Please enter a valid number.')
         .typeError('Please enter a valid number.')
+        .moreThan(81000000, 'Please enter a valid number.')
+        .lessThan(99999999, 'Please enter a valid number.')
         .default(null),
       'Home Number': yup
         .number()
@@ -59,6 +61,8 @@ const FORM_SCHEMA_MEMBER = (docId: string) =>
         .integer('Please enter a valid number.')
         .positive('Please enter a valid number.')
         .typeError('Please enter a valid number.')
+        .moreThan(60000000, 'Please enter a valid number.')
+        .lessThan(69999999, 'Please enter a valid number.')
         .default(null),
       'Name Of Next-Of-Kin': yup
         .string()
@@ -77,6 +81,8 @@ const FORM_SCHEMA_MEMBER = (docId: string) =>
         .integer('Please enter a valid number.')
         .positive('Please enter a valid number.')
         .typeError('Please enter a valid number.')
+        .moreThan(81000000, 'Please enter a valid number.')
+        .lessThan(99999999, 'Please enter a valid number.')
         .default(null),
       'updatedAt': yup
         .mixed()
