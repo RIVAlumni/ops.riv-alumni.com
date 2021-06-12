@@ -31,7 +31,7 @@ const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
             if (!isNaN(Number(value))) return setValue(Number(value));
             if (value === 'true') return setValue(true);
             if (value === 'false') return setValue(false);
-            return value;
+            return setValue(value);
           }}
         />
 
