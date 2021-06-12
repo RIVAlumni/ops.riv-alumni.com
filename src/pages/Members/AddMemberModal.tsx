@@ -71,7 +71,7 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <FormInput type='number' name='Email' />
+            <FormInput type='email' name='Email' />
           </div>
 
           <div className='grid-span-6'>
@@ -83,7 +83,7 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <FormInput type='text' name='Current School' />
+            <FormInput type='text' name='Current School / Company' />
           </div>
 
           <div className='grid-span-6'>
