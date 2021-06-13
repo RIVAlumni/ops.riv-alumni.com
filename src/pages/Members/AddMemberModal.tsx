@@ -83,7 +83,11 @@ const AddMemberModal: React.FC<Props> = ({ ...props }) => {
           </div>
 
           <div className='grid-span-12'>
-            <FormInput type='text' name='Current School / Company' />
+            <FormInput
+              type='text'
+              name='Current School'
+              label='Current School / Company'
+            />
           </div>
 
           <div className='grid-span-6'>
