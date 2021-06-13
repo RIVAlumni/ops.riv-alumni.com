@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 
 import { isEmpty } from 'lodash';
 import { DateTime } from 'luxon';
-import { firestore } from 'firebase/app';
+import { app, storage, firestore } from 'firebase/app';
 
 import { of, combineLatest } from 'rxjs';
 import { docData } from 'rxfire/firestore';
@@ -21,6 +21,9 @@ interface DetailedEventView extends Event {
   'Overall In-Charge': Member;
   'Assistant In-Charge': Member;
 }
+
+const storageApp = app('storage');
+const storageRef = storage(storageApp).ref('thumbnails');
 
 const firebase = FirebaseService.getInstance();
 
@@ -42,12 +45,14 @@ const ViewEvent: React.FC = memo(() => {
 
           return combineLatest(
             firebase.getMemberDoc(_event['Event Overall In-Charge']),
-            firebase.getMemberDoc(_event['Event Assistant In-Charge'])
+            firebase.getMemberDoc(_event['Event Assistant In-Charge']),
+            storageRef.child(_event['Event Code'].toString()).getDownloadURL()
           ).pipe(
-            map(([_oic, _aic]) => ({
+            map(([_oic, _aic, _url]) => ({
               ..._event,
               'Overall In-Charge': _oic,
               'Assistant In-Charge': _aic,
+              'Event Thumbnail': `${_url}?alt=media`,
             }))
           );
         }),
