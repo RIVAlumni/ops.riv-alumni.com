@@ -1,8 +1,9 @@
+import dayjs from 'dayjs';
+
 import { memo, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { isEmpty } from 'lodash';
-import { DateTime } from 'luxon';
 import { app, storage, firestore } from 'firebase/app';
 
 import { of, combineLatest } from 'rxjs';
@@ -80,10 +81,9 @@ const ViewEvent: React.FC = memo(() => {
     );
 
   const isOfficial = event['Official Event'] ? 'Official' : 'Non-Official';
-  const happenedOn = DateTime.fromFormat(
-    event['Event Code'].toString(),
-    'yyyyMMdd'
-  ).toFormat('EEEE, dd MMMM yyyy');
+  const happenedOn = dayjs(String(event['Event Code']), 'YYYYMMDD').format(
+    'dddd, DD MMMM YYYY'
+  );
 
   return (
     <section>

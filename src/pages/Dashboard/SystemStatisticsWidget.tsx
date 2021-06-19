@@ -5,12 +5,8 @@ import { AppState } from '../../services';
 import { StaticCard } from '../../components';
 
 const SystemStatisticsWidget: React.FC = memo(() => {
-  const {
-    usersCount,
-    membersCount,
-    eventsCount,
-    participationsCount,
-  } = useSelector(({ remote }: AppState) => remote.aggregations.data);
+  const { usersCount, membersCount, eventsCount, participationsCount } =
+    useSelector(({ remote }: AppState) => remote.aggregations.data);
 
   return (
     <div className='row mb-2'>

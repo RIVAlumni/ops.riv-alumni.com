@@ -1,5 +1,6 @@
+import dayjs from 'dayjs';
+
 import { memo, Fragment } from 'react';
-import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../../services';
@@ -7,7 +8,7 @@ import { DynamicCard } from '../../components';
 
 const UpcomingEventsWidgetData: React.FC = memo(() => {
   const events = useSelector(({ remote }: AppState) => remote.events.data);
-  const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
+  const currentDate = Number(dayjs().format('YYYYMMDD'));
 
   const filteredEvents = events.filter(
     (evt) => evt['Event Code'] >= currentDate

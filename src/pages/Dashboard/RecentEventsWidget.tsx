@@ -1,5 +1,6 @@
+import dayjs from 'dayjs';
+
 import { memo, FC, Fragment } from 'react';
-import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { AppState } from '../../services';
@@ -7,10 +8,9 @@ import { DynamicCard } from '../../components';
 
 const RecentEventsWidgetData: FC = memo(() => {
   const events = useSelector(({ remote }: AppState) => remote.events.data);
-  const currentDate = Number(DateTime.local().toFormat('yyyyLLdd'));
-  const yearAgoDate = Number(
-    DateTime.local().minus({ years: 1 }).toFormat('yyyyLLdd')
-  );
+
+  const currentDate = Number(dayjs().format('YYYYMMDD'));
+  const yearAgoDate = Number(dayjs().subtract(1, 'year').format('YYYYMMDD'));
 
   const filteredEvents = events.filter(
     (event) =>
