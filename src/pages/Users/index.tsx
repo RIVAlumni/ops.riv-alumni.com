@@ -7,10 +7,10 @@ import { collection } from 'rxfire/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
-import { User } from '../../models';
+import { User, UserAccessLevels } from '../../models';
+import { QUERY_LIMIT, FIRESTORE_COLLECTIONS } from '../../constants';
+
 import { Search } from '../../ui/Search';
-import { QUERY_LIMIT } from '../../constants';
-import { UserAccessLevels } from '../../models';
 import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
@@ -18,8 +18,8 @@ interface IRenderDataProps {
   loading: boolean;
 }
 
-const baseRef = firestore().collection('users');
 const onSearch$ = new BehaviorSubject<string>('');
+const usersRef = firestore().collection(FIRESTORE_COLLECTIONS.Users);
 
 const COLSPAN = 4;
 
@@ -86,7 +86,7 @@ const Users: React.FC = memo(() => {
       const start = displayName;
       const end = start + '~';
 
-      const query = baseRef
+      const query = usersRef
         .orderBy('Display Name')
         .startAt(start)
         .endAt(end)
@@ -95,7 +95,7 @@ const Users: React.FC = memo(() => {
       return collection(query);
     }
 
-    const query = baseRef
+    const query = usersRef
       .orderBy('Display Name', 'asc')
       .startAfter(lastDoc.current ?? null)
       .limit(QUERY_LIMIT);

@@ -10,8 +10,8 @@ import { of, combineLatest } from 'rxjs';
 import { docData } from 'rxfire/firestore';
 import { tap, map, switchMap } from 'rxjs/operators';
 
-import { FirebaseService } from '../../services';
 import { Member, Event } from '../../models';
+import { FIRESTORE_COLLECTIONS, STORAGE_BUCKETS } from '../../constants';
 import { PageHeader, DynamicCard, LoadingStatus } from '../../components';
 
 interface IViewEventProps {
@@ -23,10 +23,10 @@ interface DetailedEventView extends Event {
   'Assistant In-Charge': Member;
 }
 
-const storageApp = app('storage');
+const storageApp = app(STORAGE_BUCKETS.Events);
 const storageRef = storage(storageApp).ref('thumbnails');
 
-const firebase = FirebaseService.getInstance();
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
 
 const ViewEvent: React.FC = memo(() => {
   const params = useParams<IViewEventProps>();
@@ -45,15 +45,17 @@ const ViewEvent: React.FC = memo(() => {
           if (!_event) return of(undefined);
 
           return combineLatest(
-            firebase.getMemberDoc(_event['Event Overall In-Charge']),
-            firebase.getMemberDoc(_event['Event Assistant In-Charge']),
+            docData<Member>(membersRef.doc(_event['Event Overall In-Charge'])),
+            docData<Member>(
+              membersRef.doc(_event['Event Assistant In-Charge'])
+            ),
             storageRef.child(_event['Event Code'].toString()).getDownloadURL()
           ).pipe(
             map(([_oic, _aic, _url]) => ({
               ..._event,
               'Overall In-Charge': _oic,
               'Assistant In-Charge': _aic,
-              'Event Thumbnail': `${_url}?alt=media`,
+              'Event Thumbnail': _url,
             }))
           );
         }),

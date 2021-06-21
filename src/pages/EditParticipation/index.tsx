@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react';
+import { firestore } from 'firebase/app';
 
 import { Form, Formik } from 'formik';
-import { firestore } from 'firebase/app';
 import { Link, useParams, useHistory } from 'react-router-dom';
 
 import { of } from 'rxjs';
 import { docData } from 'rxfire/firestore';
 import { tap, map, switchMap } from 'rxjs/operators';
 
-import { FORM_SCHEMA_PARTICIPATION } from '../../constants';
+import { Member, Participation } from '../../models';
+import {
+  FIRESTORE_COLLECTIONS,
+  FORM_SCHEMA_PARTICIPATION,
+} from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { Member, Participation } from '../../models';
 import {
   PageHeader,
   InputField,
@@ -23,6 +26,11 @@ interface IEditParticipationParams {
   id: string;
 }
 
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+const participationsRef = firestore().collection(
+  FIRESTORE_COLLECTIONS.Participations
+);
+
 const EditParticipation: React.FC = () => {
   const history = useHistory();
   const params = useParams<IEditParticipationParams>();
@@ -31,7 +39,7 @@ const EditParticipation: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const query = firestore().doc(`participations/${params.id}`);
+    const query = participationsRef.doc(params.id);
 
     const unsub = docData<Participation>(query)
       .pipe(
@@ -40,7 +48,7 @@ const EditParticipation: React.FC = () => {
         switchMap((incData: Participation) => {
           if (!incData) return of(undefined);
 
-          const ref = firestore().doc(`members/${incData['Membership ID']}`);
+          const ref = membersRef.doc(incData['Membership ID']);
 
           return docData<Member>(ref).pipe(
             map((memberData) => ({ ...incData, ...memberData }))
@@ -65,7 +73,7 @@ const EditParticipation: React.FC = () => {
     );
 
   const onSaveChanges = async (values: Participation) => {
-    const ref = firestore().doc(`participations/${data['Participation ID']}`);
+    const ref = participationsRef.doc(data['Participation ID']);
 
     const updatedData: Participation = {
       'Participation ID': values['Participation ID'].trim(),

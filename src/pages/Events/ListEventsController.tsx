@@ -8,10 +8,11 @@ import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Event } from '../../models';
 import { LoadingStatus } from '../../components';
-import { MAX_EVENT_CODE } from '../../constants';
 import { ListEventsView } from './ListEventsView';
+import { MAX_EVENT_CODE, FIRESTORE_COLLECTIONS } from '../../constants';
 
 const onSearch$ = new BehaviorSubject(0);
+const eventsRef = firestore().collection(FIRESTORE_COLLECTIONS.Events);
 
 const useController = () => {
   const setSearch = (search: number) => onSearch$.next(search);
@@ -33,16 +34,11 @@ const ListEventsController: React.FC = () => {
 
   const getEvents = (eventCode: number) => {
     if (eventCode > 0) {
-      const query = firestore()
-        .collection('events')
-        .where('Event Code', '==', eventCode)
-        .limit(15);
-
+      const query = eventsRef.where('Event Code', '==', eventCode).limit(15);
       return collection(query);
     }
 
-    const query = firestore()
-      .collection('events')
+    const query = eventsRef
       .orderBy('Event Code', 'desc')
       .startAfter(lastDoc.current ?? MAX_EVENT_CODE)
       .limit(15);

@@ -1,18 +1,23 @@
 import { Props } from 'react-modal';
 import { Form, Formik } from 'formik';
-
-import { firestore } from 'firebase/app';
 import { useHistory } from 'react-router-dom';
+import { firestore } from 'firebase/app';
 
-import { Modal } from '../../ui';
 import { Member } from '../../models';
 import { FORM_SCHEMA_MEMBER } from '../../schema';
+import {
+  GENDER,
+  GRADUATING_YEAR,
+  GRADUATING_CLASS,
+  FIRESTORE_COLLECTIONS,
+} from '../../constants';
+
+import { Modal } from '../../ui';
 import { FormInput, FormSelect, FormActions } from '../../components/form';
-import { GENDER, GRADUATING_YEAR, GRADUATING_CLASS } from '../../constants';
 
 const AddMemberModal: React.FC<Props> = ({ ...props }) => {
   const history = useHistory();
-  const ref = firestore().collection('members').doc();
+  const ref = firestore().collection(FIRESTORE_COLLECTIONS.Members).doc();
   const validationSchema = FORM_SCHEMA_MEMBER(ref.id);
 
   const initialValues: Member = {

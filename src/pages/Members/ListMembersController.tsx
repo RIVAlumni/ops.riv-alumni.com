@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Member } from '../../models';
+import { FIRESTORE_COLLECTIONS } from '../../constants';
+
 import { LoadingStatus } from '../../components';
 import { ListMembersView } from './ListMembersView';
 
@@ -32,9 +34,10 @@ const ListMembersController: React.FC = () => {
       : (lastDoc.current = docs[docs.length - 1]);
 
   const getMembers = (fullName: string) => {
+    const ref = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+
     if (!fullName) {
-      const query = firestore()
-        .collection('members')
+      const query = ref
         .orderBy('Full Name', 'asc')
         .startAfter(lastDoc.current ?? null)
         .limit(15);
@@ -45,12 +48,7 @@ const ListMembersController: React.FC = () => {
     const start = fullName;
     const end = start + '~';
 
-    const query = firestore()
-      .collection('members')
-      .orderBy('Full Name')
-      .startAt(start)
-      .endAt(end)
-      .limit(15);
+    const query = ref.orderBy('Full Name').startAt(start).endAt(end).limit(15);
 
     return collection(query);
   };

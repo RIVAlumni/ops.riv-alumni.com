@@ -7,23 +7,24 @@ import { firestore } from 'firebase/app';
 import { docData } from 'rxfire/firestore';
 import { tap, map, switchMap } from 'rxjs/operators';
 
-import { FirebaseService } from '../../services';
+import { FIRESTORE_COLLECTIONS } from '../../constants';
 import { Member, Event, Participation } from '../../models';
+
 import { PageHeader, DynamicCard, LoadingStatus } from '../../components';
 
 interface IViewParticipationProps {
   id: string;
 }
 
-const firebase = FirebaseService.getInstance();
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+const eventsRef = firestore().collection(FIRESTORE_COLLECTIONS.Events);
 
 const ViewParticipation: React.FC = memo(() => {
   const params = useParams<IViewParticipationProps>();
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [participation, setParticipation] = useState<
-    Member & Event & Participation
-  >();
+  const [participation, setParticipation] =
+    useState<Member & Event & Participation>();
 
   useEffect(() => {
     const query = firestore().doc(`participations/${params.id}`);
@@ -35,16 +36,16 @@ const ViewParticipation: React.FC = memo(() => {
         switchMap((_prt) => {
           if (!_prt) return of(undefined);
 
-          return firebase
-            .getMemberDoc(_prt['Membership ID'])
-            .pipe(map((_member) => ({ ..._prt, ..._member })));
+          return docData<Member>(membersRef.doc(_prt['Membership ID'])).pipe(
+            map((_member) => ({ ..._prt, ..._member }))
+          );
         }),
         switchMap((_prt) => {
           if (!_prt) return of(undefined);
 
-          return firebase
-            .getEventDoc(_prt['Event Code'].toString())
-            .pipe(map((_event) => ({ ..._prt, ..._event })));
+          return docData<Event>(
+            eventsRef.doc(_prt['Event Code'].toString())
+          ).pipe(map((_event) => ({ ..._prt, ..._event })));
         }),
         tap(() => setLoading(false))
       )

@@ -1,16 +1,20 @@
 import { memo, useState, useEffect } from 'react';
-
 import { firestore } from 'firebase/app';
+
 import { Form, Formik } from 'formik';
 import { useParams, useHistory, Link } from 'react-router-dom';
 
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
-import { FORM_SCHEMA_USER, SelectOptions } from '../../constants';
+import { User, UserAccessLevels } from '../../models';
+import {
+  FIRESTORE_COLLECTIONS,
+  FORM_SCHEMA_USER,
+  SelectOptions,
+} from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { User, UserAccessLevels } from '../../models';
 import {
   InputField,
   SelectField,
@@ -23,6 +27,8 @@ interface IEditUserParams {
   id: string;
 }
 
+const usersRef = firestore().collection(FIRESTORE_COLLECTIONS.Users);
+
 const EditUser: React.FC = memo(() => {
   const history = useHistory();
   const params = useParams<IEditUserParams>();
@@ -31,7 +37,7 @@ const EditUser: React.FC = memo(() => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const query = firestore().doc(`users/${params.id}`);
+    const query = usersRef.doc(params.id);
 
     const sub = docData<User>(query)
       .pipe(
@@ -57,7 +63,7 @@ const EditUser: React.FC = memo(() => {
 
   const accessLevels = Object.keys(UserAccessLevels).filter((_) => isNaN(+_));
   const onSaveChanges = async (values: User) => {
-    const ref = firestore().doc(`users/${user['User ID']}`);
+    const ref = usersRef.doc(user['User ID']);
 
     const data: User = {
       'User ID': values['User ID'].trim(),

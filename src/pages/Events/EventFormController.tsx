@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { collection } from 'rxfire/firestore';
 import { app, storage, firestore } from 'firebase/app';
+import { collection } from 'rxfire/firestore';
 
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 
 import { Event, Member } from '../../models';
 import { FORM_SCHEMA_EVENT } from '../../schema';
+import { STORAGE_BUCKETS, FIRESTORE_COLLECTIONS } from '../../constants';
 
 type FormEventData = Omit<
   Event,
@@ -20,13 +21,13 @@ type FormEventData = Omit<
 
 type FormEventParsed = Event;
 
-const eventsRef = firestore().collection('events');
-const membersRef = firestore().collection('members');
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+const eventsRef = firestore().collection(FIRESTORE_COLLECTIONS.Events);
+
+const storageApp = app(STORAGE_BUCKETS.Events);
+const storageRef = storage(storageApp).ref('thumbnails');
 
 const searchQuery = new BehaviorSubject('');
-
-const storageApp = app('storage');
-const storageRef = storage(storageApp).ref('thumbnails');
 
 const initialValues: FormEventData = {
   'Event Code': undefined as any,

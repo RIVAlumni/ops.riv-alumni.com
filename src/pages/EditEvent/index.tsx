@@ -7,10 +7,11 @@ import { Form, Formik, Field, FieldArray } from 'formik';
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
+import { Event } from '../../models';
+import { FIRESTORE_COLLECTIONS } from '../../constants';
 import { FORM_SCHEMA_EVENT } from '../../schema';
 
 import { mapEmpty } from '../../pipes';
-import { Event } from '../../models';
 import {
   InputField,
   PageHeader,
@@ -23,6 +24,8 @@ interface IEditEventParams {
   id: string;
 }
 
+const eventsRef = firestore().collection(FIRESTORE_COLLECTIONS.Events);
+
 const EditEvent: React.FC = memo(() => {
   const history = useHistory();
   const params = useParams<IEditEventParams>();
@@ -31,7 +34,7 @@ const EditEvent: React.FC = memo(() => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const query = firestore().doc(`events/${params.id}`);
+    const query = eventsRef.doc(params.id);
 
     const unsub = docData<Event>(query)
       .pipe(
@@ -56,7 +59,7 @@ const EditEvent: React.FC = memo(() => {
     );
 
   const onSaveChanges = async (values: Event) => {
-    const ref = firestore().doc(`events/${event['Event Code']}`);
+    const ref = eventsRef.doc(event['Event Code'].toString());
 
     const data: Event = {
       'Event Code': Number(values['Event Code']),

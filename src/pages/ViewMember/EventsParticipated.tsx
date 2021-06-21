@@ -5,12 +5,16 @@ import { of, combineLatest } from 'rxjs';
 import { tap, map, switchMap } from 'rxjs/operators';
 
 import { firestore } from 'firebase/app';
-import { collection } from 'rxfire/firestore';
+import { docData, collection } from 'rxfire/firestore';
 
-import { FirebaseService } from '../../services';
-import { RenderTableLoading } from '../../components';
 import { Event, Member, Participation } from '../../models';
-import { QUERY_LIMIT, MAX_EVENT_CODE } from '../../constants';
+import {
+  QUERY_LIMIT,
+  MAX_EVENT_CODE,
+  FIRESTORE_COLLECTIONS,
+} from '../../constants';
+
+import { RenderTableLoading } from '../../components';
 
 interface IEventsParticipated {
   member: Member;
@@ -21,8 +25,10 @@ interface IRenderDataProps {
   loading: boolean;
 }
 
-const firebase = FirebaseService.getInstance();
-const baseRef = firestore().collection('participations');
+const eventsRef = firestore().collection(FIRESTORE_COLLECTIONS.Events);
+const participationsRef = firestore().collection(
+  FIRESTORE_COLLECTIONS.Participations
+);
 
 const RenderData: React.FC<IRenderDataProps> = ({ data, loading }) => {
   if (!loading && data.length === 0)
@@ -70,9 +76,9 @@ const EventsParticipated: React.FC<IEventsParticipated> = memo(({ member }) => {
 
     return combineLatest(
       participations.map((participation) =>
-        firebase
-          .getEventDoc(participation['Event Code'].toString())
-          .pipe(map((event) => ({ ...event, ...participation })))
+        docData<Event>(
+          eventsRef.doc(participation['Event Code'].toString())
+        ).pipe(map((event) => ({ ...event, ...participation })))
       )
     );
   };
@@ -80,7 +86,7 @@ const EventsParticipated: React.FC<IEventsParticipated> = memo(({ member }) => {
   useEffect(() => {
     if (!member) return () => {};
 
-    const query = baseRef
+    const query = participationsRef
       .where('Membership ID', '==', member['Membership ID'])
       .orderBy('Event Code', 'desc')
       .startAfter(lastDoc.current ?? MAX_EVENT_CODE)

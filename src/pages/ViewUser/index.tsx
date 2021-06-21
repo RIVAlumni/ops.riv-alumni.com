@@ -8,8 +8,10 @@ import { firestore } from 'firebase/app';
 import { tap, map } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
-import { AppState } from '../../services';
+import { FIRESTORE_COLLECTIONS } from '../../constants';
 import { User, UserAccessLevels } from '../../models';
+
+import { AppState } from '../../services';
 import {
   PageHeader,
   DynamicCard,
@@ -24,6 +26,8 @@ interface IUserRouteParams {
 interface IMembershipInformationProps {
   user: User;
 }
+
+const usersRef = firestore().collection(FIRESTORE_COLLECTIONS.Users);
 
 const MembershipInformation: React.FC<IMembershipInformationProps> = memo(
   ({ user }) => {
@@ -46,7 +50,7 @@ const ViewUser: React.FC = memo(() => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const query = firestore().doc(`users/${params.id}`);
+    const query = usersRef.doc(params.id);
     const sub = docData<User | undefined>(query)
       .pipe(
         tap(() => setLoading(true)),

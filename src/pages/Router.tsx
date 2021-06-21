@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { AuthGuard } from '../guards';
-import { AppState } from '../services';
+import { AppState, FirebaseService } from '../services';
 import { AuthUserAsync } from '../states';
 import { UserAccessLevels } from '../models';
 import { Navbar, Container, LoadingStatus } from '../components';
@@ -15,7 +15,6 @@ import {
   ListEventsController,
   Participations,
 } from '../pages';
-import { AddEvent } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
 
@@ -24,6 +23,8 @@ interface IRouterRoutes {
   component: React.FC;
   role: UserAccessLevels;
 }
+
+FirebaseService.getInstance();
 
 const Router: React.FC = memo(() => {
   const dispatch = useDispatch();
@@ -78,11 +79,6 @@ const Router: React.FC = memo(() => {
     {
       path: '/manage/members/:id/edit',
       component: EditMember,
-      role: UserAccessLevels.Editor,
-    },
-    {
-      path: '/manage/events/add',
-      component: AddEvent,
       role: UserAccessLevels.Editor,
     },
     {

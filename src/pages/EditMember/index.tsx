@@ -1,17 +1,22 @@
 import { memo, useState, useEffect } from 'react';
-
 import { firestore } from 'firebase/app';
+
 import { Form, Formik } from 'formik';
 import { useParams, useHistory, Link } from 'react-router-dom';
 
 import { tap } from 'rxjs/operators';
 import { docData } from 'rxfire/firestore';
 
+import { Member } from '../../models';
 import { FORM_SCHEMA_MEMBER } from '../../schema';
-import { GENDER, GRADUATING_YEAR, GRADUATING_CLASS } from '../../constants';
+import {
+  GENDER,
+  GRADUATING_YEAR,
+  GRADUATING_CLASS,
+  FIRESTORE_COLLECTIONS,
+} from '../../constants';
 
 import { mapEmpty } from '../../pipes';
-import { Member } from '../../models';
 import {
   InputField,
   SelectField,
@@ -25,6 +30,8 @@ interface IEditMemberParams {
   id: string;
 }
 
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+
 const EditMember: React.FC = memo(() => {
   const history = useHistory();
   const params = useParams<IEditMemberParams>();
@@ -33,7 +40,7 @@ const EditMember: React.FC = memo(() => {
   const [member, setMember] = useState<Member>();
 
   useEffect(() => {
-    const query = firestore().doc(`members/${params.id}`);
+    const query = membersRef.doc(params.id);
 
     const unsub = docData<Member>(query)
       .pipe(
@@ -58,7 +65,7 @@ const EditMember: React.FC = memo(() => {
     );
 
   const onSaveChanges = async (values: Member) => {
-    const ref = firestore().doc(`members/${member['Membership ID']}`);
+    const ref = membersRef.doc(member['Membership ID']);
 
     const data = {
       'Membership ID': values['Membership ID'].trim(),

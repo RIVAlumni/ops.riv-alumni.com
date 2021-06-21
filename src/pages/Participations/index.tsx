@@ -2,15 +2,20 @@ import { memo, useRef, useEffect, useState, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { firestore } from 'firebase/app';
-import { collection } from 'rxfire/firestore';
+import { docData, collection } from 'rxfire/firestore';
 
 import { of, combineLatest, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
-import { Search } from '../../ui/Search';
-import { FirebaseService } from '../../services';
 import { Member, Participation } from '../../models';
-import { QUERY_LIMIT, MAX_VIA_HOURS, MAX_EVENT_CODE } from '../../constants';
+import {
+  QUERY_LIMIT,
+  MAX_VIA_HOURS,
+  MAX_EVENT_CODE,
+  FIRESTORE_COLLECTIONS,
+} from '../../constants';
+
+import { Search } from '../../ui/Search';
 import { PageHeader, DynamicCard, RenderTableLoading } from '../../components';
 
 interface IRenderDataProps {
@@ -18,10 +23,12 @@ interface IRenderDataProps {
   loading: boolean;
 }
 
-const firebase = FirebaseService.getInstance();
-
 const onSearch$ = new BehaviorSubject<number>(0);
-const baseRef = firestore().collection('participations');
+
+const membersRef = firestore().collection(FIRESTORE_COLLECTIONS.Members);
+const participationsRef = firestore().collection(
+  FIRESTORE_COLLECTIONS.Participations
+);
 
 const COLSPAN = 5;
 
@@ -87,7 +94,7 @@ const Participants: React.FC = memo(() => {
 
   const getParticipations = (eventCode: number) => {
     if (eventCode > 0) {
-      const query = baseRef
+      const query = participationsRef
         .where('Event Code', '==', eventCode)
         .orderBy('VIA Hours', 'desc')
         .startAfter(lastDoc.current ?? MAX_VIA_HOURS)
@@ -96,7 +103,7 @@ const Participants: React.FC = memo(() => {
       return collection(query);
     }
 
-    const query = baseRef
+    const query = participationsRef
       .orderBy('VIA Hours', 'desc')
       .orderBy('Event Code', 'desc')
       .startAfter(lastDoc.current ?? MAX_EVENT_CODE)
@@ -110,9 +117,9 @@ const Participants: React.FC = memo(() => {
 
     return combineLatest(
       participations.map((participation) =>
-        firebase
-          .getMemberDoc(participation['Membership ID'])
-          .pipe(map((member) => ({ ...member, ...participation })))
+        docData<Member>(membersRef.doc(participation['Membership ID'])).pipe(
+          map((member) => ({ ...member, ...participation }))
+        )
       )
     );
   };

@@ -8,8 +8,8 @@ import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/analytics';
 import 'firebase/firestore';
-import 'firebase/remote-config';
 
+import { STORAGE_BUCKETS } from '../constants';
 import { count } from '../pipes';
 import {
   User,
@@ -22,8 +22,8 @@ import {
   ParticipationAggregation,
 } from '../models';
 
-import fbConfig from '../configs/firebase.json';
-import storageConfig from '../configs/storage.json';
+import firebaseConfig from '../configs/firebase.json';
+import eventStorageConfig from '../configs/storage.json';
 
 class FirebaseService {
   private static instance: FirebaseService;
@@ -131,8 +131,8 @@ class FirebaseService {
   }
 
   private constructor() {
-    initializeApp(fbConfig);
-    initializeApp(storageConfig, 'storage');
+    initializeApp(firebaseConfig);
+    initializeApp(eventStorageConfig, STORAGE_BUCKETS.Events);
     analytics();
   }
 
