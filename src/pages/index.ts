@@ -17,7 +17,7 @@ export { ListEventsController } from './Events/ListEventsController';
 export { default as ViewEvent } from './ViewEvent';
 export { default as EditEvent } from './EditEvent';
 
-export { default as Participations } from './Participations';
+export { ListParticipationsView } from './Participations/ListParticipationsView';
 export { default as ViewParticipation } from './ViewParticipation';
 export { default as EditParticipation } from './EditParticipation';
 

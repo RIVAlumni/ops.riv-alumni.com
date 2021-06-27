@@ -13,7 +13,7 @@ import {
   Users,
   ListMembersController,
   ListEventsController,
-  Participations,
+  ListParticipationsView,
 } from '../pages';
 import { ViewUser, ViewMember, ViewEvent, ViewParticipation } from '../pages';
 import { EditUser, EditMember, EditEvent, EditParticipation } from '../pages';
@@ -58,7 +58,7 @@ const Router: React.FC = memo(() => {
     },
     {
       path: '/manage/participations',
-      component: Participations,
+      component: ListParticipationsView,
       role: UserAccessLevels.Editor,
     },
     {
