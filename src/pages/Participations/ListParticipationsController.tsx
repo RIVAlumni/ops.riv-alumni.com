@@ -10,7 +10,7 @@ import { tap, map, switchMap, debounceTime } from 'rxjs/operators';
 import { Member, Participation } from '../../models';
 import {
   QUERY_LIMIT,
-  MAX_VIA_HOURS,
+  // MAX_VIA_HOURS,
   MAX_EVENT_CODE,
   FIRESTORE_COLLECTIONS,
 } from '../../constants';
@@ -24,6 +24,9 @@ const participationsRef = firestore().collection(
 
 const useParticipationsController = () => {
   const lastDoc = useRef<firestore.QueryDocumentSnapshot>();
+  const lastQueryCode = useRef<number>(0);
+
+  useEffect(() => console.log(lastDoc.current?.data()));
 
   const [complete, setComplete] = useState(false);
   const [data, setData] = useState<(Member & Participation)[]>();
@@ -32,7 +35,18 @@ const useParticipationsController = () => {
   const fetchNextPage = () => searchQuery$.next(searchQuery$.value);
 
   const resetCursors = () =>
-    searchQuery$.value && (lastDoc.current = undefined);
+    searchQuery$.value !== lastQueryCode.current &&
+    (lastDoc.current = undefined);
+
+  const resetDataWhenSearching = (eventCode: number) => {
+    if (eventCode === lastQueryCode.current) return;
+
+    setData([]);
+    lastDoc.current = undefined;
+  };
+
+  const adjustLastSearch = (eventCode: number) =>
+    (lastQueryCode.current = eventCode);
 
   const adjustComplete = (docs: firestore.QueryDocumentSnapshot[]) =>
     setComplete(docs.length < QUERY_LIMIT);
@@ -44,10 +58,16 @@ const useParticipationsController = () => {
 
   const getParticipations = (eventCode: number) => {
     if (eventCode > 0) {
+      // const query = participationsRef
+      //   .where('Event Code', '==', eventCode)
+      //   .orderBy('VIA Hours', 'desc')
+      //   .startAfter(lastDoc.current ?? MAX_VIA_HOURS)
+      //   .limit(QUERY_LIMIT);
+
       const query = participationsRef
         .where('Event Code', '==', eventCode)
-        .orderBy('VIA Hours', 'desc')
-        .startAfter(lastDoc.current ?? MAX_VIA_HOURS)
+        .orderBy('Role', 'asc')
+        .startAfter(lastDoc.current ?? '')
         .limit(QUERY_LIMIT);
 
       return collection(query);
@@ -80,6 +100,8 @@ const useParticipationsController = () => {
     const sub = searchQuery$
       .pipe(
         debounceTime(300),
+        tap(resetDataWhenSearching),
+        tap(adjustLastSearch),
         switchMap(getParticipations),
         tap(adjustCursors),
         tap(adjustComplete),
@@ -88,8 +110,8 @@ const useParticipationsController = () => {
         tap(resetCursors)
       )
       .subscribe((docs) =>
-        setData((prevState) =>
-          uniqBy([...(prevState || []), ...docs], 'Participation ID')
+        setData((prevDocs) =>
+          uniqBy([...(prevDocs || []), ...docs], 'Participation ID')
         )
       );
 
