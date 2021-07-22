@@ -99,14 +99,49 @@ const useParticipationsController = () => {
 
     const sub = searchQuery$
       .pipe(
+        /*
+         * Prevent searching after every keystroke. Waits 300ms
+         * before actually querying the database.
+         */
         debounceTime(300),
+        /*
+         * Resets query pointers if there is a change in the
+         * search parameters.
+         */
         tap(resetDataWhenSearching),
+        /*
+         * Stores the current search for future comparison.
+         */
         tap(adjustLastSearch),
+        /*
+         * Get data from Firestore query.
+         */
         switchMap(getParticipations),
+        /*
+         * Stores the last DocumentSnapshot found in the returned
+         * list of data from the query, to be used for querying
+         * the next set of data.
+         */
         tap(adjustCursors),
+        /*
+         * Changes the query state from "complete" to "non-complete"
+         * if there is more data that has not been fetched yet.
+         */
         tap(adjustComplete),
+        /*
+         * Converts all the DocumentSnapshots into actual data values.
+         */
         map((docs) => docs.map((doc) => doc.data() as Participation)),
+        /*
+         * Fetch the next half of the query from the `members`
+         * collection and merge the data with the participations
+         * record.
+         */
         switchMap(mergeWithMembership),
+        /*
+         * Resets the last DocumentSnapshot to `undefined` if the
+         * cached query does not match the current query value.
+         */
         tap(resetCursors)
       )
       .subscribe((docs) =>
