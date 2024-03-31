@@ -2,7 +2,12 @@
 export default {
 	content: ['./src/**/*{html,ts,svelte}'],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				sans: ['Geist Sans', 'sans-serif'],
+				mono: ['Geist Mono', 'monospace']
+			}
+		}
 	},
 	plugins: []
 };
