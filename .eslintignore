@@ -1,0 +1,2 @@
+# Ignore shadcn-svelte files
+/apps/portal/src/lib/components/ui
