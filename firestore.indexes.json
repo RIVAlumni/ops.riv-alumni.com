@@ -1,0 +1,75 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "members",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`Full Name`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`Graduating Year`",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "participations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`Event Code`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`VIA Hours`",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "participations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`Event Code`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Role",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "participations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`Membership ID`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`Event Code`",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "participations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`VIA Hours`",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "`Event Code`",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
