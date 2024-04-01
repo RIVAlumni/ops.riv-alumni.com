@@ -22,6 +22,7 @@
     "@repo/typescript-config": "workspace:*",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.57.0",
     "firebase-tools": "^13.6.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.2",
