@@ -20,7 +20,7 @@
       "port": 9000
     },
     "hosting": {
-      "port": 5000
+      "port": 3001
     },
     "pubsub": {
       "port": 8085
@@ -39,5 +39,18 @@
   "remoteconfig": {
     "template": "remoteconfig.template.json"
   },
-  "extensions": {}
+  "extensions": {},
+  "hosting": {
+    "source": "portal",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "asia-east1",
+      "invoker": "public",
+      "maxInstances": 1
+    }
+  }
 }
