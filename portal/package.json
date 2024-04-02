@@ -3,7 +3,7 @@
 	"type": "module",
 	"name": "@riva/portal",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "firebase emulators:start --only hosting",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
