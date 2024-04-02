@@ -1,5 +1,3 @@
-import { fontFamily } from 'tailwindcss/defaultTheme';
-
 /** @type {import('tailwindcss').Config} */
 const config = {
 	darkMode: ['class'],
@@ -14,6 +12,9 @@ const config = {
 			}
 		},
 		extend: {
+			backgroundImage: {
+				signin: "linear-gradient(0deg, #000, transparent), url('/signin.png')"
+			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',
@@ -55,7 +56,8 @@ const config = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				sans: [...fontFamily.sans]
+				sans: ['Geist Sans', 'sans-serif'],
+				mono: ['Geist Mono', 'monospace'],
 			}
 		}
 	}

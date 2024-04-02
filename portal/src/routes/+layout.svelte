@@ -1,8 +1,6 @@
-<script lang="ts">
-  import '../app.css';
+<script lang="ts"></script>
 
-  import '@fontsource/geist-sans';
-  import '@fontsource/geist-mono';
-</script>
-
-<slot />
+<div class="dark h-screen
+            text-white bg-background">
+  <slot />
+</div>
