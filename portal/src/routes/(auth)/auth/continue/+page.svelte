@@ -7,18 +7,18 @@
 </svelte:head>
 
 <div class="h-full flex flex-col md:flex-row">
+  <!-- RIVAlumni Branding -->
+  <p class="z-20 absolute left-10 top-10 text-lg text-white font-medium">
+    RIVAlumni <span class="font-bold">Portal</span>
+  </p>
+
   <!-- Left side -->
-  <div class="p-10 relative
+  <div class="p-10 relative border-r
               hidden md:flex
-              flex-col flex-1 justify-between">
+              flex-col flex-1 justify-end">
     <!-- Cover image -->
     <div class="z-10 absolute inset-0
                 bg-cover bg-center bg-signin" />
-
-    <p class="z-20 relative
-              text-lg text-white font-medium">
-      RIVAlumni <span class="font-bold">Portal</span>
-    </p>
 
     <div class="z-20 relative">
 			<blockquote class="space-y-2">
@@ -33,12 +33,8 @@
   <!-- Right side -->
   <div class="p-10 relative flex-1
               flex flex-col justify-center">
-    <p class="absolute top-10 left-10
-              text-lg text-white font-medium md:hidden">
-      RIVAlumni <span class="font-bold">Portal</span>
-    </p>
 
-    <div class="mx-auto max-w-96
+    <div class="mx-auto max-w-sm
                 space-y-6 text-center">
       <div class="space-y-2">
         <h1 class="text-2xl font-semibold tracking-tight">Continue with an identity</h1>
