@@ -1,7 +1,7 @@
 {
   "arrowParens": "always",
-  "bracketSameLine": true,
   "bracketSpacing": true,
+  "bracketSameLine": true,
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
   "printWidth": 80,
@@ -10,7 +10,7 @@
   "singleAttributePerLine": true,
   "singleQuote": true,
   "svelteAllowShorthand": true,
-  "svelteBracketNewLine": true,
+  "svelteBracketNewLine": false,
   "svelteIndentScriptAndStyle": true,
   "svelteSortOrder": "scripts-options-markup-styles",
   "svelteStrictMode": true,
