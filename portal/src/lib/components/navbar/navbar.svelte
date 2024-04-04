@@ -24,8 +24,7 @@
           flex flex-row items-center gap-4">
   <nav
     class="hidden md:flex
-            flex-col md:flex-row
-            gap-6 items-center
+            gap-6 flex-row items-center
             text-lg font-medium md:text-sm">
     <a
       href="/"
