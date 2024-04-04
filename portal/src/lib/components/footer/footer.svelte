@@ -33,12 +33,31 @@
       <ul class="text-sm space-y-4">
         <li>
           <a
+            href="//go.riv-alumni.com/discord"
+            class="transition-colors text-muted-foreground
+                    hover:underline hover:underline-offset-4">
+            Discord
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="//instagram.com/riv.alumni"
+            class="transition-colors text-muted-foreground
+                    hover:underline hover:underline-offset-4">
+            Instagram (@riv.alumni)
+          </a>
+        </li>
+
+        <li>
+          <a
             href="/terms"
             class="transition-colors text-muted-foreground
                     hover:underline hover:underline-offset-4">
             Terms of Service
           </a>
         </li>
+
         <li>
           <a
             href="/privacy"
