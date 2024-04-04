@@ -1,4 +1,6 @@
 <script lang="ts">
+  import SewingPin from 'svelte-radix/SewingPinFilled.svelte';
+
   export let eventName: string = 'Unspecified';
   export let eventLocation: string = 'Undetermined';
   export let backgroundImage: string;
@@ -14,10 +16,12 @@
 
   <div class="text-sm space-y-1">
     <h3 class="leading-none font-medium">{eventName}</h3>
-    <p class="text-xs text-muted-foreground">
-      <i
-        class="mr-1 text-primary
-                fa-sharp fa-solid fa-location-dot"></i>
+    <p
+      class="text-xs text-muted-foreground inline-flex flex-row justify-center gap-1">
+      <SewingPin
+        class="w-4 h-4 text-primary"
+        ariaLabel="Event Location" />
+
       {eventLocation}
     </p>
   </div>

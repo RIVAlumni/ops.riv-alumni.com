@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Person from 'svelte-radix/Person.svelte';
+  import ArrowRight from 'svelte-radix/ArrowRight.svelte';
+
   import * as Card from '$lib/components/ui/card';
   import * as Avatar from '$lib/components/ui/avatar';
 
@@ -7,14 +10,16 @@
 
 <Card.Root
   class="sm:col-span-2
-          bg-cover bg-right-top bg-no-repeat bg-img-profile-card">
+          bg-cover bg-no-repeat
+          bg-right-top bg-img-profile-card">
   <Card.Header class="pb-4">
     <Avatar.Root class="w-28 h-28 my-5">
       <Avatar.Image
         src=""
         alt="Profile Picture" />
+
       <Avatar.Fallback class="flex flex-col justify-center">
-        <i class="fa-2xl fa-regular fa-user"></i>
+        <Person class="w-10 h-10" />
       </Avatar.Fallback>
     </Avatar.Root>
 
@@ -27,7 +32,7 @@
   <Card.Footer>
     <Button href="/auth/continue">
       Continue
-      <i class="ml-2 fa-sharp fa-solid fa-arrow-right"></i>
+      <ArrowRight class="ml-1 w-5 h-5" />
     </Button>
   </Card.Footer>
 </Card.Root>

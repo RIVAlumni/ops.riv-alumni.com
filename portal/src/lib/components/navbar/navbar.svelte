@@ -1,6 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
 
+  import Person from 'svelte-radix/Person.svelte';
+  import HamburgerMenu from 'svelte-radix/HamburgerMenu.svelte';
+
   import * as Sheet from '$lib/components/ui/sheet';
   import * as Avatar from '$lib/components/ui/avatar';
   import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
@@ -61,7 +64,7 @@
         variant="outline"
         builders="{[builder]}"
         class="shrink-0 md:hidden">
-        <i class="fa-solid fa-bars"></i>
+        <HamburgerMenu class="w-4 h-4" />
         <span class="sr-only">Toggle navigation menu</span>
       </Button>
     </Sheet.Trigger>
@@ -103,7 +106,7 @@
               src=""
               alt="Profile Picture" />
             <Avatar.Fallback>
-              <i class="fa-regular fa-user"></i>
+              <Person class="w-4 h-4" />
               <span class="sr-only">Toggle user menu</span>
             </Avatar.Fallback>
           </Avatar.Root>
