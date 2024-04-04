@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Navbar } from '$lib/components/navbar';
+  import { Footer } from '$lib/components/footer';
 </script>
 
 <div
@@ -10,4 +11,6 @@
   <main class="flex flex-col">
     <slot />
   </main>
+
+  <Footer />
 </div>
