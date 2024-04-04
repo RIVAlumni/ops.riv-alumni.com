@@ -18,7 +18,7 @@
 
 <header
   class="z-50 top-0 sticky
-          px-4 md:px-6
+          px-6 sm:px-8
           h-16 border-b
           bg-opacity-10 backdrop-filter backdrop-blur-lg
           flex flex-row items-center gap-4">
