@@ -13,7 +13,7 @@ const config = {
 		},
 		extend: {
 			backgroundImage: {
-				signin: "linear-gradient(0deg, #000, transparent), url('/signin.png')"
+				signin: "linear-gradient(0deg, #000, transparent), url('/signin.webp')"
 			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
