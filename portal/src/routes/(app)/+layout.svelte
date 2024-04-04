@@ -2,10 +2,12 @@
   import { Navbar } from '$lib/components/navbar';
 </script>
 
-<div class="flex flex-col bg-background">
+<div
+  class="w-full min-h-screen
+          flex flex-col bg-background">
   <Navbar />
 
-  <main>
+  <main class="flex flex-col">
     <slot />
   </main>
 </div>
