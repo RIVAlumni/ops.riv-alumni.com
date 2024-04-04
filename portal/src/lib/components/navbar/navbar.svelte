@@ -7,9 +7,10 @@
 
   import { Button } from '$lib/components/ui/button';
 
+  import ModeSelector from './mode-selector.svelte';
+
   const links = [
     { name: 'Overview', href: '/overview' },
-    { name: 'Schedule', href: '/schedule' },
     { name: 'Events', href: '/events' },
     { name: 'Standing', href: '/standing' },
     { name: 'Reimbursements', href: '/reimbursements' },
@@ -37,6 +38,8 @@
         class="w-full h-full aspect-square" />
       <span class="sr-only">RIVAlumni Logo</span>
     </a>
+
+    <ModeSelector />
 
     {#each links as { href, name }}
       <a
@@ -69,6 +72,8 @@
             RIVAlumni <span class="font-bold">Portal</span>
           </p>
         </a>
+
+        <ModeSelector />
 
         {#each links as { href, name }}
           <a
