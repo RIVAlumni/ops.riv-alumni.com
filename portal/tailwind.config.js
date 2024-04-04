@@ -14,7 +14,7 @@ const config = {
 		extend: {
 			backgroundImage: {
 				"img-signin": "linear-gradient(0deg, hsla(var(--background) / 0.8), transparent), url('/signin.webp')",
-				"img-profile-card": "linear-gradient(90deg, hsla(var(--background) / 0.8) 40%, transparent), url(/accountcard.webp)"
+				"img-profile-card": "linear-gradient(90deg, hsla(var(--background) / 0.8) 40%, transparent), url(/profilecard.webp)"
 			},
 			colors: {
 				border: 'hsl(var(--border) / <alpha-value>)',
