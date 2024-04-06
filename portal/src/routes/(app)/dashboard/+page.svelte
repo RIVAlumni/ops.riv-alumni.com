@@ -1,64 +1,127 @@
 <script lang="ts">
+  import User from 'lucide-svelte/icons/user';
+  import Users from 'lucide-svelte/icons/users';
+  import Ticket from 'lucide-svelte/icons/ticket';
+  import CalendarDays from 'lucide-svelte/icons/calendar-days';
+
   import * as Card from '$lib/components/ui/card';
+  import * as Tabs from '$lib/components/ui/tabs';
+  import * as Table from '$lib/components/ui/table';
   import * as Avatar from '$lib/components/ui/avatar';
 
+  import { Badge } from '$lib/components/ui/badge';
   import { Button } from '$lib/components/ui/button';
-  import { SuperLayout } from '$lib/components/superlayout';
+
+  import Layout from './(components)/layout.svelte';
+  import NumericStatsCard from './(components)/numeric-stats-card.svelte';
 </script>
 
 <svelte:head>
   <title>Dashboard - RIVAlumni Portal</title>
 </svelte:head>
 
-<SuperLayout>
+<Layout>
   <svelte:fragment slot="content">
-    <Card.Root class="sm:col-span-2">
-      <Card.Header class="pb-4">
-        <Card.Title>Sign in to your account</Card.Title>
-        <Card.Description>
-          Get the full experience of being an alumni by signing into your
-          account now.
-        </Card.Description>
-      </Card.Header>
-      <Card.Footer>
-        <Button
-          href="/auth/continue"
-          class="gap-1">
-          Continue
-          <i class="fa-sharp fa-solid fa-arrow-right"></i>
-        </Button>
-      </Card.Footer>
-    </Card.Root>
+    <div
+      class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+      <NumericStatsCard
+        icon="{User}"
+        title="Users"
+        value="72"
+        description="+10% increase from last month" />
 
-    <Card.Root>
-      <Card.Header class="pb-4">
-        <Card.Description>Total Events</Card.Description>
-        <Card.Title class="text-4xl">209</Card.Title>
-      </Card.Header>
-      <Card.Content>
-        <p class="text-xs text-muted-foreground">since inauguration in 20XX</p>
-      </Card.Content>
-    </Card.Root>
+      <NumericStatsCard
+        icon="{Users}"
+        title="Members"
+        value="42"
+        description="+10% increase from last month" />
 
-    <Card.Root>
-      <Card.Header class="pb-4">
-        <Card.Description>Total Hours</Card.Description>
-        <Card.Title class="text-4xl">2,099</Card.Title>
-      </Card.Header>
-      <Card.Content>
-        <p class="text-xs text-muted-foreground">accumulated this year</p>
-      </Card.Content>
-    </Card.Root>
+      <NumericStatsCard
+        icon="{CalendarDays}"
+        title="Events"
+        value="12"
+        description="+10% increase from last month" />
 
-    <Card.Root class="col-span-4">
-      <Card.Header class="pb-4">
-        <Card.Title>More cards coming</Card.Title>
-        <Card.Description>Layout is still scaffolding</Card.Description>
-      </Card.Header>
-      <Card.Footer>
-        <p class="text-sm text-muted-foreground">Wait a bit longer eh</p>
-      </Card.Footer>
-    </Card.Root>
+      <NumericStatsCard
+        icon="{Ticket}"
+        title="Participations"
+        value="40"
+        description="+10% increase from last month" />
+    </div>
+
+    <Tabs.Root
+      value="users"
+      class="overflow-hidden">
+      <div class="overflow-x-scroll flex flex-row items-center">
+        <Tabs.List>
+          <Tabs.Trigger value="users">Users</Tabs.Trigger>
+          <Tabs.Trigger value="members">Members</Tabs.Trigger>
+          <Tabs.Trigger value="events">Events</Tabs.Trigger>
+          <Tabs.Trigger value="participations">Participations</Tabs.Trigger>
+        </Tabs.List>
+      </div>
+
+      <Tabs.Content value="users">
+        <Card.Root>
+          <Card.Header class="px-7">
+            <Card.Title>Users</Card.Title>
+          </Card.Header>
+          <Card.Content>
+            <Table.Root>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head class="w-32">Display Name</Table.Head>
+                  <Table.Head class="hidden sm:table-cell">Email</Table.Head>
+                  <Table.Head class="hidden sm:table-cell">Linked</Table.Head>
+                  <Table.Head class="hidden sm:table-cell">
+                    Suspended
+                  </Table.Head>
+                  <Table.Head class="text-right">Action</Table.Head>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <p class="font-medium">Aaron Teo</p>
+                  </Table.Cell>
+
+                  <Table.Cell class="hidden sm:table-cell">
+                    <p class="text-sm text-muted-foreground text-ellipsis">
+                      aaron.teo@riv-alumni.com
+                    </p>
+                  </Table.Cell>
+
+                  <Table.Cell class="hidden sm:table-cell">
+                    <Badge
+                      class="text-xs"
+                      variant="green">
+                      Yes
+                    </Badge>
+                  </Table.Cell>
+
+                  <Table.Cell class="hidden sm:table-cell">
+                    <Badge
+                      class="text-xs bg-green-600"
+                      variant="green">
+                      No
+                    </Badge>
+                  </Table.Cell>
+
+                  <Table.Cell class="text-right">
+                    <Button
+                      variant="outline"
+                      size="sm">
+                      Go
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table.Root>
+          </Card.Content>
+        </Card.Root>
+      </Tabs.Content>
+    </Tabs.Root>
   </svelte:fragment>
 
   <svelte:fragment slot="aside">
@@ -163,4 +226,4 @@
       </Card.Content>
     </Card.Root>
   </svelte:fragment>
-</SuperLayout>
+</Layout>
