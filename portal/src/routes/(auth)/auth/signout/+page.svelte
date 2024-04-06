@@ -6,7 +6,7 @@
 </svelte:head>
 
 <div
-  class="mx-auto max-w-sm
+  class="mx-auto w-full max-w-sm
           text-center space-y-6">
   <div class="space-y-2">
     <h1 class="text-2xl font-semibold tracking-tight">
