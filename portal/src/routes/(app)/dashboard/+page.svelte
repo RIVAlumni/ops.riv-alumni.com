@@ -52,7 +52,9 @@
     <Tabs.Root
       value="users"
       class="overflow-hidden">
-      <div class="overflow-x-scroll flex flex-row items-center">
+      <div
+        class="overflow-x-scroll scrollbar-hide
+                flex flex-row items-center">
         <Tabs.List>
           <Tabs.Trigger value="users">Users</Tabs.Trigger>
           <Tabs.Trigger value="members">Members</Tabs.Trigger>
