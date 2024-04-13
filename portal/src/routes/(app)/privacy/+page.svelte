@@ -6,11 +6,15 @@
 
 <div
   class="p-6 sm:p-8
+          text-justify
           flex flex-col gap-8 md:gap-10">
   <div class="space-y-1">
     <h1 class="text-4xl font-semibold tracking-tight">Privacy Notice</h1>
     <p class="text-sm text-muted-foreground">
       Effective Date: <span class="font-bold">12 April 2024</span>
+    </p>
+    <p class="text-sm text-muted-foreground">
+      Last Updated: <span class="font-bold">14 April 2024</span>
     </p>
   </div>
 
@@ -37,14 +41,16 @@
   </div>
 
   <div class="space-y-4">
-    <h2 class="text-2xl font-semibold tracking-tight">1. Personal Data</h2>
+    <h2 class="text-2xl font-semibold tracking-tight">Part 1. Personal Data</h2>
 
     <ol
       start="1"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4
+              list-decimal">
       <li class="space-y-4">
-        <span>As used in this Notice:</span>
-        <p class="pl-4">
+        <p class="inline">As used in this Notice:</p>
+
+        <p>
           “personal data” means data, whether true or not, about an individual
           (whether a prospective service users, service users, service users'
           authorised representative, volunteers or otherwise) who can be
@@ -56,11 +62,11 @@
       <li>
         Depending on the nature of your interaction with us, some examples of
         personal data which we may collect from you include name, identification
-        numbers such as nric, fin, work permit and birth certificate, contact
+        numbers such as NRIC, FIN, work permit and birth certificate, contact
         information such as residential address, email address or telephone
         number, gender, medical history, photographs and other audio-visual
-        information, employment information, graduation class and year and
-        emergency contact.
+        information, employment information, graduation class, graduation year
+        and emergency contact.
       </li>
 
       <li>
@@ -72,40 +78,61 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      2. Collection, Use and Disclosure of Personal Data
+      Part 2. Collection, Use and Disclosure of Personal Data
     </h2>
 
     <ol
       start="4"
-      class="space-y-4 list-decimal list-inside">
-      <li>
-        We generally do not collect your personal data unless (a) it is provided
-        to us voluntarily by you directly or via a third party who has been duly
-        authorised by you to disclose your personal data to us (your “authorised
-        representative”) after (i) you (or your authorised representative) have
-        been notified of the purposes for which the data is collected, and (ii)
-        you (or your authorised representative) have provided written consent to
-        the collection and usage of your personal data for those purposes, or
-        (b) collection and use of personal data without consent is permitted or
-        required by the PDPA or other laws. We shall seek your consent before
-        collecting any additional personal data and before using your personal
-        data for a purpose which has not been notified to you (except where
-        permitted or authorised by law).
+      class="space-y-4 list-decimal">
+      <li class="space-y-2">
+        We generally do not collect your personal data unless:
+
+        <ol class="space-y-2 list-lower-alpha">
+          <li>
+            it is provided to us voluntarily by you directly or via a third
+            party who has been duly authorised by you to disclose your personal
+            data to us (your “authorised representative”) after
+
+            <ol class="list-lower-roman">
+              <li>
+                you (or your authorised representative) have been notified of
+                the purposes for which the data is collected, and
+              </li>
+
+              <li>
+                you (or your authorised representative) have provided written
+                consent to the collection and usage of your personal data for
+                those purposes, or
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            collection and use of personal data without consent is permitted or
+            required by the PDPA or other laws.
+          </li>
+        </ol>
+
+        <p>
+          We shall seek your consent before collecting any additional personal
+          data and before using your personal data for a purpose which has not
+          been notified to you (except where permitted or authorised by law).
+        </p>
       </li>
 
       <li>
         We may collect and use your personal data for any or all of the
         following purposes:
 
-        <ul class="pl-5 list-disc list-inside">
+        <ul class="list-disc">
           <li class="mb-4">
             establishing or managing your relationship with us. This includes:
 
-            <ul class="pl-5 space-y-2 list-disc list-inside">
+            <ul class="space-y-2 list-disc">
               <li>
                 Where you are a prospective service user,
 
-                <ul class="pl-5 list-disc list-inside">
+                <ul class="list-disc">
                   <li>
                     processing and evaluating your application for our services
                   </li>
@@ -115,7 +142,7 @@
               <li>
                 Where you are a service user,
 
-                <ul class="pl-5 list-disc list-inside">
+                <ul class="list-disc">
                   <li>providing the services requested by you; and</li>
                   <li>
                     monitoring, evaluating and/or auditing of services provided.
@@ -130,7 +157,7 @@
               <li>
                 Where you are a service user's authorised representative
 
-                <ul class="pl-5 list-disc list-inside">
+                <ul class="list-disc">
                   <li>
                     processing and evaluating the service user's application for
                     our services
@@ -141,10 +168,11 @@
               <li>
                 Where you are a volunteer,
 
-                <ul class="pl-5 list-disc list-inside">
+                <ul class="list-disc">
                   <li>
                     processing and evaluating your suitability to volunteer; and
                   </li>
+
                   <li>
                     monitoring, evaluating and/or auditing of services you
                     participated in.
@@ -158,20 +186,24 @@
             providing you with information on our upcoming events or activities,
             where you have specifically requested to receive such information;
           </li>
+
           <li>verifying your identity;</li>
           <li>
             responding to, handling, and processing queries, requests,
             applications, complaints and feedback from you;
           </li>
+
           <li>
             complying with any applicable laws, regulations, codes of practice,
             guidelines, or rules, or to assist in law enforcement and
             investigations conducted by any governmental and/or regulatory
             authority;
           </li>
+
           <li>
             any other purposes for which you have provided the information; and
           </li>
+
           <li>
             transmitting to any unaffiliated third parties including our third
             party service providers and agents, and relevant governmental and/or
@@ -184,7 +216,7 @@
       <li>
         We may disclose your personal data:
 
-        <ul class="pl-5 list-disc list-inside">
+        <ul class="list-disc">
           <li>
             where such disclosure is required for, or in connection with, the
             provision of the services requested by you;
@@ -223,12 +255,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      3. Reliance on the Legitimate Interests Exception
+      Part 3. Reliance on the Legitimate Interests Exception
     </h2>
 
     <ol
       start="9"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         In compliance with the PDPA, we may collect, use or disclose your
         personal data without your consent for the legitimate interests of
@@ -243,7 +275,7 @@
         In line with the legitimate interests’ exception, we will collect, use
         or disclose your personal data for the following purposes:
 
-        <ol class="pl-5 list-decimal list-inside">
+        <ol class="list-lower-alpha">
           <li>Fraud detection and prevention; and</li>
           <li>Detection and prevention of misuse of services.</li>
         </ol>
@@ -260,12 +292,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      4. Withdrawing your consent
+      Part 4. Withdrawing your consent
     </h2>
 
     <ol
       start="11"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         The consent that you provide for the collection, use and disclosure of
         your personal data will remain valid until such time it is being
@@ -310,21 +342,34 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      5. Access to and Correction of Personal Data
+      Part 5. Access to and Correction of Personal Data
     </h2>
 
     <ol
       start="15"
-      class="space-y-4 list-decimal list-inside">
-      <li>
-        If you wish to make (a) an access request for access to a copy of the
-        personal data which we hold about you or information about the ways in
-        which we use or disclose your personal data, or (b) a correction request
-        to correct or update any of your personal data which we hold about you,
-        you may submit your request via email or otherwise in writing, to our
-        Data Protection Officer at the contact details provided below. If you
-        require assistance with the submission of your request, you can ask to
-        speak to or meet with our Data Protection Officer.
+      class="space-y-4 list-decimal">
+      <li class="space-y-2">
+        If you wish to make:
+
+        <ol class="list-lower-alpha">
+          <li>
+            an access request for access to a copy of the personal data which we
+            hold about you or information about the ways in which we use or
+            disclose your personal data, or
+          </li>
+
+          <li>
+            a correction request to correct or update any of your personal data
+            which we hold about you,
+          </li>
+        </ol>
+
+        <p>
+          you may submit your request via email or otherwise in writing, to our
+          Data Protection Officer at the contact details provided below. If you
+          require assistance with the submission of your request, you can ask to
+          speak to or meet with our Data Protection Officer.
+        </p>
       </li>
 
       <li>
@@ -348,12 +393,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      6. Protection of Personal Data
+      Part 6. Protection of Personal Data
     </h2>
 
     <ol
       start="18"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         To safeguard your personal data from unauthorised access, collection,
         use, disclosure, copying, modification, disposal or similar risks, we
@@ -377,12 +422,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      7. Accuracy of Personal Data
+      Part 7. Accuracy of Personal Data
     </h2>
 
     <ol
       start="20"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         We generally rely on personal data provided by you (or your authorised
         representative). In order to ensure that your personal data is current,
@@ -395,12 +440,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      8. Retention of Personal Data
+      Part 8. Retention of Personal Data
     </h2>
 
     <ol
       start="21"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         We may retain your personal data for as long as it is necessary to
         fulfil the purpose for which it was collected, or as required or
@@ -419,18 +464,20 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      9. Data Protection Officer
+      Part 9. Data Protection Officer
     </h2>
 
     <ol
       start="24"
-      class="space-y-4 list-decimal list-inside">
-      <li>
-        You may contact our Data Protection Officer if you have any enquiries or
-        feedback on our personal data protection policies and procedures, or if
-        you wish to make any request, in the following manner:
+      class="space-y-4 list-decimal">
+      <li class="space-y-4">
+        <p class="inline">
+          You may contact our Data Protection Officer if you have any enquiries
+          or feedback on our personal data protection policies and procedures,
+          or if you wish to make any request, in the following manner:
+        </p>
 
-        <table class="ml-8">
+        <table>
           <tr>
             <td>Name of DPO</td>
             <td class="pr-4">:</td>
@@ -467,12 +514,12 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      10. Effects of Notice and Changes to Notice
+      Part 10. Effects of Notice and Changes to Notice
     </h2>
 
     <ol
       start="25"
-      class="space-y-4 list-decimal list-inside">
+      class="space-y-4 list-decimal">
       <li>
         This Notice applies in conjunction with any other notices, contractual
         clauses and consent clauses that apply in relation to the collection,
@@ -489,3 +536,10 @@
     </ol>
   </div>
 </div>
+
+<style>
+  ol,
+  ul {
+    @apply ps-8;
+  }
+</style>

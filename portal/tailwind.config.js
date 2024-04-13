@@ -12,12 +12,6 @@ const config = {
       },
     },
     extend: {
-      backgroundImage: {
-        'img-signin':
-          "linear-gradient(0deg, hsla(var(--background) / 0.8), transparent), url('/signin.webp')",
-        'img-profile-card':
-          'linear-gradient(0deg, hsla(var(--background) / 0.8), transparent), url(/profilecard.webp)',
-      },
       colors: {
         border: 'hsl(var(--border) / <alpha-value>)',
         input: 'hsl(var(--input) / <alpha-value>)',
@@ -61,6 +55,16 @@ const config = {
       fontFamily: {
         sans: ['Geist Sans', 'sans-serif'],
         mono: ['Geist Mono', 'monospace'],
+      },
+      listStyleType: {
+        'lower-alpha': 'lower-alpha',
+        'lower-roman': 'lower-roman',
+      },
+      backgroundImage: {
+        'img-signin':
+          "linear-gradient(0deg, hsla(var(--background) / 0.8), transparent), url('/signin.webp')",
+        'img-profile-card':
+          'linear-gradient(0deg, hsla(var(--background) / 0.8), transparent), url(/profilecard.webp)',
       },
     },
   },
