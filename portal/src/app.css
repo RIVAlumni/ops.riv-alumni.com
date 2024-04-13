@@ -52,7 +52,21 @@
 @layer base {
   * {
     @apply border-border;
+
+    /* Firefox Scrollbar */
+    scrollbar-color: hsla(var(--foreground) / 0.5) hsla(var(--foreground) / 0.1);
   }
+
+  /* Chrome, Edge, and Safari Scrollbar */
+  *::-webkit-scrollbar-thumb {
+    background: hsla(var(--foreground) / 0.5);
+  }
+
+  /* Chrome, Edge, and Safari Scrollbar */
+  *::-webkit-scrollbar-track {
+    background: hsla(var(--foreground) / 0.1);
+  }
+
   body {
     @apply bg-background text-foreground;
   }
