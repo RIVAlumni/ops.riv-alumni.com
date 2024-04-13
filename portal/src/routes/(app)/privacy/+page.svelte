@@ -2,6 +2,42 @@
 
 <svelte:head>
   <title>Privacy Notice - RIVAlumni Portal</title>
+
+  <meta
+    name="description"
+    content="RIVA's Data Protection Notice outlining how we collect, use, and disclose personal data of service users, volunteers, and donors in accordance with the PDPA." />
+
+  <meta
+    name="keywords"
+    content="Rivervale Primary School, Alumni Association, Data Protection, Privacy Policy, PDPA, Singapore, Personal Data, Consent, Collection, Use, Disclosure" />
+
+  <meta
+    property="og:title"
+    content="Privacy Notice" />
+
+  <meta
+    property="og:type"
+    content="website" />
+
+  <meta
+    property="og:url"
+    content="https://ops.riv-alumni.com/privacy" />
+
+  <meta
+    property="og:description"
+    content="RIVA's Data Protection Notice outlining how we collect, use, and disclose personal data of service users, volunteers, and donors in accordance with the PDPA." />
+
+  <meta
+    name="twitter:card"
+    content="summary" />
+
+  <meta
+    name="twitter:title"
+    content="Privacy Notice" />
+
+  <meta
+    name="twitter:description"
+    content="RIVA's Data Protection Notice outlining how we collect, use, and disclose personal data of service users, volunteers, and donors in accordance with the PDPA." />
 </svelte:head>
 
 <div
