@@ -77,7 +77,9 @@
   </div>
 
   <div class="space-y-4">
-    <h2 class="text-2xl font-semibold tracking-tight">Part 1. Personal Data</h2>
+    <h2 class="text-2xl font-semibold tracking-tight">
+      Section 1. Personal Data
+    </h2>
 
     <ol
       start="1"
@@ -114,7 +116,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 2. Collection, Use and Disclosure of Personal Data
+      Section 2. Collection, Use and Disclosure of Personal Data
     </h2>
 
     <ol
@@ -291,7 +293,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 3. Reliance on the Legitimate Interests Exception
+      Section 3. Reliance on the Legitimate Interests Exception
     </h2>
 
     <ol
@@ -328,7 +330,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 4. Withdrawing your consent
+      Section 4. Withdrawing your consent
     </h2>
 
     <ol
@@ -378,7 +380,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 5. Access to and Correction of Personal Data
+      Section 5. Access to and Correction of Personal Data
     </h2>
 
     <ol
@@ -429,7 +431,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 6. Protection of Personal Data
+      Section 6. Protection of Personal Data
     </h2>
 
     <ol
@@ -458,7 +460,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 7. Accuracy of Personal Data
+      Section 7. Accuracy of Personal Data
     </h2>
 
     <ol
@@ -476,7 +478,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 8. Retention of Personal Data
+      Section 8. Retention of Personal Data
     </h2>
 
     <ol
@@ -500,7 +502,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 9. Data Protection Officer
+      Section 9. Data Protection Officer
     </h2>
 
     <ol
@@ -550,7 +552,7 @@
 
   <div class="space-y-4">
     <h2 class="text-2xl font-semibold tracking-tight">
-      Part 10. Effects of Notice and Changes to Notice
+      Section 10. Effects of Notice and Changes to Notice
     </h2>
 
     <ol
