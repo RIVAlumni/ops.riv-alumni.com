@@ -83,7 +83,7 @@
 
         <li>
           <a
-            href="https://github.com/RIVAlumni/ops.riv-alumni.com"
+            href="//github.com/RIVAlumni/ops.riv-alumni.com"
             class="transition-colors text-muted-foreground
                     hover:underline hover:underline-offset-4">
             GitHub Repository
