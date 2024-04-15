@@ -19,7 +19,6 @@
 		"@fontsource/geist-sans": "^5.0.2",
 		"@fortawesome/fontawesome-free": "^6.5.1",
 		"@internationalized/date": "^3.5.2",
-		"@riva/shared": "workspace:^",
 		"bits-ui": "^0.21.1",
 		"clsx": "^2.1.0",
 		"cmdk-sv": "^0.0.17",
@@ -40,6 +39,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
+		"@riva/shared": "workspace:^",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
