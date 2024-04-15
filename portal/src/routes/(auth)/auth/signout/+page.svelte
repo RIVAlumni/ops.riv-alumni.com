@@ -1,4 +1,10 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { signOut } from '$lib/firebase/auth';
+
+  onMount(async () => {
+    await signOut();
+  });
 </script>
 
 <svelte:head>
