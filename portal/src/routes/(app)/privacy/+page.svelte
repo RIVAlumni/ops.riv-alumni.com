@@ -50,7 +50,7 @@
       Effective Date: <span class="font-bold">12 April 2024</span>
     </p>
     <p class="text-sm text-muted-foreground">
-      Last Updated: <span class="font-bold">14 April 2024</span>
+      Last Updated: <span class="font-bold">17 April 2024</span>
     </p>
   </div>
 
@@ -539,9 +539,9 @@
             <td class="pr-4">:</td>
             <td>
               <a
-                href="mailto:hello@riv-alumni.com"
+                href="mailto:privacy@riv-alumni.com"
                 class="text-primary hover:underline underline-offset-2">
-                hello@riv-alumni.com
+                privacy@riv-alumni.com
               </a>
             </td>
           </tr>
