@@ -27,6 +27,12 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
+      eslint-plugin-only-warn:
+        specifier: ^1.1.0
+        version: 1.1.0
+      eslint-plugin-turbo:
+        specifier: ^1.13.2
+        version: 1.13.2(eslint@8.57.0)
       firebase-tools:
         specifier: ^13.6.0
         version: 13.6.0(encoding@0.1.13)
@@ -3262,6 +3268,11 @@ packages:
 
   eslint-plugin-turbo@1.12.4:
     resolution: {integrity: sha512-3AGmXvH7E4i/XTWqBrcgu+G7YKZJV/8FrEn79kTd50ilNsv+U3nS2IlcCrQB6Xm2m9avGD9cadLzKDR1/UF2+g==}
+    peerDependencies:
+      eslint: '>6.6.0'
+
+  eslint-plugin-turbo@1.13.2:
+    resolution: {integrity: sha512-QNaihF0hTRjfOBd1SLHrftm8V3pOU35CNS/C0/Z6qY1xxdL1PSv4IctEIldSMX7/A1jOPYwMPO7wYwPXgjgp/g==}
     peerDependencies:
       eslint: '>6.6.0'
 
@@ -11101,6 +11112,11 @@ snapshots:
       '@microsoft/tsdoc-config': 0.16.2
 
   eslint-plugin-turbo@1.12.4(eslint@8.57.0):
+    dependencies:
+      dotenv: 16.0.3
+      eslint: 8.57.0
+
+  eslint-plugin-turbo@1.13.2(eslint@8.57.0):
     dependencies:
       dotenv: 16.0.3
       eslint: 8.57.0

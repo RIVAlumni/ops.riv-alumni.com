@@ -23,6 +23,8 @@
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-turbo": "^1.13.2",
     "firebase-tools": "^13.6.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.2",
