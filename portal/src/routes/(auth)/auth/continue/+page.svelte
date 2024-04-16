@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button';
+  import { signInGoogleProvider } from '$lib/firebase/auth';
 </script>
 
 <svelte:head>
@@ -23,7 +24,8 @@
     <Button
       type="button"
       variant="outline"
-      class="w-full">
+      class="w-full"
+      on:click="{signInGoogleProvider}">
       <i class="fa-brands fa-google mr-2"></i>
       Google
     </Button>
