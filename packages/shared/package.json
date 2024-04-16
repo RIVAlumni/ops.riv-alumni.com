@@ -10,6 +10,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "firebase": "^10.11.0",
+    "firebase-admin": "^11.8.0",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.6.0"
   }
 }
