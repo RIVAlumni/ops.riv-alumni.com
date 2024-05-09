@@ -3,7 +3,7 @@
   "name": "ops.riv-alumni.com",
   "packageManager": "pnpm@9.0.1",
   "engines": {
-    "node": ">=20"
+    "node": "20"
   },
   "scripts": {
     "prepare": "husky install",
