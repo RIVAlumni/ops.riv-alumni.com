@@ -3,9 +3,7 @@
   "type": "module",
   "name": "@riva/portal",
   "scripts": {
-    "dev": "run-p dev:web dev:emulator",
-    "dev:web": "vite dev",
-    "dev:emulator": "firebase emulators:start --import=firebase-export --export-on-exit --only auth,firestore,storage",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
